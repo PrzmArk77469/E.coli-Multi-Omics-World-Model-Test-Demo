@@ -25,6 +25,10 @@ Last updated: 2026-09-21 16:15 +08:00
   `dc7a5a1510acfac4df9b0a532c5e635bb1e4972f`.
 - Pushed `main` to the local rollback remote
   `D:\CodexApp\Project13\GitBackup.git`.
+- Connected `origin` to `https://github.com/PrzmArk77469/Git.git`.
+- Merged the two pre-existing GitHub commits with the new project history
+  using an unrelated-history merge that preserves both histories.
+- Pushed the merged `main` branch to GitHub.
 
 ## Pending Windows reboot
 
@@ -52,19 +56,17 @@ wsl.exe -d Ubuntu-24.04 -u root -- passwd mars
 - Local branch: `main`
 - Local rollback remote: `backup` at
   `D:\CodexApp\Project13\GitBackup.git`
-- External `origin`: not configured because no repository URL or account was
-  supplied.
+- External `origin`: `https://github.com/PrzmArk77469/Git.git`
 
-Configure the external remote with:
+Push subsequent changes with:
 
 ```powershell
-git remote add origin <repository-url>
-git push -u origin main
+git push origin main
+git push backup main
 ```
 
 ## Required user decisions
 
-- Provide the external Git repository URL.
 - Restart Windows when convenient to complete WSL2 import.
 - Decide whether to mirror GitHub to Alibaba Cloud Codeup for mainland ECS
   access.

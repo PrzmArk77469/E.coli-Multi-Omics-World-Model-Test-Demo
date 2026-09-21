@@ -27,7 +27,7 @@ the project data tree outside this repository or an object-storage bucket.
 4. Run the Ubuntu bootstrap script as root.
 5. Install and configure Docker Desktop with its data root on D:.
 6. Verify Docker integration from Ubuntu.
-7. Configure the Git remote and push the repository.
+7. Use the configured Git remote and push the repository.
 8. Deploy the Alibaba Cloud CPU control plane before enabling GPU workers.
 
 See `docs/INFRASTRUCTURE.md` for the complete topology and
@@ -45,5 +45,6 @@ git commit -m "Bootstrap project infrastructure"
 git push -u origin main
 ```
 
-The `origin` remote must be created by the repository owner because the target
-Git hosting URL and account are not stored in this repository.
+The configured `origin` is
+`https://github.com/PrzmArk77469/Git.git`. A local rollback remote named
+`backup` points to `D:\CodexApp\Project13\GitBackup.git`.

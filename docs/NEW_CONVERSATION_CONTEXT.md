@@ -27,8 +27,10 @@
 - The Ubuntu rootfs is downloaded and SHA256-verified.
 - Docker Desktop is installed on D: and configured with its WSL data root on
   D:.
-- The repository has an initial commit and a local `backup` remote.
-- No external Git `origin` is configured yet.
+- The repository is connected to
+  `https://github.com/PrzmArk77469/Git.git` as `origin`.
+- A local rollback remote named `backup` points to
+  `D:\CodexApp\Project13\GitBackup.git`.
 
 ## Resume command
 
@@ -44,17 +46,8 @@ Then set the Linux password:
 wsl.exe -d Ubuntu-24.04 -u root -- passwd mars
 ```
 
-## Git remote
-
-When the repository URL is known:
-
-```powershell
-& D:\CodexApp\Project13\Git\Configure-GitRemote.ps1 -RemoteUrl '<repository-url>'
-```
-
 ## Do not do
 
 - Do not commit `D:\CodexApp\Project13\EcoliOmics\raw`.
 - Do not store SSH keys, cloud credentials, or API tokens in the repository.
 - Do not unregister `Ubuntu-24.04` before exporting a backup.
-
