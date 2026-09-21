@@ -1,0 +1,1455 @@
+{
+  "source": "ENA Portal API",
+  "prefix": "ena_mg1655_files",
+  "snapshot_date": "2026-09-14T11:05:34+00:00",
+  "input_file": "manifests\\ena_mg1655_files.tsv.gz",
+  "input_bytes": 1591656,
+  "input_sha256": "ceed8b8a6a68a43ced3eb522cd4c208131200d1f375dd3046223a0923938074a",
+  "totals": {
+    "rows": 20864,
+    "unique_studies": 768,
+    "fastq_bytes": 13849924930103,
+    "read_count": 207967694910,
+    "base_count": 28683268728908,
+    "rows_with_fastq_bytes": 20772,
+    "rows_missing_fastq_bytes": 92,
+    "mg1655_rows": 20864,
+    "mg1655_fastq_bytes": 13849924930103
+  },
+  "top_library_strategies": [
+    {
+      "name": "RNA-Seq",
+      "runs": 5519,
+      "studies": 329,
+      "fastq_bytes": 6380099279238,
+      "base_count": 13207692635068
+    },
+    {
+      "name": "WGS",
+      "runs": 6575,
+      "studies": 207,
+      "fastq_bytes": 2918995135762,
+      "base_count": 5095468974177
+    },
+    {
+      "name": "OTHER",
+      "runs": 1908,
+      "studies": 112,
+      "fastq_bytes": 1944184846855,
+      "base_count": 4446457452003
+    },
+    {
+      "name": "ChIP-Seq",
+      "runs": 1364,
+      "studies": 64,
+      "fastq_bytes": 791049830226,
+      "base_count": 1274833647948
+    },
+    {
+      "name": "MNase-Seq",
+      "runs": 36,
+      "studies": 1,
+      "fastq_bytes": 639686187777,
+      "base_count": 1814408465856
+    },
+    {
+      "name": "AMPLICON",
+      "runs": 4268,
+      "studies": 58,
+      "fastq_bytes": 539426624285,
+      "base_count": 1626181445738
+    },
+    {
+      "name": "RIP-Seq",
+      "runs": 223,
+      "studies": 14,
+      "fastq_bytes": 192242113876,
+      "base_count": 391441688893
+    },
+    {
+      "name": "ssRNA-seq",
+      "runs": 99,
+      "studies": 9,
+      "fastq_bytes": 107877018168,
+      "base_count": 206359884187
+    },
+    {
+      "name": "Tn-Seq",
+      "runs": 208,
+      "studies": 19,
+      "fastq_bytes": 101463881438,
+      "base_count": 212296621845
+    },
+    {
+      "name": "Bisulfite-Seq",
+      "runs": 70,
+      "studies": 3,
+      "fastq_bytes": 69949188001,
+      "base_count": 121374175889
+    },
+    {
+      "name": "EST",
+      "runs": 22,
+      "studies": 1,
+      "fastq_bytes": 39623466634,
+      "base_count": 63290247592
+    },
+    {
+      "name": "CLONE",
+      "runs": 292,
+      "studies": 5,
+      "fastq_bytes": 34457088735,
+      "base_count": 71058719463
+    },
+    {
+      "name": "WGA",
+      "runs": 51,
+      "studies": 12,
+      "fastq_bytes": 25425769964,
+      "base_count": 42683228982
+    },
+    {
+      "name": "ncRNA-Seq",
+      "runs": 141,
+      "studies": 8,
+      "fastq_bytes": 15022297384,
+      "base_count": 34342316837
+    },
+    {
+      "name": "ATAC-seq",
+      "runs": 40,
+      "studies": 1,
+      "fastq_bytes": 14821490968,
+      "base_count": 20027852573
+    },
+    {
+      "name": "MeDIP-Seq",
+      "runs": 9,
+      "studies": 1,
+      "fastq_bytes": 13380345993,
+      "base_count": 20063248600
+    },
+    {
+      "name": "Hi-C",
+      "runs": 23,
+      "studies": 2,
+      "fastq_bytes": 11426018979,
+      "base_count": 22546618594
+    },
+    {
+      "name": "POOLCLONE",
+      "runs": 9,
+      "studies": 1,
+      "fastq_bytes": 8956676845,
+      "base_count": 10976402682
+    },
+    {
+      "name": "VALIDATION",
+      "runs": 6,
+      "studies": 1,
+      "fastq_bytes": 1455034223,
+      "base_count": 1394820179
+    },
+    {
+      "name": "Targeted-Capture",
+      "runs": 1,
+      "studies": 1,
+      "fastq_bytes": 382634752,
+      "base_count": 370281802
+    }
+  ],
+  "top_library_sources": [
+    {
+      "name": "TRANSCRIPTOMIC",
+      "runs": 6516,
+      "studies": 374,
+      "fastq_bytes": 7643525467377,
+      "base_count": 16170610307632
+    },
+    {
+      "name": "GENOMIC",
+      "runs": 12649,
+      "studies": 371,
+      "fastq_bytes": 4942844295063,
+      "base_count": 8861958434181
+    },
+    {
+      "name": "SYNTHETIC",
+      "runs": 845,
+      "studies": 24,
+      "fastq_bytes": 530887867242,
+      "base_count": 1404339789017
+    },
+    {
+      "name": "OTHER",
+      "runs": 691,
+      "studies": 24,
+      "fastq_bytes": 435140375163,
+      "base_count": 1534736919517
+    },
+    {
+      "name": "METAGENOMIC",
+      "runs": 79,
+      "studies": 7,
+      "fastq_bytes": 136026531886,
+      "base_count": 296854915401
+    },
+    {
+      "name": "TRANSCRIPTOMIC SINGLE CELL",
+      "runs": 16,
+      "studies": 5,
+      "fastq_bytes": 85725611134,
+      "base_count": 248334276236
+    },
+    {
+      "name": "METATRANSCRIPTOMIC",
+      "runs": 26,
+      "studies": 2,
+      "fastq_bytes": 63512644833,
+      "base_count": 141950164800
+    },
+    {
+      "name": "GENOMIC SINGLE CELL",
+      "runs": 42,
+      "studies": 2,
+      "fastq_bytes": 12262137405,
+      "base_count": 24483922124
+    }
+  ],
+  "top_scientific_names": [
+    {
+      "name": "Escherichia coli str. K-12 substr. MG1655",
+      "runs": 20863,
+      "fastq_bytes": 13849885063656
+    },
+    {
+      "name": "unidentified;Escherichia coli str. K-12 substr. MG1655",
+      "runs": 1,
+      "fastq_bytes": 39866447
+    }
+  ],
+  "top_studies": [
+    {
+      "study_accession": "PRJNA848841",
+      "runs": 1120,
+      "fastq_bytes": 1567622257844,
+      "base_count": 3630118788532,
+      "strategies": [
+        "RNA-Seq"
+      ],
+      "scientific_names": [
+        "Escherichia coli str. K-12 substr. MG1655"
+      ]
+    },
+    {
+      "study_accession": "PRJEB87756",
+      "runs": 60,
+      "fastq_bytes": 652016499111,
+      "base_count": 1836314275740,
+      "strategies": [
+        "MNase-Seq",
+        "RNA-Seq"
+      ],
+      "scientific_names": [
+        "Escherichia coli str. K-12 substr. MG1655"
+      ]
+    },
+    {
+      "study_accession": "PRJNA80049",
+      "runs": 174,
+      "fastq_bytes": 315704811370,
+      "base_count": 447594041260,
+      "strategies": [
+        "EST",
+        "WGS"
+      ],
+      "scientific_names": [
+        "Escherichia coli str. K-12 substr. MG1655"
+      ]
+    },
+    {
+      "study_accession": "PRJNA1273601",
+      "runs": 230,
+      "fastq_bytes": 276182753155,
+      "base_count": 363801805469,
+      "strategies": [
+        "RNA-Seq"
+      ],
+      "scientific_names": [
+        "Escherichia coli str. K-12 substr. MG1655"
+      ]
+    },
+    {
+      "study_accession": "PRJNA643436",
+      "runs": 6,
+      "fastq_bytes": 264708640208,
+      "base_count": 623648094713,
+      "strategies": [
+        "OTHER"
+      ],
+      "scientific_names": [
+        "Escherichia coli str. K-12 substr. MG1655"
+      ]
+    },
+    {
+      "study_accession": "PRJNA1118281",
+      "runs": 424,
+      "fastq_bytes": 242841641280,
+      "base_count": 402543661190,
+      "strategies": [
+        "ChIP-Seq",
+        "OTHER"
+      ],
+      "scientific_names": [
+        "Escherichia coli str. K-12 substr. MG1655"
+      ]
+    },
+    {
+      "study_accession": "PRJNA881952",
+      "runs": 128,
+      "fastq_bytes": 217479581020,
+      "base_count": 1055442142362,
+      "strategies": [
+        "OTHER"
+      ],
+      "scientific_names": [
+        "Escherichia coli str. K-12 substr. MG1655"
+      ]
+    },
+    {
+      "study_accession": "PRJNA1135229",
+      "runs": 2,
+      "fastq_bytes": 209847734713,
+      "base_count": 292119884200,
+      "strategies": [
+        "OTHER"
+      ],
+      "scientific_names": [
+        "Escherichia coli str. K-12 substr. MG1655"
+      ]
+    },
+    {
+      "study_accession": "PRJNA551791",
+      "runs": 552,
+      "fastq_bytes": 205447730866,
+      "base_count": 401816038625,
+      "strategies": [
+        "RNA-Seq",
+        "WGS"
+      ],
+      "scientific_names": [
+        "Escherichia coli str. K-12 substr. MG1655"
+      ]
+    },
+    {
+      "study_accession": "PRJNA251272",
+      "runs": 30,
+      "fastq_bytes": 168349897418,
+      "base_count": 238537896600,
+      "strategies": [
+        "RNA-Seq"
+      ],
+      "scientific_names": [
+        "Escherichia coli str. K-12 substr. MG1655"
+      ]
+    },
+    {
+      "study_accession": "PRJNA421326",
+      "runs": 42,
+      "fastq_bytes": 167865764239,
+      "base_count": 254471253123,
+      "strategies": [
+        "OTHER",
+        "RNA-Seq"
+      ],
+      "scientific_names": [
+        "Escherichia coli str. K-12 substr. MG1655"
+      ]
+    },
+    {
+      "study_accession": "PRJNA872174",
+      "runs": 10,
+      "fastq_bytes": 139332793823,
+      "base_count": 278747085900,
+      "strategies": [
+        "OTHER"
+      ],
+      "scientific_names": [
+        "Escherichia coli str. K-12 substr. MG1655"
+      ]
+    },
+    {
+      "study_accession": "PRJNA194149",
+      "runs": 54,
+      "fastq_bytes": 132235724192,
+      "base_count": 161787650800,
+      "strategies": [
+        "RNA-Seq"
+      ],
+      "scientific_names": [
+        "Escherichia coli str. K-12 substr. MG1655"
+      ]
+    },
+    {
+      "study_accession": "PRJNA1273304",
+      "runs": 120,
+      "fastq_bytes": 118995521246,
+      "base_count": 157693422164,
+      "strategies": [
+        "RNA-Seq"
+      ],
+      "scientific_names": [
+        "Escherichia coli str. K-12 substr. MG1655"
+      ]
+    },
+    {
+      "study_accession": "PRJEB56300",
+      "runs": 199,
+      "fastq_bytes": 118618138323,
+      "base_count": 512954992430,
+      "strategies": [
+        "WGS"
+      ],
+      "scientific_names": [
+        "Escherichia coli str. K-12 substr. MG1655"
+      ]
+    },
+    {
+      "study_accession": "PRJNA301595",
+      "runs": 50,
+      "fastq_bytes": 113198499139,
+      "base_count": 132010556484,
+      "strategies": [
+        "RNA-Seq"
+      ],
+      "scientific_names": [
+        "Escherichia coli str. K-12 substr. MG1655"
+      ]
+    },
+    {
+      "study_accession": "PRJNA436580",
+      "runs": 20,
+      "fastq_bytes": 102783380055,
+      "base_count": 238044381860,
+      "strategies": [
+        "RNA-Seq"
+      ],
+      "scientific_names": [
+        "Escherichia coli str. K-12 substr. MG1655"
+      ]
+    },
+    {
+      "study_accession": "PRJNA1358792",
+      "runs": 32,
+      "fastq_bytes": 99498306892,
+      "base_count": 306228729208,
+      "strategies": [
+        "RNA-Seq"
+      ],
+      "scientific_names": [
+        "Escherichia coli str. K-12 substr. MG1655"
+      ]
+    },
+    {
+      "study_accession": "PRJNA251794",
+      "runs": 98,
+      "fastq_bytes": 94107599118,
+      "base_count": 99502520066,
+      "strategies": [
+        "WGS"
+      ],
+      "scientific_names": [
+        "Escherichia coli str. K-12 substr. MG1655"
+      ]
+    },
+    {
+      "study_accession": "PRJNA691963",
+      "runs": 124,
+      "fastq_bytes": 89358086472,
+      "base_count": 146648268977,
+      "strategies": [
+        "ChIP-Seq",
+        "RNA-Seq"
+      ],
+      "scientific_names": [
+        "Escherichia coli str. K-12 substr. MG1655"
+      ]
+    },
+    {
+      "study_accession": "PRJNA1263894",
+      "runs": 179,
+      "fastq_bytes": 86986872148,
+      "base_count": 142949758391,
+      "strategies": [
+        "AMPLICON"
+      ],
+      "scientific_names": [
+        "Escherichia coli str. K-12 substr. MG1655"
+      ]
+    },
+    {
+      "study_accession": "PRJDB3140",
+      "runs": 28,
+      "fastq_bytes": 82839951897,
+      "base_count": 100587198816,
+      "strategies": [
+        "RNA-Seq"
+      ],
+      "scientific_names": [
+        "Escherichia coli str. K-12 substr. MG1655"
+      ]
+    },
+    {
+      "study_accession": "PRJNA242238",
+      "runs": 59,
+      "fastq_bytes": 82448736546,
+      "base_count": 85021640388,
+      "strategies": [
+        "WGS"
+      ],
+      "scientific_names": [
+        "Escherichia coli str. K-12 substr. MG1655"
+      ]
+    },
+    {
+      "study_accession": "PRJNA296672",
+      "runs": 3,
+      "fastq_bytes": 79178533908,
+      "base_count": 218617514308,
+      "strategies": [
+        "OTHER"
+      ],
+      "scientific_names": [
+        "Escherichia coli str. K-12 substr. MG1655"
+      ]
+    },
+    {
+      "study_accession": "PRJNA944658",
+      "runs": 4,
+      "fastq_bytes": 78146687204,
+      "base_count": 157156283979,
+      "strategies": [
+        "WGS"
+      ],
+      "scientific_names": [
+        "Escherichia coli str. K-12 substr. MG1655"
+      ]
+    },
+    {
+      "study_accession": "PRJNA1010512",
+      "runs": 259,
+      "fastq_bytes": 77034445489,
+      "base_count": 187503315309,
+      "strategies": [
+        "WGS"
+      ],
+      "scientific_names": [
+        "Escherichia coli str. K-12 substr. MG1655"
+      ]
+    },
+    {
+      "study_accession": "PRJEB96842",
+      "runs": 73,
+      "fastq_bytes": 73342126108,
+      "base_count": 146603498446,
+      "strategies": [
+        "WGS"
+      ],
+      "scientific_names": [
+        "Escherichia coli str. K-12 substr. MG1655"
+      ]
+    },
+    {
+      "study_accession": "PRJNA301160",
+      "runs": 238,
+      "fastq_bytes": 72491290363,
+      "base_count": 136230359866,
+      "strategies": [
+        "WGS"
+      ],
+      "scientific_names": [
+        "Escherichia coli str. K-12 substr. MG1655"
+      ]
+    },
+    {
+      "study_accession": "PRJEB98418",
+      "runs": 27,
+      "fastq_bytes": 67888353556,
+      "base_count": 196690323222,
+      "strategies": [
+        "RNA-Seq",
+        "WGS"
+      ],
+      "scientific_names": [
+        "Escherichia coli str. K-12 substr. MG1655"
+      ]
+    },
+    {
+      "study_accession": "PRJNA1235115",
+      "runs": 40,
+      "fastq_bytes": 67611075182,
+      "base_count": 165431077691,
+      "strategies": [
+        "RNA-Seq"
+      ],
+      "scientific_names": [
+        "Escherichia coli str. K-12 substr. MG1655"
+      ]
+    },
+    {
+      "study_accession": "PRJNA489357",
+      "runs": 64,
+      "fastq_bytes": 66134149622,
+      "base_count": 72705292228,
+      "strategies": [
+        "WGS"
+      ],
+      "scientific_names": [
+        "Escherichia coli str. K-12 substr. MG1655"
+      ]
+    },
+    {
+      "study_accession": "PRJNA1205775",
+      "runs": 20,
+      "fastq_bytes": 63841453763,
+      "base_count": 81657421537,
+      "strategies": [
+        "AMPLICON",
+        "WGS"
+      ],
+      "scientific_names": [
+        "Escherichia coli str. K-12 substr. MG1655"
+      ]
+    },
+    {
+      "study_accession": "PRJNA1034827",
+      "runs": 40,
+      "fastq_bytes": 62506284208,
+      "base_count": 157578158658,
+      "strategies": [
+        "RNA-Seq",
+        "WGS"
+      ],
+      "scientific_names": [
+        "Escherichia coli str. K-12 substr. MG1655"
+      ]
+    },
+    {
+      "study_accession": "PRJNA382025",
+      "runs": 18,
+      "fastq_bytes": 60531291180,
+      "base_count": 71012079294,
+      "strategies": [
+        "RNA-Seq"
+      ],
+      "scientific_names": [
+        "Escherichia coli str. K-12 substr. MG1655"
+      ]
+    },
+    {
+      "study_accession": "PRJEB87391",
+      "runs": 18,
+      "fastq_bytes": 60093683151,
+      "base_count": 122068505400,
+      "strategies": [
+        "ChIP-Seq"
+      ],
+      "scientific_names": [
+        "Escherichia coli str. K-12 substr. MG1655"
+      ]
+    },
+    {
+      "study_accession": "PRJNA726266",
+      "runs": 18,
+      "fastq_bytes": 59999373238,
+      "base_count": 128961339142,
+      "strategies": [
+        "RNA-Seq"
+      ],
+      "scientific_names": [
+        "Escherichia coli str. K-12 substr. MG1655"
+      ]
+    },
+    {
+      "study_accession": "PRJEB26394",
+      "runs": 37,
+      "fastq_bytes": 57467418459,
+      "base_count": 124218942588,
+      "strategies": [
+        "ssRNA-seq"
+      ],
+      "scientific_names": [
+        "Escherichia coli str. K-12 substr. MG1655"
+      ]
+    },
+    {
+      "study_accession": "PRJEB32954",
+      "runs": 229,
+      "fastq_bytes": 57438163003,
+      "base_count": 76624704918,
+      "strategies": [
+        "WGS"
+      ],
+      "scientific_names": [
+        "Escherichia coli str. K-12 substr. MG1655"
+      ]
+    },
+    {
+      "study_accession": "PRJEB21199",
+      "runs": 51,
+      "fastq_bytes": 56680582288,
+      "base_count": 82040342097,
+      "strategies": [
+        "ChIP-Seq",
+        "OTHER",
+        "WGS",
+        "ssRNA-seq"
+      ],
+      "scientific_names": [
+        "Escherichia coli str. K-12 substr. MG1655"
+      ]
+    },
+    {
+      "study_accession": "PRJNA1049603",
+      "runs": 172,
+      "fastq_bytes": 55910947314,
+      "base_count": 220914636840,
+      "strategies": [
+        "AMPLICON"
+      ],
+      "scientific_names": [
+        "Escherichia coli str. K-12 substr. MG1655"
+      ]
+    },
+    {
+      "study_accession": "PRJNA611679",
+      "runs": 85,
+      "fastq_bytes": 55902739743,
+      "base_count": 86790586441,
+      "strategies": [
+        "WGS"
+      ],
+      "scientific_names": [
+        "Escherichia coli str. K-12 substr. MG1655"
+      ]
+    },
+    {
+      "study_accession": "PRJEB34734",
+      "runs": 60,
+      "fastq_bytes": 55842003662,
+      "base_count": 96241448839,
+      "strategies": [
+        "Bisulfite-Seq"
+      ],
+      "scientific_names": [
+        "Escherichia coli str. K-12 substr. MG1655"
+      ]
+    },
+    {
+      "study_accession": "PRJNA597349",
+      "runs": 41,
+      "fastq_bytes": 55356877445,
+      "base_count": 93611221884,
+      "strategies": [
+        "WGS"
+      ],
+      "scientific_names": [
+        "Escherichia coli str. K-12 substr. MG1655"
+      ]
+    },
+    {
+      "study_accession": "PRJNA615952",
+      "runs": 45,
+      "fastq_bytes": 54669009807,
+      "base_count": 99425136300,
+      "strategies": [
+        "WGS"
+      ],
+      "scientific_names": [
+        "Escherichia coli str. K-12 substr. MG1655"
+      ]
+    },
+    {
+      "study_accession": "PRJEB44490",
+      "runs": 103,
+      "fastq_bytes": 53958454526,
+      "base_count": 99751584470,
+      "strategies": [
+        "WGS"
+      ],
+      "scientific_names": [
+        "Escherichia coli str. K-12 substr. MG1655"
+      ]
+    },
+    {
+      "study_accession": "PRJNA832085",
+      "runs": 64,
+      "fastq_bytes": 51911805172,
+      "base_count": 126846344100,
+      "strategies": [
+        "ChIP-Seq"
+      ],
+      "scientific_names": [
+        "Escherichia coli str. K-12 substr. MG1655"
+      ]
+    },
+    {
+      "study_accession": "PRJNA40075",
+      "runs": 593,
+      "fastq_bytes": 50524933366,
+      "base_count": 97433173987,
+      "strategies": [
+        "WGS"
+      ],
+      "scientific_names": [
+        "Escherichia coli str. K-12 substr. MG1655",
+        "unidentified;Escherichia coli str. K-12 substr. MG1655"
+      ]
+    },
+    {
+      "study_accession": "PRJNA282598",
+      "runs": 70,
+      "fastq_bytes": 50221735610,
+      "base_count": 96727213825,
+      "strategies": [
+        "AMPLICON",
+        "RNA-Seq"
+      ],
+      "scientific_names": [
+        "Escherichia coli str. K-12 substr. MG1655"
+      ]
+    },
+    {
+      "study_accession": "PRJNA1097790",
+      "runs": 18,
+      "fastq_bytes": 50019605361,
+      "base_count": 106364707500,
+      "strategies": [
+        "RNA-Seq"
+      ],
+      "scientific_names": [
+        "Escherichia coli str. K-12 substr. MG1655"
+      ]
+    },
+    {
+      "study_accession": "PRJEB71589",
+      "runs": 106,
+      "fastq_bytes": 49466129314,
+      "base_count": 86286658432,
+      "strategies": [
+        "RNA-Seq",
+        "WGS"
+      ],
+      "scientific_names": [
+        "Escherichia coli str. K-12 substr. MG1655"
+      ]
+    },
+    {
+      "study_accession": "PRJNA884691",
+      "runs": 12,
+      "fastq_bytes": 48524911115,
+      "base_count": 177884609378,
+      "strategies": [
+        "OTHER",
+        "RNA-Seq"
+      ],
+      "scientific_names": [
+        "Escherichia coli str. K-12 substr. MG1655"
+      ]
+    },
+    {
+      "study_accession": "PRJNA357050",
+      "runs": 32,
+      "fastq_bytes": 48512384003,
+      "base_count": 63219098872,
+      "strategies": [
+        "ChIP-Seq"
+      ],
+      "scientific_names": [
+        "Escherichia coli str. K-12 substr. MG1655"
+      ]
+    },
+    {
+      "study_accession": "PRJNA218159",
+      "runs": 5,
+      "fastq_bytes": 48394943497,
+      "base_count": 74653296740,
+      "strategies": [
+        "OTHER"
+      ],
+      "scientific_names": [
+        "Escherichia coli str. K-12 substr. MG1655"
+      ]
+    },
+    {
+      "study_accession": "PRJNA999602",
+      "runs": 6,
+      "fastq_bytes": 46182268330,
+      "base_count": 160639837500,
+      "strategies": [
+        "RNA-Seq"
+      ],
+      "scientific_names": [
+        "Escherichia coli str. K-12 substr. MG1655"
+      ]
+    },
+    {
+      "study_accession": "PRJNA255655",
+      "runs": 34,
+      "fastq_bytes": 45583748431,
+      "base_count": 51685602187,
+      "strategies": [
+        "RNA-Seq"
+      ],
+      "scientific_names": [
+        "Escherichia coli str. K-12 substr. MG1655"
+      ]
+    },
+    {
+      "study_accession": "PRJNA993583",
+      "runs": 81,
+      "fastq_bytes": 44584433623,
+      "base_count": 72061668392,
+      "strategies": [
+        "WGS"
+      ],
+      "scientific_names": [
+        "Escherichia coli str. K-12 substr. MG1655"
+      ]
+    },
+    {
+      "study_accession": "PRJEB22567",
+      "runs": 38,
+      "fastq_bytes": 43045269277,
+      "base_count": 70057078275,
+      "strategies": [
+        "WGS"
+      ],
+      "scientific_names": [
+        "Escherichia coli str. K-12 substr. MG1655"
+      ]
+    },
+    {
+      "study_accession": "PRJNA1219971",
+      "runs": 45,
+      "fastq_bytes": 42993083695,
+      "base_count": 105485349900,
+      "strategies": [
+        "RNA-Seq"
+      ],
+      "scientific_names": [
+        "Escherichia coli str. K-12 substr. MG1655"
+      ]
+    },
+    {
+      "study_accession": "PRJEB38418",
+      "runs": 258,
+      "fastq_bytes": 42907785494,
+      "base_count": 116692100382,
+      "strategies": [
+        "AMPLICON"
+      ],
+      "scientific_names": [
+        "Escherichia coli str. K-12 substr. MG1655"
+      ]
+    },
+    {
+      "study_accession": "PRJNA1280264",
+      "runs": 6,
+      "fastq_bytes": 42758689093,
+      "base_count": 124213411800,
+      "strategies": [
+        "RNA-Seq"
+      ],
+      "scientific_names": [
+        "Escherichia coli str. K-12 substr. MG1655"
+      ]
+    },
+    {
+      "study_accession": "PRJEB86591",
+      "runs": 22,
+      "fastq_bytes": 42663592585,
+      "base_count": 78442968000,
+      "strategies": [
+        "WGS"
+      ],
+      "scientific_names": [
+        "Escherichia coli str. K-12 substr. MG1655"
+      ]
+    },
+    {
+      "study_accession": "PRJNA926794",
+      "runs": 420,
+      "fastq_bytes": 42386317811,
+      "base_count": 116605534658,
+      "strategies": [
+        "WGS"
+      ],
+      "scientific_names": [
+        "Escherichia coli str. K-12 substr. MG1655"
+      ]
+    },
+    {
+      "study_accession": "PRJNA252655",
+      "runs": 29,
+      "fastq_bytes": 42372221161,
+      "base_count": 47243040471,
+      "strategies": [
+        "WGS"
+      ],
+      "scientific_names": [
+        "Escherichia coli str. K-12 substr. MG1655"
+      ]
+    },
+    {
+      "study_accession": "PRJNA664333",
+      "runs": 10,
+      "fastq_bytes": 42246439434,
+      "base_count": 78371921700,
+      "strategies": [
+        "RNA-Seq"
+      ],
+      "scientific_names": [
+        "Escherichia coli str. K-12 substr. MG1655"
+      ]
+    },
+    {
+      "study_accession": "PRJNA397636",
+      "runs": 20,
+      "fastq_bytes": 42144069112,
+      "base_count": 51271016800,
+      "strategies": [
+        "RNA-Seq"
+      ],
+      "scientific_names": [
+        "Escherichia coli str. K-12 substr. MG1655"
+      ]
+    },
+    {
+      "study_accession": "PRJNA560549",
+      "runs": 41,
+      "fastq_bytes": 41936902220,
+      "base_count": 57521873850,
+      "strategies": [
+        "OTHER",
+        "RNA-Seq"
+      ],
+      "scientific_names": [
+        "Escherichia coli str. K-12 substr. MG1655"
+      ]
+    },
+    {
+      "study_accession": "PRJNA913892",
+      "runs": 84,
+      "fastq_bytes": 41495255761,
+      "base_count": 61718044878,
+      "strategies": [
+        "RNA-Seq"
+      ],
+      "scientific_names": [
+        "Escherichia coli str. K-12 substr. MG1655"
+      ]
+    },
+    {
+      "study_accession": "PRJNA1060668",
+      "runs": 12,
+      "fastq_bytes": 41219521192,
+      "base_count": 91978473866,
+      "strategies": [
+        "RNA-Seq"
+      ],
+      "scientific_names": [
+        "Escherichia coli str. K-12 substr. MG1655"
+      ]
+    },
+    {
+      "study_accession": "PRJNA789568",
+      "runs": 42,
+      "fastq_bytes": 40594429782,
+      "base_count": 51127703260,
+      "strategies": [
+        "RNA-Seq"
+      ],
+      "scientific_names": [
+        "Escherichia coli str. K-12 substr. MG1655"
+      ]
+    },
+    {
+      "study_accession": "PRJNA1268353",
+      "runs": 46,
+      "fastq_bytes": 40541413026,
+      "base_count": 151016683310,
+      "strategies": [
+        "RNA-Seq"
+      ],
+      "scientific_names": [
+        "Escherichia coli str. K-12 substr. MG1655"
+      ]
+    },
+    {
+      "study_accession": "PRJNA487814",
+      "runs": 53,
+      "fastq_bytes": 40469424292,
+      "base_count": 88741401786,
+      "strategies": [
+        "RNA-Seq"
+      ],
+      "scientific_names": [
+        "Escherichia coli str. K-12 substr. MG1655"
+      ]
+    },
+    {
+      "study_accession": "PRJNA896561",
+      "runs": 9,
+      "fastq_bytes": 37334595984,
+      "base_count": 54288651137,
+      "strategies": [
+        "ChIP-Seq"
+      ],
+      "scientific_names": [
+        "Escherichia coli str. K-12 substr. MG1655"
+      ]
+    },
+    {
+      "study_accession": "PRJEB10931",
+      "runs": 52,
+      "fastq_bytes": 37228240881,
+      "base_count": 66463848702,
+      "strategies": [
+        "RNA-Seq"
+      ],
+      "scientific_names": [
+        "Escherichia coli str. K-12 substr. MG1655"
+      ]
+    },
+    {
+      "study_accession": "PRJNA679299",
+      "runs": 24,
+      "fastq_bytes": 37149865851,
+      "base_count": 51555106671,
+      "strategies": [
+        "RNA-Seq"
+      ],
+      "scientific_names": [
+        "Escherichia coli str. K-12 substr. MG1655"
+      ]
+    },
+    {
+      "study_accession": "PRJNA1218468",
+      "runs": 9,
+      "fastq_bytes": 36943561408,
+      "base_count": 52825507500,
+      "strategies": [
+        "WGS"
+      ],
+      "scientific_names": [
+        "Escherichia coli str. K-12 substr. MG1655"
+      ]
+    },
+    {
+      "study_accession": "PRJNA1049601",
+      "runs": 84,
+      "fastq_bytes": 36907482006,
+      "base_count": 136286643201,
+      "strategies": [
+        "AMPLICON"
+      ],
+      "scientific_names": [
+        "Escherichia coli str. K-12 substr. MG1655"
+      ]
+    },
+    {
+      "study_accession": "PRJNA515929",
+      "runs": 12,
+      "fastq_bytes": 36794279236,
+      "base_count": 49930010136,
+      "strategies": [
+        "RIP-Seq",
+        "RNA-Seq"
+      ],
+      "scientific_names": [
+        "Escherichia coli str. K-12 substr. MG1655"
+      ]
+    },
+    {
+      "study_accession": "PRJNA354388",
+      "runs": 36,
+      "fastq_bytes": 36397937459,
+      "base_count": 62504357400,
+      "strategies": [
+        "OTHER",
+        "RNA-Seq"
+      ],
+      "scientific_names": [
+        "Escherichia coli str. K-12 substr. MG1655"
+      ]
+    },
+    {
+      "study_accession": "PRJNA1165952",
+      "runs": 30,
+      "fastq_bytes": 36354759256,
+      "base_count": 78266089098,
+      "strategies": [
+        "WGS"
+      ],
+      "scientific_names": [
+        "Escherichia coli str. K-12 substr. MG1655"
+      ]
+    },
+    {
+      "study_accession": "PRJNA721482",
+      "runs": 48,
+      "fastq_bytes": 36245293578,
+      "base_count": 63166458337,
+      "strategies": [
+        "OTHER"
+      ],
+      "scientific_names": [
+        "Escherichia coli str. K-12 substr. MG1655"
+      ]
+    },
+    {
+      "study_accession": "PRJNA679481",
+      "runs": 24,
+      "fastq_bytes": 36111791216,
+      "base_count": 56414354943,
+      "strategies": [
+        "RNA-Seq"
+      ],
+      "scientific_names": [
+        "Escherichia coli str. K-12 substr. MG1655"
+      ]
+    },
+    {
+      "study_accession": "PRJEB5802",
+      "runs": 12,
+      "fastq_bytes": 36003307517,
+      "base_count": 38257153818,
+      "strategies": [
+        "WGS"
+      ],
+      "scientific_names": [
+        "Escherichia coli str. K-12 substr. MG1655"
+      ]
+    },
+    {
+      "study_accession": "PRJEB44483",
+      "runs": 5,
+      "fastq_bytes": 35906083388,
+      "base_count": 73653082891,
+      "strategies": [
+        "WGS"
+      ],
+      "scientific_names": [
+        "Escherichia coli str. K-12 substr. MG1655"
+      ]
+    },
+    {
+      "study_accession": "PRJEB59215",
+      "runs": 260,
+      "fastq_bytes": 35762978055,
+      "base_count": 137358116159,
+      "strategies": [
+        "AMPLICON"
+      ],
+      "scientific_names": [
+        "Escherichia coli str. K-12 substr. MG1655"
+      ]
+    },
+    {
+      "study_accession": "PRJNA1125610",
+      "runs": 36,
+      "fastq_bytes": 35711727013,
+      "base_count": 84857602574,
+      "strategies": [
+        "RIP-Seq"
+      ],
+      "scientific_names": [
+        "Escherichia coli str. K-12 substr. MG1655"
+      ]
+    },
+    {
+      "study_accession": "PRJNA1254960",
+      "runs": 42,
+      "fastq_bytes": 35383617020,
+      "base_count": 90107094046,
+      "strategies": [
+        "RNA-Seq"
+      ],
+      "scientific_names": [
+        "Escherichia coli str. K-12 substr. MG1655"
+      ]
+    },
+    {
+      "study_accession": "PRJNA1049606",
+      "runs": 46,
+      "fastq_bytes": 34700531827,
+      "base_count": 139034084426,
+      "strategies": [
+        "AMPLICON"
+      ],
+      "scientific_names": [
+        "Escherichia coli str. K-12 substr. MG1655"
+      ]
+    },
+    {
+      "study_accession": "PRJNA1081799",
+      "runs": 1,
+      "fastq_bytes": 34583330637,
+      "base_count": 68224623600,
+      "strategies": [
+        "RNA-Seq"
+      ],
+      "scientific_names": [
+        "Escherichia coli str. K-12 substr. MG1655"
+      ]
+    },
+    {
+      "study_accession": "PRJNA504479",
+      "runs": 28,
+      "fastq_bytes": 34427107684,
+      "base_count": 64102506684,
+      "strategies": [
+        "RNA-Seq"
+      ],
+      "scientific_names": [
+        "Escherichia coli str. K-12 substr. MG1655"
+      ]
+    },
+    {
+      "study_accession": "PRJNA1051491",
+      "runs": 18,
+      "fastq_bytes": 34222738794,
+      "base_count": 53509077498,
+      "strategies": [
+        "ChIP-Seq",
+        "RNA-Seq"
+      ],
+      "scientific_names": [
+        "Escherichia coli str. K-12 substr. MG1655"
+      ]
+    },
+    {
+      "study_accession": "PRJEB86481",
+      "runs": 225,
+      "fastq_bytes": 33583929955,
+      "base_count": 37424333908,
+      "strategies": [
+        "WGS"
+      ],
+      "scientific_names": [
+        "Escherichia coli str. K-12 substr. MG1655"
+      ]
+    },
+    {
+      "study_accession": "PRJNA311041",
+      "runs": 10,
+      "fastq_bytes": 33310895492,
+      "base_count": 42104742900,
+      "strategies": [
+        "OTHER",
+        "RNA-Seq"
+      ],
+      "scientific_names": [
+        "Escherichia coli str. K-12 substr. MG1655"
+      ]
+    },
+    {
+      "study_accession": "PRJNA435926",
+      "runs": 28,
+      "fastq_bytes": 32725710469,
+      "base_count": 61650795738,
+      "strategies": [
+        "RNA-Seq"
+      ],
+      "scientific_names": [
+        "Escherichia coli str. K-12 substr. MG1655"
+      ]
+    },
+    {
+      "study_accession": "PRJNA679480",
+      "runs": 24,
+      "fastq_bytes": 32480481740,
+      "base_count": 47732473413,
+      "strategies": [
+        "RNA-Seq"
+      ],
+      "scientific_names": [
+        "Escherichia coli str. K-12 substr. MG1655"
+      ]
+    },
+    {
+      "study_accession": "PRJNA174425",
+      "runs": 8,
+      "fastq_bytes": 31822585685,
+      "base_count": 54058730800,
+      "strategies": [
+        "OTHER"
+      ],
+      "scientific_names": [
+        "Escherichia coli str. K-12 substr. MG1655"
+      ]
+    },
+    {
+      "study_accession": "PRJNA1088182",
+      "runs": 104,
+      "fastq_bytes": 31731281567,
+      "base_count": 88573536755,
+      "strategies": [
+        "WGS"
+      ],
+      "scientific_names": [
+        "Escherichia coli str. K-12 substr. MG1655"
+      ]
+    },
+    {
+      "study_accession": "PRJNA1068771",
+      "runs": 18,
+      "fastq_bytes": 31101896175,
+      "base_count": 102518853102,
+      "strategies": [
+        "RNA-Seq"
+      ],
+      "scientific_names": [
+        "Escherichia coli str. K-12 substr. MG1655"
+      ]
+    },
+    {
+      "study_accession": "PRJEB7301",
+      "runs": 8,
+      "fastq_bytes": 30726337934,
+      "base_count": 32987508531,
+      "strategies": [
+        "RNA-Seq"
+      ],
+      "scientific_names": [
+        "Escherichia coli str. K-12 substr. MG1655"
+      ]
+    },
+    {
+      "study_accession": "PRJNA286974",
+      "runs": 9,
+      "fastq_bytes": 30576623864,
+      "base_count": 48822783698,
+      "strategies": [
+        "RNA-Seq"
+      ],
+      "scientific_names": [
+        "Escherichia coli str. K-12 substr. MG1655"
+      ]
+    },
+    {
+      "study_accession": "PRJNA1173156",
+      "runs": 24,
+      "fastq_bytes": 30352731502,
+      "base_count": 42973593620,
+      "strategies": [
+        "OTHER",
+        "RNA-Seq"
+      ],
+      "scientific_names": [
+        "Escherichia coli str. K-12 substr. MG1655"
+      ]
+    }
+  ]
+}

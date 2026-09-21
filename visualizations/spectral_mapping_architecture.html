@@ -1,0 +1,934 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>生物分子词表 → 频谱空间：六种映射方法架构图</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+<style>
+  :root {
+    --bg: #0d1117;
+    --surface: #161b22;
+    --border: #30363d;
+    --text: #c9d1d9;
+    --text-secondary: #8b949e;
+    --accent1: #58a6ff;
+    --accent2: #f0883e;
+    --accent3: #3fb950;
+    --accent4: #d2a8ff;
+    --accent5: #ff7b72;
+    --accent6: #a5d6ff;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+  .container { max-width: 1200px; margin: 0 auto; padding: 2rem; }
+  h1 {
+    font-size: 2rem; text-align: center; margin-bottom: 0.5rem;
+    background: linear-gradient(135deg, #58a6ff, #d2a8ff, #f0883e);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .subtitle { text-align: center; color: var(--text-secondary); margin-bottom: 2.5rem; font-size: 1rem; }
+  h2 {
+    font-size: 1.4rem; margin: 2.5rem 0 1rem 0; padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--border); color: var(--accent1);
+  }
+  h3 {
+    font-size: 1.1rem; margin: 1.5rem 0 0.8rem 0;
+    color: var(--accent3);
+  }
+  .card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 12px; padding: 1.5rem; margin: 1.5rem 0;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  }
+  .card-header {
+    display: flex; align-items: center; gap: 0.8rem; margin-bottom: 1rem;
+  }
+  .method-badge {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 42px; height: 42px; border-radius: 50%;
+    font-weight: 700; font-size: 1.1rem; color: #fff;
+    flex-shrink: 0;
+  }
+  .m1 { background: linear-gradient(135deg, #58a6ff, #1f6feb); }
+  .m2 { background: linear-gradient(135deg, #3fb950, #238636); }
+  .m3 { background: linear-gradient(135deg, #d2a8ff, #8957e5); }
+  .m4 { background: linear-gradient(135deg, #f0883e, #c45b1a); }
+  .m5 { background: linear-gradient(135deg, #ff7b72, #da3633); }
+  .m6 { background: linear-gradient(135deg, #a5d6ff, #1f6feb); }
+  .card-title { font-size: 1.15rem; font-weight: 600; }
+  .card-desc { color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1rem; }
+  .mermaid {
+    background: #0d1117; border-radius: 8px; padding: 1rem;
+    display: flex; justify-content: center; overflow-x: auto;
+  }
+  .mermaid svg { max-width: 100%; }
+  .key-points {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 0.8rem; margin-top: 1rem;
+  }
+  .key-point {
+    background: rgba(88,166,255,0.08); border-left: 3px solid var(--accent1);
+    border-radius: 4px; padding: 0.6rem 1rem; font-size: 0.88rem;
+  }
+  .key-point.orange { background: rgba(240,136,62,0.08); border-left-color: var(--accent2); }
+  .key-point.green { background: rgba(63,185,80,0.08); border-left-color: var(--accent3); }
+  .key-point.purple { background: rgba(210,168,255,0.08); border-left-color: var(--accent4); }
+  .key-point.red { background: rgba(255,123,114,0.08); border-left-color: var(--accent5); }
+  .key-point.blue2 { background: rgba(165,214,255,0.08); border-left-color: var(--accent6); }
+  .formula {
+    background: rgba(88,166,255,0.06); border: 1px solid var(--border);
+    border-radius: 6px; padding: 0.8rem 1.2rem; margin: 0.8rem 0;
+    font-family: 'Cambria Math', 'Latin Modern Math', serif;
+    font-size: 1rem; text-align: center; overflow-x: auto;
+    white-space: nowrap;
+  }
+  .comparison-table {
+    width: 100%; border-collapse: collapse; margin: 1rem 0;
+    font-size: 0.85rem;
+  }
+  .comparison-table th {
+    background: var(--surface); color: var(--accent1); text-align: left;
+    padding: 0.6rem 0.8rem; border-bottom: 2px solid var(--border);
+  }
+  .comparison-table td {
+    padding: 0.5rem 0.8rem; border-bottom: 1px solid var(--border);
+  }
+  .comparison-table tr:hover td { background: rgba(88,166,255,0.04); }
+  .stars { color: #f0883e; }
+  .tag {
+    display: inline-block; padding: 0.15rem 0.5rem; border-radius: 10px;
+    font-size: 0.75rem; font-weight: 600; margin-right: 0.3rem;
+  }
+  .tag-blue { background: rgba(88,166,255,0.2); color: #58a6ff; }
+  .tag-green { background: rgba(63,185,80,0.2); color: #3fb950; }
+  .tag-orange { background: rgba(240,136,62,0.2); color: #f0883e; }
+  .tag-purple { background: rgba(210,168,255,0.2); color: #d2a8ff; }
+  hr { border: none; border-top: 1px solid var(--border); margin: 2rem 0; }
+  .nav { position: sticky; top: 0; z-index: 100; background: rgba(13,17,23,0.92);
+    backdrop-filter: blur(10px); padding: 0.8rem 0; border-bottom: 1px solid var(--border);
+    display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;
+  }
+  .nav a { color: var(--text-secondary); text-decoration: none; font-size: 0.85rem;
+    padding: 0.3rem 0.8rem; border-radius: 6px; transition: 0.2s; }
+  .nav a:hover { color: var(--accent1); background: rgba(88,166,255,0.1); }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="#overview">总览架构</a>
+  <a href="#method1">方法一</a>
+  <a href="#method2">方法二</a>
+  <a href="#method3">方法三</a>
+  <a href="#method4">方法四</a>
+  <a href="#method5">方法五</a>
+  <a href="#method6">方法六</a>
+  <a href="#pipeline">综合方案</a>
+  <a href="#comparison">对比总结</a>
+</nav>
+
+<div class="container">
+
+<h1>🔬 生物分子词表 → 频谱空间</h1>
+<p class="subtitle">六种符号-频谱映射方法的架构图解 · 从文本空间的离散 token 到频谱空间的复数信号</p>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- 总览图 -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<h2 id="overview">📐 总览架构：六种方法的全景关系</h2>
+
+<div class="card">
+<div class="mermaid">
+graph TB
+    subgraph INPUT["📥 输入层"]
+        VOCAB["🧬 生物分子词表<br/>━━━━━━━━━━<br/>· RNA种类 (~50K)<br/>· 蛋白质种类 (~80K)<br/>· 代谢物 (~5K)<br/>· 修饰状态变体"]
+        NET["🕸️ 分子互作网络<br/>━━━━━━━━━━<br/>· PPI · GRN<br/>· 代谢网络<br/>· 信号通路"]
+        TS["⏱️ 时序组学数据<br/>━━━━━━━━━━<br/>· pseudotime<br/>· RNA velocity<br/>· live-cell imaging"]
+        PHYS["⚖️ 物理先验<br/>━━━━━━━━━━<br/>· 化学计量比<br/>· 热力学约束<br/>· 通路层级"]
+    end
+
+    subgraph METHODS["⚙️ 六种映射方法"]
+        M1["🔵 方法一<br/>Sparse Spectral<br/>Dictionary Learning<br/>━━━━━━━<br/>谱字典 + 稀疏编码"]
+        M2["🟢 方法二<br/>Graph Fourier<br/>Transform<br/>━━━━━━━<br/>图拉普拉斯谱分解"]
+        M3["🟣 方法三<br/>Complex-Valued<br/>Embedding<br/>━━━━━━━<br/>幅度+相位复数嵌入"]
+        M4["🟠 方法四<br/>Multi-Resolution<br/>Wavelet<br/>━━━━━━━<br/>多尺度小波分解"]
+        M5["🔴 方法五<br/>Koopman<br/>Spectral Embedding<br/>━━━━━━━<br/>动力系统谱分解"]
+        M6["🔷 方法六<br/>Physics-Informed<br/>Spectral Prior<br/>━━━━━━━<br/>物理定律约束注入"]
+    end
+
+    subgraph SPECTRAL["📡 频谱空间（目标）"]
+        SPEC["💠 复数频谱空间 ℂᵈ<br/>━━━━━━━━━━<br/>· 幅度 = 分子活性强度<br/>· 相位 = 时间/位置信息<br/>· 频率 = 动力学模式"]
+        FREQ_ANAL["🔍 频域分析<br/>━━━━━━━━━━<br/>· 卷积混合（替代Attention）<br/>· 频域滤波<br/>· 相干性检测"]
+        INV["🔄 逆变换<br/>━━━━━━━━━━<br/>· IFFT → 时域重建<br/>· 预测下一token<br/>· O(N log N)复杂度"]
+    end
+
+    VOCAB --> M1
+    VOCAB --> M3
+    NET --> M2
+    NET --> M6
+    TS --> M4
+    TS --> M5
+    PHYS --> M6
+
+    M1 -->|"E(t)=Σα·φ"| SPEC
+    M2 -->|"Û=Uᵀx"| SPEC
+    M3 -->|"z=|z|·eⁱᶿ"| SPEC
+    M4 -->|"W(a,b)"| SPEC
+    M5 -->|"λᵏ·φₖ"| SPEC
+    M6 -->|"constraint loss"| SPEC
+
+    SPEC --> FREQ_ANAL
+    FREQ_ANAL --> INV
+    INV -->|"预测"| VOCAB
+
+    style INPUT fill:#0d1117,stroke:#30363d,color:#8b949e
+    style METHODS fill:#0d1117,stroke:#30363d,color:#8b949e
+    style SPECTRAL fill:#0d1117,stroke:#58a6ff,color:#c9d1d9
+    style M1 fill:#0d419d,stroke:#58a6ff,color:#fff
+    style M2 fill:#0d5c1a,stroke:#3fb950,color:#fff
+    style M3 fill:#3d1a6e,stroke:#d2a8ff,color:#fff
+    style M4 fill:#6e3a1a,stroke:#f0883e,color:#fff
+    style M5 fill:#6e1a1a,stroke:#ff7b72,color:#fff
+    style M6 fill:#1a3a5e,stroke:#a5d6ff,color:#fff
+    style SPEC fill:#0d2b4e,stroke:#58a6ff,color:#fff
+    style FREQ_ANAL fill:#0d2b4e,stroke:#58a6ff,color:#fff
+    style INV fill:#0d2b4e,stroke:#58a6ff,color:#fff
+</div>
+</div>
+
+<hr>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- 方法一 -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<h2 id="method1">🔵 方法一：Sparse Spectral Dictionary Learning（稀疏谱字典学习）</h2>
+
+<div class="card">
+  <div class="card-header">
+    <div class="method-badge m1">1</div>
+    <div>
+      <div class="card-title">核心思想：每个 token 不是单一向量，而是多个"谱原子"的稀疏组合</div>
+      <div class="card-desc">最贴近三篇论文的框架——用频域卷积替代注意力</div>
+    </div>
+  </div>
+
+  <div class="mermaid">
+graph LR
+    subgraph STEP1["Step 1: 定义共享谱字典"]
+        D["谱字典 D ∈ ℂ^(K×d)<br/>━━━━━━━━━━<br/>K=512~2048 个谱原子<br/>每个原子 = 特定频率的复指数基<br/>φ₁=低频全局模式 φ₂=中频 φ₃=高频细节"]
+    end
+
+    subgraph STEP2["Step 2: Token 稀疏编码"]
+        T1["token: TP53"]
+        T2["token: EGFR"]
+        T3["token: MYC"]
+        SPARSE["稀疏码向量 α ∈ ℂᴷ<br/>━━━━━━━━━━<br/>‖α‖₀ ≪ K (大多为0)"]
+    end
+
+    subgraph STEP3["Step 3: 频谱嵌入"]
+        EMB["E(token) = Σ αₖ · φₖ<br/>━━━━━━━━━━<br/>每个token获得<br/>独特的频谱签名"]
+    end
+
+    subgraph STEP4["Step 4: 序列→频谱"]
+        SEQ["序列: [TP53, MDM2, p21, ...]<br/>━━━━━━━━━━<br/>S(ω) = Σₜ E(t) · e⁻ⁱωᵗ"]
+    end
+
+    subgraph STEP5["Step 5: 频域混合"]
+        MIX["Y(ω) = S(ω) ⊙ H(ω)<br/>━━━━━━━━━━<br/>逐元素乘法替代 Attention<br/>O(N log N) 复杂度"]
+    end
+
+    subgraph STEP6["Step 6: 逆变换"]
+        INV["yₜ = IFFT[Y(ω)]<br/>━━━━━━━━━━<br/>恢复时域表示<br/>预测下一token"]
+    end
+
+    D --> SPARSE
+    T1 --> SPARSE
+    T2 --> SPARSE
+    T3 --> SPARSE
+    SPARSE --> EMB
+    EMB --> SEQ
+    SEQ --> MIX
+    MIX --> INV
+
+    style D fill:#0d419d,stroke:#58a6ff,color:#fff
+    style SPARSE fill:#0d2b4e,stroke:#58a6ff,color:#c9d1d9
+    style EMB fill:#0d2b4e,stroke:#58a6ff,color:#c9d1d9
+    style SEQ fill:#0d2b4e,stroke:#58a6ff,color:#c9d1d9
+    style MIX fill:#0d2b4e,stroke:#f0883e,color:#c9d1d9
+    style INV fill:#0d2b4e,stroke:#3fb950,color:#c9d1d9
+    style T1 fill:#161b22,stroke:#30363d,color:#c9d1d9
+    style T2 fill:#161b22,stroke:#30363d,color:#c9d1d9
+    style T3 fill:#161b22,stroke:#30363d,color:#c9d1d9
+  </div>
+
+  <div class="formula">
+    <b>核心公式：</b>
+    E(tᵢ) = Σₖ αᵢ,ₖ · φₖ &emsp;|&emsp;
+    S(ω) = Σₜ E(t_τ) · e⁻ⁱωτ &emsp;|&emsp;
+    Y(ω) = S(ω) ⊙ H(ω) &emsp;|&emsp;
+    yₜ = Σω Y(ω) · e⁺ⁱωt
+  </div>
+
+  <div class="key-points">
+    <div class="key-point">
+      <strong>🎯 生物学适配：</strong>稀疏性天然符合生物事实——任何通路只涉及少数分子，稀疏编码自动实现特征选择
+    </div>
+    <div class="key-point orange">
+      <strong>⚡ 效率优势：</strong>注意力 O(N²) → 频域卷积 O(N log N)，对长序列（完整通路）效率提升显著
+    </div>
+    <div class="key-point green">
+      <strong>🔗 可解释性：</strong>每个谱原子对应特定频率，可直接追溯哪个频率模式主导了预测
+    </div>
+  </div>
+</div>
+
+<hr>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- 方法二 -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<h2 id="method2">🟢 方法二：Graph Fourier Transform（图傅里叶变换）</h2>
+
+<div class="card">
+  <div class="card-header">
+    <div class="method-badge m2">2</div>
+    <div>
+      <div class="card-title">核心思想：利用分子互作网络的拓扑结构定义"图频率"，在图谱空间表示每个分子</div>
+      <div class="card-desc">将网络拓扑转化为频谱——零额外数据成本</div>
+    </div>
+  </div>
+
+  <div class="mermaid">
+graph TB
+    subgraph NET["🕸️ 生物分子互作网络"]
+        NODES["节点 = 词表中的分子<br/>━━━━━━━━━━<br/>· 蛋白质节点<br/>· RNA节点<br/>· 代谢物节点"]
+        EDGES["边 = 已知互作/调控<br/>━━━━━━━━━━<br/>· 物理互作 (PPI)<br/>· 调控关系 (GRN)<br/>· 代谢反应 (substrate→product)"]
+        NODES --- EDGES
+    end
+
+    subgraph LAP["📊 图拉普拉斯矩阵"]
+        LMAT["L = I − D⁻¹ᐟ² A D⁻¹ᐟ²<br/>━━━━━━━━━━<br/>对称半正定矩阵<br/>特征分解：L = U Λ Uᵀ"]
+        EIG["特征向量 U 的列 = 图傅里叶基<br/>━━━━━━━━━━<br/>· λ₀=0 → 全局平均(DC分量)<br/>· λ₁ 小 → 低频(大社区结构)<br/>· λₙ 大 → 高频(局部邻域细节)"]
+        LMAT --> EIG
+    end
+
+    subgraph SPECTRAL["💠 图频谱表示"]
+        PROJ["每个分子节点的图频谱：<br/>x̂ = Uᵀ · x_onehot<br/>━━━━━━━━━━<br/>低频分量 → 通路归属<br/>中频分量 → 功能模块<br/>高频分量 → 局部互作特征"]
+    end
+
+    subgraph RESULT["🎯 频谱空间的生物学意义"]
+        R1["同一通路内的分子<br/>→ 低频分量相近"]
+        R2["功能相似但不同通路<br/>→ 中频分量相近"]
+        R3["直接物理互作的分子对<br/>→ 高频分量相关"]
+    end
+
+    NET --> LAP
+    LAP --> SPECTRAL
+    SPECTRAL --> RESULT
+
+    style NET fill:#0d3320,stroke:#3fb950,color:#c9d1d9
+    style LAP fill:#0d5c1a,stroke:#3fb950,color:#fff
+    style SPECTRAL fill:#0d5c1a,stroke:#3fb950,color:#fff
+    style RESULT fill:#0d3320,stroke:#3fb950,color:#c9d1d9
+    style NODES fill:#161b22,stroke:#30363d,color:#c9d1d9
+    style EDGES fill:#161b22,stroke:#30363d,color:#c9d1d9
+    style LMAT fill:#161b22,stroke:#30363d,color:#c9d1d9
+    style EIG fill:#161b22,stroke:#30363d,color:#c9d1d9
+    style PROJ fill:#161b22,stroke:#30363d,color:#c9d1d9
+    style R1 fill:#161b22,stroke:#3fb950,color:#c9d1d9
+    style R2 fill:#161b22,stroke:#3fb950,color:#c9d1d9
+    style R3 fill:#161b22,stroke:#3fb950,color:#c9d1d9
+  </div>
+
+  <div class="formula">
+    <b>核心公式：</b>
+    L = I − D⁻¹ᐟ² A D⁻¹ᐟ² &emsp;|&emsp;
+    L = U Λ Uᵀ &emsp;|&emsp;
+    x̂ = Uᵀ x &emsp;|&emsp;
+    <b>图卷积：</b> g_θ ★ x = U g_θ(Λ) Uᵀ x
+  </div>
+
+  <div class="key-points">
+    <div class="key-point green">
+      <strong>🎯 零成本先验：</strong>直接利用 STRING、BioGRID、Reactome 等公开数据库的互作网络，无需额外标注
+    </div>
+    <div class="key-point green">
+      <strong>🔗 平滑性保证：</strong>"图上相近的分子频谱也相近"——自动实现了功能相似性约束
+    </div>
+    <div class="key-point green">
+      <strong>📐 可组合：</strong>图频谱 + 时间频谱 → 2D 频谱（图频率 × 时间频率），支持 2D 卷积处理
+    </div>
+  </div>
+</div>
+
+<hr>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- 方法三 -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<h2 id="method3">🟣 方法三：Complex-Valued Token Embedding（复数嵌入）</h2>
+
+<div class="card">
+  <div class="card-header">
+    <div class="method-badge m3">3</div>
+    <div>
+      <div class="card-title">核心思想：每个分子 = 一个复数向量，幅度编码"是什么"，相位编码"在哪/何时"</div>
+      <div class="card-desc">天然桥接离散符号与连续波动力学</div>
+    </div>
+  </div>
+
+  <div class="mermaid">
+graph LR
+    subgraph EMB["🔢 复数嵌入空间"]
+        TOKEN["token: TP53<br/>━━━━━━━━━━<br/>z ∈ ℂᵈ"]
+        MAG["📏 幅度 |z|<br/>━━━━━━━━━━<br/>· 分子类型/身份<br/>· 表达量/丰度<br/>· 功能强度"]
+        PHASE["📐 相位 ∠z<br/>━━━━━━━━━━<br/>· 序列位置<br/>· 时间状态<br/>· 振荡相位"]
+        TOKEN --> MAG
+        TOKEN --> PHASE
+    end
+
+    subgraph SEQ["⏱️ 序列化表示"]
+        S1["t=1: z₁ = E(TP53)"]
+        S2["t=2: z₂ = E(MDM2) · eⁱᶿ"]
+        S3["t=3: z₃ = E(p21) · e²ⁱᶿ"]
+        S4["..."]
+        S1 --> S2 --> S3 --> S4
+    end
+
+    subgraph SPEC["📡 序列频谱"]
+        SPECEQ["S(ω) = Σₜ zₜ · e⁻ⁱωᵗ<br/>━━━━━━━━━━<br/>|S(ω)| = 频谱幅度<br/>∠S(ω) = 频谱相位"]
+    end
+
+    subgraph ANALYSIS["🔍 频谱分析应用"]
+        A1["振荡同步性检测<br/>→ 识别共调控基因"]
+        A2["相位超前/滞后<br/>→ 推断因果调控方向"]
+        A3["幅度调制<br/>→ 追踪表达量动态"]
+    end
+
+    EMB --> SEQ
+    SEQ --> SPEC
+    SPEC --> ANALYSIS
+
+    style EMB fill:#2d1550,stroke:#d2a8ff,color:#c9d1d9
+    style SEQ fill:#2d1550,stroke:#d2a8ff,color:#c9d1d9
+    style SPEC fill:#3d1a6e,stroke:#d2a8ff,color:#fff
+    style ANALYSIS fill:#2d1550,stroke:#d2a8ff,color:#c9d1d9
+    style TOKEN fill:#161b22,stroke:#30363d,color:#c9d1d9
+    style MAG fill:#161b22,stroke:#d2a8ff,color:#f0883e
+    style PHASE fill:#161b22,stroke:#d2a8ff,color:#58a6ff
+    style S1 fill:#161b22,stroke:#30363d,color:#c9d1d9
+    style S2 fill:#161b22,stroke:#30363d,color:#c9d1d9
+    style S3 fill:#161b22,stroke:#30363d,color:#c9d1d9
+    style S4 fill:#161b22,stroke:#30363d,color:#c9d1d9
+    style SPECEQ fill:#161b22,stroke:#d2a8ff,color:#f0883e
+    style A1 fill:#161b22,stroke:#d2a8ff,color:#c9d1d9
+    style A2 fill:#161b22,stroke:#d2a8ff,color:#c9d1d9
+    style A3 fill:#161b22,stroke:#d2a8ff,color:#c9d1d9
+  </div>
+
+  <div class="formula">
+    <b>核心公式：</b>
+    z(tᵢ) ∈ ℂᵈ &emsp;|&emsp;
+    Z(τ) = z(t_τ) ⊙ eⁱᶿτ &emsp;|&emsp;
+    S(ω) = Σₜ Z(τ) · e⁻ⁱωτ &emsp;|&emsp;
+    相干性: C_AB(ω) = |⟨S_A(ω), S_B(ω)⟩| / (|S_A|·|S_B|)
+  </div>
+
+  <div class="key-points">
+    <div class="key-point purple">
+      <strong>🎯 直接对接实验数据：</strong>幅度可直接设为基因表达量/蛋白丰度，实现符号和连续值的统一
+    </div>
+    <div class="key-point purple">
+      <strong>⚡ 与 RoPE 同构：</strong>相位旋转机制已被大规模验证（LLaMA、GPT 等），可复用成熟实现
+    </div>
+    <div class="key-point purple">
+      <strong>🔗 量子力学类比：</strong>复数运算闭合于波动力学，天然适配 Schrödinger 式的生物物理建模
+    </div>
+  </div>
+</div>
+
+<hr>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- 方法四 -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<h2 id="method4">🟠 方法四：Multi-Resolution Wavelet Decomposition（多分辨率小波分解）</h2>
+
+<div class="card">
+  <div class="card-header">
+    <div class="method-badge m4">4</div>
+    <div>
+      <div class="card-title">核心思想：不同生物学过程在不同时间尺度运行——用小波同时捕获所有尺度</div>
+      <div class="card-desc">解决固定窗口 STFT 无法处理多尺度生物学的问题</div>
+    </div>
+  </div>
+
+  <div class="mermaid">
+graph TB
+    subgraph SCALES["⏱️ 生物学的多尺度特性"]
+        S_HIGH["🔬 高频 (ms~s)<br/>━━━━━━━━━━<br/>离子通道开闭<br/>酶催化构象变化<br/>配体-受体结合"]
+        S_MID["🧫 中频 (min~hr)<br/>━━━━━━━━━━<br/>信号转导级联<br/>转录因子入核<br/>mRNA翻译调控"]
+        S_LOW["🧬 低频 (hr~day)<br/>━━━━━━━━━━<br/>细胞分化<br/>表观遗传重塑<br/>细胞周期"]
+        S_HIGH --> S_MID --> S_LOW
+        linkStyle 0 stroke:#ff7b72
+        linkStyle 1 stroke:#f0883e
+    end
+
+    subgraph WAVELET["🌊 小波变换"]
+        DWT["离散小波变换 (DWT)<br/>━━━━━━━━━━<br/>W(a,b) = Σₜ E(t) · ψ((t−b)/a)<br/><br/>a = 尺度 (频率⁻¹)<br/>b = 平移 (位置)"]
+        LEVELS["小波分解层级<br/>━━━━━━━━━━<br/>Level 1 → 高频 (a=2)<br/>Level 2 → 中高频 (a=4)<br/>Level 3 → 中低频 (a=8)<br/>Level 4 → 低频 (a=16)"]
+        DWT --> LEVELS
+    end
+
+    subgraph RESULT["🎯 多分辨率频谱"]
+        R1["高频系数<br/>→ 酶催化事件"]
+        R2["中频系数<br/>→ 信号转导"]
+        R3["低频系数<br/>→ 细胞命运"]
+    end
+
+    SCALES --> WAVELET
+    WAVELET --> RESULT
+
+    style SCALES fill:#3d2000,stroke:#f0883e,color:#c9d1d9
+    style WAVELET fill:#6e3a1a,stroke:#f0883e,color:#fff
+    style RESULT fill:#3d2000,stroke:#f0883e,color:#c9d1d9
+    style S_HIGH fill:#161b22,stroke:#ff7b72,color:#ff7b72
+    style S_MID fill:#161b22,stroke:#f0883e,color:#f0883e
+    style S_LOW fill:#161b22,stroke:#3fb950,color:#3fb950
+    style DWT fill:#161b22,stroke:#f0883e,color:#f0883e
+    style LEVELS fill:#161b22,stroke:#f0883e,color:#c9d1d9
+    style R1 fill:#161b22,stroke:#ff7b72,color:#c9d1d9
+    style R2 fill:#161b22,stroke:#f0883e,color:#c9d1d9
+    style R3 fill:#161b22,stroke:#3fb950,color:#c9d1d9
+  </div>
+
+  <div class="formula">
+    <b>核心公式：</b>
+    W_ψ(a, b) = Σ_τ E(t_τ) · ψ((τ−b)/a) &emsp;|&emsp;
+    重建: E(t) = Σ_a Σ_b W(a,b) · ψ̃((τ−b)/a) &emsp;|&emsp;
+    <b>稀疏性：</b> 大多数生物过程只在特定尺度 a* 上有显著能量
+  </div>
+
+  <div class="key-points">
+    <div class="key-point orange">
+      <strong>🎯 精确匹配生物学：</strong>毫秒（离子通道）→ 分钟（信号转导）→ 小时（基因表达）的多尺度天然对齐
+    </div>
+    <div class="key-point orange">
+      <strong>📐 自定义母小波：</strong>可用已知通路的动力学常数（k_cat, K_m, τ_1/2）设计生物学引导的小波基
+    </div>
+    <div class="key-point orange">
+      <strong>🔗 稀疏性好：</strong>大多数过程只在 1~2 个尺度上有显著能量，小波系数自然稀疏
+    </div>
+  </div>
+</div>
+
+<hr>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- 方法五 -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<h2 id="method5">🔴 方法五：Koopman Spectral Embedding（库普曼算子谱嵌入）</h2>
+
+<div class="card">
+  <div class="card-header">
+    <div class="method-badge m5">5</div>
+    <div>
+      <div class="card-title">核心思想：将非线性细胞动力学提升到线性可观测空间，用谱分解完全描述系统演化</div>
+      <div class="card-desc">动力系统理论 × 深度学习——非线性到线性的优雅过渡</div>
+    </div>
+  </div>
+
+  <div class="mermaid">
+graph LR
+    subgraph NONLIN["🌀 原始非线性动力学"]
+        STATE1["细胞状态 xₜ<br/>━━━━━━━━━━<br/>分子浓度向量<br/>ℝⁿ (n=50K~200K)"]
+        EVOL["非线性演化<br/>━━━━━━━━━━<br/>xₜ₊₁ = F(xₜ)<br/>F 未知且高度非线性"]
+        STATE1 --> EVOL
+        EVOL -->|"下一时刻"| STATE1
+    end
+
+    subgraph KOOP["📐 Koopman 算子"]
+        LIFT["升维映射 g<br/>━━━━━━━━━━<br/>g: ℝⁿ → ℂᴺ<br/>将状态映射到复数可观测量"]
+        KOP_EQ["Kg(xₜ) = g(xₜ₊₁)<br/>━━━━━━━━━━<br/>K 是线性算子！<br/>在原空间非线性<br/>在g空间线性"]
+        LIFT --> KOP_EQ
+    end
+
+    subgraph SPECTRAL["📡 谱分解"]
+        EIGVAL["特征值 λₖ<br/>━━━━━━━━━━<br/>|λₖ|=1 → 周期模式<br/>|λₖ|<1 → 衰减模式<br/>λₖ 复数 → 阻尼振荡"]
+        EIGFUNC["特征函数 φₖ<br/>━━━━━━━━━━<br/>空间模式<br/>哪些分子协同变化"]
+        MODE["Koopman 模式 vₖ<br/>━━━━━━━━━━<br/>该模式在各分子<br/>上的投影权重"]
+        EIGVAL --- EIGFUNC --- MODE
+    end
+
+    subgraph RESULT["🎯 完整动力学描述"]
+        EQ["g(xₜ) = Σₖ λₖᵗ · φₖ(x₀) · vₖ<br/>━━━━━━━━━━<br/>每个分子的时间演化<br/>= 各个 Koopman 模式的叠加"]
+    end
+
+    NONLIN --> KOOP
+    KOOP --> SPECTRAL
+    SPECTRAL --> RESULT
+
+    style NONLIN fill:#3d1010,stroke:#ff7b72,color:#c9d1d9
+    style KOOP fill:#6e1a1a,stroke:#ff7b72,color:#fff
+    style SPECTRAL fill:#6e1a1a,stroke:#ff7b72,color:#fff
+    style RESULT fill:#3d1010,stroke:#ff7b72,color:#c9d1d9
+    style STATE1 fill:#161b22,stroke:#ff7b72,color:#c9d1d9
+    style EVOL fill:#161b22,stroke:#ff7b72,color:#ff7b72
+    style LIFT fill:#161b22,stroke:#ff7b72,color:#c9d1d9
+    style KOP_EQ fill:#161b22,stroke:#3fb950,color:#3fb950
+    style EIGVAL fill:#161b22,stroke:#d2a8ff,color:#d2a8ff
+    style EIGFUNC fill:#161b22,stroke:#58a6ff,color:#58a6ff
+    style MODE fill:#161b22,stroke:#f0883e,color:#f0883e
+    style EQ fill:#161b22,stroke:#3fb950,color:#c9d1d9
+  </div>
+
+  <div class="formula">
+    <b>核心公式：</b>
+    Kg(xₜ) = g(xₜ₊₁) &emsp;|&emsp;
+    Kφₖ = λₖ φₖ &emsp;|&emsp;
+    g(xₜ) = Σₖ λₖᵗ φₖ(x₀) vₖ &emsp;|&emsp;
+    <b>生物学翻译：</b>λₖ的幅角 = 振荡频率，|λₖ| = 衰减率
+  </div>
+
+  <div class="key-points">
+    <div class="key-point red">
+      <strong>🎯 动力系统第一性原理：</strong>从数据中自动发现支配细胞动力学的"自然模式"（慢变量、周期变量），无需手动设计
+    </div>
+    <div class="key-point red">
+      <strong>🔗 功能模块发现：</strong>每个 Koopman 特征函数 φₖ 自动识别一组协同变化的分子——即功能模块
+    </div>
+    <div class="key-point red">
+      <strong>📐 可预测：</strong>一旦获得谱分解，任意时刻的状态可以精确外推（在训练数据覆盖的模式内）
+    </div>
+  </div>
+</div>
+
+<hr>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- 方法六 -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<h2 id="method6">🔷 方法六：Physics-Informed Spectral Prior（物理先验引导的频谱分配）</h2>
+
+<div class="card">
+  <div class="card-header">
+    <div class="method-badge m6">6</div>
+    <div>
+      <div class="card-title">核心思想：用已知的生物化学/生物物理学定律直接约束频谱结构，不依赖纯数据学习</div>
+      <div class="card-desc">PINN 风格——在频谱字典学习中加入物理约束损失项</div>
+    </div>
+  </div>
+
+  <div class="mermaid">
+graph TB
+    subgraph PRIORS["⚖️ 六类物理先验"]
+        P1["🧪 化学计量比<br/>━━━━━━━━━━<br/>反应 A+B→C<br/>频谱幅度比 |E(A)|:|E(B)|:|E(C)| = 1:1:1"]
+        P2["⚡ 米氏动力学<br/>━━━━━━━━━━<br/>酶E+底物S→产物P<br/>E(E)和E(S)的相关性<br/>满足 v=Vmax[S]/(Km+[S])"]
+        P3["📊 质量守恒<br/>━━━━━━━━━━<br/>总频谱功率不变<br/>‖Sₜ₊₁‖² = ‖Sₜ‖²"]
+        P4["🔥 热力学<br/>━━━━━━━━━━<br/>频谱熵随时间单调增加<br/>H(Sₜ₊₁) ≥ H(Sₜ)"]
+        P5["🪜 通路层级<br/>━━━━━━━━━━<br/>上游分子→下游分子<br/>相位: ∠E(上游) > ∠E(下游)"]
+        P6["🏠 亚细胞定位<br/>━━━━━━━━━━<br/>核·质·膜·线粒体<br/>→ 不同频带分配"]
+    end
+
+    subgraph CONSTRAIN["🔧 约束注入机制"]
+        LOSS["物理约束损失函数<br/>━━━━━━━━━━<br/>L_phys = Σᵢ λᵢ · Lᵢ<br/><br/>L₁: ‖E(A)+E(B)−E(C)‖²<br/>L₂: 相位关系约束<br/>L₃: 功率守恒约束<br/>..."]
+    end
+
+    subgraph RESULT["🎯 物理一致的频谱空间"]
+        R1["频谱幅度比<br/>= 化学计量比"]
+        R2["通路上下游<br/>= 相位超前/滞后"]
+        R3["频谱总功率<br/>= 质量守恒"]
+    end
+
+    PRIORS --> CONSTRAIN
+    CONSTRAIN --> RESULT
+
+    style PRIORS fill:#0d1a30,stroke:#a5d6ff,color:#c9d1d9
+    style CONSTRAIN fill:#1a3a5e,stroke:#a5d6ff,color:#fff
+    style RESULT fill:#0d1a30,stroke:#a5d6ff,color:#c9d1d9
+    style P1 fill:#161b22,stroke:#3fb950,color:#3fb950
+    style P2 fill:#161b22,stroke:#f0883e,color:#f0883e
+    style P3 fill:#161b22,stroke:#58a6ff,color:#58a6ff
+    style P4 fill:#161b22,stroke:#ff7b72,color:#ff7b72
+    style P5 fill:#161b22,stroke:#d2a8ff,color:#d2a8ff
+    style P6 fill:#161b22,stroke:#a5d6ff,color:#a5d6ff
+    style LOSS fill:#161b22,stroke:#3fb950,color:#c9d1d9
+    style R1 fill:#161b22,stroke:#3fb950,color:#c9d1d9
+    style R2 fill:#161b22,stroke:#d2a8ff,color:#c9d1d9
+    style R3 fill:#161b22,stroke:#58a6ff,color:#c9d1d9
+  </div>
+
+  <div class="formula">
+    <b>核心公式：</b>
+    L_total = L_recon + L_phys &emsp;|&emsp;
+    L_phys = λ₁‖E(A)+E(B)−E(C)‖² + λ₂‖∠E(up)−∠E(down)−Δφ‖² + λ₃‖‖Sₜ‖²−‖Sₜ₊₁‖²‖
+  </div>
+
+  <div class="key-points">
+    <div class="key-point blue2">
+      <strong>🎯 对外推的保障：</strong>物理约束确保在未见过的扰动组合上，预测不违反基本定律——直接回应报告中 L4 "AI 根本局限"问题
+    </div>
+    <div class="key-point blue2">
+      <strong>🔗 与 PINN 对齐：</strong>完全遵循"已知区域机械论精确 + 未知区域数据平滑过渡"的混合范式
+    </div>
+    <div class="key-point blue2">
+      <strong>📐 灵活组合：</strong>六类先验可根据可用知识选择性启用，知识越多约束越强
+    </div>
+  </div>
+</div>
+
+<hr>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- 综合方案 -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<h2 id="pipeline">🏗️ 推荐综合方案：三阶段分层流水线</h2>
+
+<div class="card">
+  <div class="card-header">
+    <div style="font-size:1.5rem; margin-right:0.5rem">⚙️</div>
+    <div>
+      <div class="card-title">"图傅里叶初始化 + Koopman 约束 + 物理先验正则化 + 稀疏谱字典端到端学习"</div>
+      <div class="card-desc">六种方法不是互斥的——它们在不同阶段协同工作</div>
+    </div>
+  </div>
+
+  <div class="mermaid">
+graph TB
+    subgraph PHASE1["🔰 第一阶段：词表→频谱初始化（冷启动）"]
+        direction TB
+        P1_IN["📥 输入：因果过滤后的<br/>生物分子词表<br/>━━━━━━━━━━<br/>~50K-200K tokens"]
+        P1_M2["🟢 方法二<br/>图傅里叶变换<br/>━━━━━━━━━━<br/>利用PPI/GRN网络<br/>→ 初始图频谱坐标"]
+        P1_M5["🔴 方法五<br/>Koopman预分析<br/>━━━━━━━━━━<br/>利用pseudotime数据<br/>→ 识别慢变量/周期变量"]
+        P1_M6["🔷 方法六<br/>物理先验注入<br/>━━━━━━━━━━<br/>化学计量比·通路层级<br/>→ 硬约束初始化"]
+        P1_OUT["📤 输出：物理一致<br/>的初始频谱嵌入<br/>━━━━━━━━━━<br/>E₀(tᵢ) ∈ ℂᵈ"]
+        
+        P1_IN --> P1_M2
+        P1_IN --> P1_M5
+        P1_IN --> P1_M6
+        P1_M2 --> P1_OUT
+        P1_M5 --> P1_OUT
+        P1_M6 --> P1_OUT
+    end
+
+    subgraph PHASE2["🔄 第二阶段：端到端谱字典学习（训练）"]
+        direction TB
+        P2_IN["📥 输入：初始频谱嵌入 + 训练序列"]
+        P2_M1["🔵 方法一<br/>稀疏谱字典学习<br/>━━━━━━━━━━<br/>学习共享谱字典 D<br/>稀疏编码 α"]
+        P2_M4["🟠 方法四<br/>多分辨率小波头<br/>━━━━━━━━━━<br/>同时输出不同<br/>时间尺度的频谱分量"]
+        P2_M3["🟣 方法三<br/>复数嵌入精细化<br/>━━━━━━━━━━<br/>端到端优化幅度和相位"]
+        P2_LOSS["🎯 联合损失<br/>━━━━━━━━━━<br/>L = α·L_recon + β·L_physics<br/>+ γ·L_sparsity + δ·L_consistency"]
+        P2_OUT["📤 输出：精细化<br/>频谱字典 D*<br/>+ token频谱码 α*"]
+        
+        P2_IN --> P2_M1
+        P2_M1 --> P2_M4
+        P2_M4 --> P2_M3
+        P2_M3 --> P2_LOSS
+        P2_LOSS -->|"反向传播"| P2_M1
+        P2_LOSS --> P2_OUT
+    end
+
+    subgraph PHASE3["🚀 第三阶段：序列→频谱→时域 推理"]
+        direction TB
+        P3_IN["📥 输入：分子事件序列<br/>[TP53, MDM2, p21, CDK2, ...]"]
+        P3_STFT["📡 Complex STFT<br/>━━━━━━━━━━<br/>S(ω) = Σₜ E(t) · e⁻ⁱωᵗ"]
+        P3_CONV["⚡ 频域卷积混合<br/>━━━━━━━━━━<br/>Y(ω) = S(ω) ⊙ H(ω)<br/>替代 Attention! <br/>O(N log N)"]
+        P3_IFFT["🔄 IFFT 逆变换<br/>━━━━━━━━━━<br/>yₜ = Σω Y(ω) · e⁺ⁱωᵗ"]
+        P3_OUT["📤 输出：预测<br/>· 下一个分子事件<br/>· 浓度变化轨迹<br/>· 表型状态转换"]
+        
+        P3_IN --> P3_STFT
+        P3_STFT --> P3_CONV
+        P3_CONV --> P3_IFFT
+        P3_IFFT --> P3_OUT
+    end
+
+    P1_OUT --> P2_IN
+    P2_OUT --> P3_STFT
+
+    style PHASE1 fill:#0d1117,stroke:#3fb950,color:#3fb950
+    style PHASE2 fill:#0d1117,stroke:#f0883e,color:#f0883e
+    style PHASE3 fill:#0d1117,stroke:#58a6ff,color:#58a6ff
+    style P1_IN fill:#0d3320,stroke:#3fb950,color:#c9d1d9
+    style P1_OUT fill:#0d3320,stroke:#3fb950,color:#3fb950
+    style P2_IN fill:#3d2000,stroke:#f0883e,color:#c9d1d9
+    style P2_OUT fill:#3d2000,stroke:#f0883e,color:#f0883e
+    style P3_IN fill:#0d1a40,stroke:#58a6ff,color:#c9d1d9
+    style P3_OUT fill:#0d1a40,stroke:#58a6ff,color:#58a6ff
+    style P1_M2 fill:#0d5c1a,stroke:#3fb950,color:#ccffcc
+    style P1_M5 fill:#6e1a1a,stroke:#ff7b72,color:#ffcccc
+    style P1_M6 fill:#1a3a5e,stroke:#a5d6ff,color:#ccddff
+    style P2_M1 fill:#0d419d,stroke:#58a6ff,color:#ccddff
+    style P2_M4 fill:#6e3a1a,stroke:#f0883e,color:#ffddcc
+    style P2_M3 fill:#3d1a6e,stroke:#d2a8ff,color:#eeccff
+    style P2_LOSS fill:#161b22,stroke:#3fb950,color:#3fb950
+    style P3_STFT fill:#0d419d,stroke:#58a6ff,color:#c9d1d9
+    style P3_CONV fill:#3d2000,stroke:#f0883e,color:#f0883e
+    style P3_IFFT fill:#0d5c1a,stroke:#3fb950,color:#c9d1d9
+  </div>
+</div>
+
+<hr>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- 对比表 -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<h2 id="comparison">📊 六种方法对比总结</h2>
+
+<div class="card">
+<table class="comparison-table">
+<thead>
+<tr>
+  <th>方法</th>
+  <th>核心数学工具</th>
+  <th>输出形式</th>
+  <th>所需外部数据</th>
+  <th>生物学贴合度</th>
+  <th>实现难度</th>
+  <th>在流水线中的角色</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><span class="tag tag-blue">M1 谱字典</span></td>
+  <td>稀疏编码 + 复数基分解</td>
+  <td>E(t) = Σα·φ</td>
+  <td>序列数据</td>
+  <td><span class="stars">⭐⭐⭐⭐</span></td>
+  <td><span class="stars">⭐⭐⭐</span></td>
+  <td>第二阶段核心引擎</td>
+</tr>
+<tr>
+  <td><span class="tag tag-green">M2 图傅里叶</span></td>
+  <td>图拉普拉斯谱分解</td>
+  <td>x̂ = Uᵀx</td>
+  <td>互作网络（公开DB）</td>
+  <td><span class="stars">⭐⭐⭐⭐⭐</span></td>
+  <td><span class="stars">⭐⭐</span></td>
+  <td>第一阶段初始化</td>
+</tr>
+<tr>
+  <td><span class="tag tag-purple">M3 复数嵌入</span></td>
+  <td>复数向量 + 相位旋转</td>
+  <td>z = |z|·eⁱᶿ</td>
+  <td>序列数据</td>
+  <td><span class="stars">⭐⭐⭐⭐</span></td>
+  <td><span class="stars">⭐⭐</span></td>
+  <td>第二阶段精细化</td>
+</tr>
+<tr>
+  <td><span class="tag tag-orange">M4 多分辨率小波</span></td>
+  <td>离散小波变换</td>
+  <td>W(a,b)</td>
+  <td>时序数据</td>
+  <td><span class="stars">⭐⭐⭐⭐⭐</span></td>
+  <td><span class="stars">⭐⭐⭐</span></td>
+  <td>第二阶段多头输出</td>
+</tr>
+<tr>
+  <td><span class="tag" style="background:rgba(255,123,114,0.2);color:#ff7b72">M5 Koopman</span></td>
+  <td>Koopman 算子谱分解</td>
+  <td>λᵏ·φₖ·vₖ</td>
+  <td>时序数据（pseudotime）</td>
+  <td><span class="stars">⭐⭐⭐⭐⭐</span></td>
+  <td><span class="stars">⭐⭐⭐⭐</span></td>
+  <td>第一阶段模式发现</td>
+</tr>
+<tr>
+  <td><span class="tag tag-blue">M6 物理先验</span></td>
+  <td>约束优化 + 损失正则化</td>
+  <td>约束条件</td>
+  <td>生化知识库</td>
+  <td><span class="stars">⭐⭐⭐⭐⭐</span></td>
+  <td><span class="stars">⭐⭐⭐</span></td>
+  <td>全阶段约束注入</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<hr>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- 报告挑战对应 -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<h2>🔗 频谱方法如何回应报告中的六层挑战</h2>
+
+<div class="card">
+<div class="mermaid">
+graph LR
+    subgraph CHALLENGES["报告中的核心挑战"]
+        L1["L1 知识缺陷<br/>多数参数未测量"]
+        L2["L2 建模困难<br/>多尺度·随机·空间"]
+        L3["L3 数据不足<br/>扰动组合未覆盖"]
+        L4["L4 AI根本局限<br/>外推失败·因果混淆"]
+        L5["L5 评价困难<br/>无标准benchmark"]
+        L6["L6 工程限制<br/>训练成本高"]
+    end
+
+    subgraph SOLUTION["频谱方法的回应"]
+        S1["M6 物理先验约束<br/>已知定律作为硬约束"]
+        S2["M4小波 + M5 Koopman<br/>多尺度+非线性线性化"]
+        S3["M1稀疏字典 + M2图谱<br/>泛化到未见扰动组合"]
+        S4["频域可解释性<br/>频率=模式,相位=因果"]
+        S5["频谱重建误差<br/>客观可量化指标"]
+        S6["O(N log N) 频域卷积<br/>替代 O(N²) 注意力"]
+    end
+
+    L1 --> S1
+    L2 --> S2
+    L3 --> S3
+    L4 --> S4
+    L5 --> S5
+    L6 --> S6
+
+    style CHALLENGES fill:#0d1117,stroke:#ff7b72,color:#c9d1d9
+    style SOLUTION fill:#0d1117,stroke:#3fb950,color:#c9d1d9
+    style L1 fill:#6e1a1a,stroke:#ff7b72,color:#fff
+    style L2 fill:#6e1a1a,stroke:#ff7b72,color:#fff
+    style L3 fill:#6e3a1a,stroke:#f0883e,color:#fff
+    style L4 fill:#6e3a1a,stroke:#f0883e,color:#fff
+    style L5 fill:#5a4a10,stroke:#f0c000,color:#fff
+    style L6 fill:#0d5c1a,stroke:#3fb950,color:#fff
+    style S1 fill:#1a3a5e,stroke:#a5d6ff,color:#c9d1d9
+    style S2 fill:#0d3320,stroke:#3fb950,color:#c9d1d9
+    style S3 fill:#0d419d,stroke:#58a6ff,color:#c9d1d9
+    style S4 fill:#3d1a6e,stroke:#d2a8ff,color:#c9d1d9
+    style S5 fill:#0d5c1a,stroke:#3fb950,color:#c9d1d9
+    style S6 fill:#6e3a1a,stroke:#f0883e,color:#c9d1d9
+</div>
+</div>
+
+</div>
+
+<script>
+mermaid.initialize({
+  startOnLoad: true,
+  theme: 'dark',
+  themeVariables: {
+    primaryColor: '#1f6feb',
+    primaryTextColor: '#c9d1d9',
+    primaryBorderColor: '#30363d',
+    lineColor: '#484f58',
+    secondaryColor: '#161b22',
+    tertiaryColor: '#0d1117',
+    fontSize: '14px'
+  },
+  flowchart: {
+    useMaxWidth: true,
+    htmlLabels: true,
+    curve: 'basis',
+    padding: 15
+  }
+});
+</script>
+
+</body>
+</html>

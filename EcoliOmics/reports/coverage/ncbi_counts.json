@@ -1,0 +1,55 @@
+{
+  "source": "NCBI E-utilities",
+  "retrieved_at": "2026-09-14T10:30:08+00:00",
+  "api_key_used": false,
+  "counts": {
+    "sra_species": {
+      "database": "sra",
+      "term": "txid562[Organism:exp]",
+      "count": 630037,
+      "status": "ok"
+    },
+    "sra_mg1655": {
+      "database": "sra",
+      "term": "txid511145[Organism:exp]",
+      "count": 20475,
+      "status": "ok"
+    },
+    "bioproject_species": {
+      "database": "bioproject",
+      "term": "txid562[Organism:exp]",
+      "count": 16799,
+      "status": "ok"
+    },
+    "biosample_species": {
+      "database": "biosample",
+      "term": "txid562[Organism:exp]",
+      "count": 740661,
+      "status": "ok"
+    },
+    "assembly_species": {
+      "database": "assembly",
+      "term": "txid562[Organism:exp]",
+      "count": 452374,
+      "status": "ok"
+    },
+    "assembly_mg1655": {
+      "database": "assembly",
+      "term": "txid511145[Organism:exp]",
+      "count": 59,
+      "status": "ok"
+    },
+    "geo_species": {
+      "database": "gds",
+      "term": "txid562[Organism:exp]",
+      "count": 31445,
+      "status": "ok"
+    },
+    "geo_mg1655": {
+      "database": "gds",
+      "term": "txid511145[Organism:exp]",
+      "count": 7165,
+      "status": "ok"
+    }
+  }
+}

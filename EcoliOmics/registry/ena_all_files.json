@@ -1,0 +1,22 @@
+{
+  "source": "ENA Portal API",
+  "retrieved_at": "2026-09-14T11:27:11+00:00",
+  "query": "tax_tree(562)",
+  "fields": [
+    "run_accession",
+    "study_accession",
+    "sample_accession",
+    "tax_id",
+    "scientific_name",
+    "library_strategy",
+    "library_source",
+    "fastq_bytes",
+    "read_count",
+    "base_count",
+    "fastq_ftp",
+    "fastq_md5"
+  ],
+  "manifest": "manifests\\ena_all_files.tsv.gz",
+  "manifest_bytes": 51422950,
+  "manifest_sha256": "a7e12300bb1297feb5c7376d566b85f3eb5bdb2c7fbd32fde0772fc9acb614de"
+}

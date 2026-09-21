@@ -1,0 +1,25 @@
+{
+  "selected_at": "2026-09-14T11:13:05+00:00",
+  "selection_reason": "pilot_pipeline_smoke_test",
+  "runs": 7,
+  "files": 8,
+  "fastq_bytes": 197518621,
+  "studies": 5,
+  "by_strategy": {
+    "ChIP-Seq": {
+      "runs": 1,
+      "fastq_bytes": 22450650
+    },
+    "Tn-Seq": {
+      "runs": 4,
+      "fastq_bytes": 129863424
+    },
+    "ncRNA-Seq": {
+      "runs": 2,
+      "fastq_bytes": 45204547
+    }
+  },
+  "runs_manifest": "manifests\\download_queue\\pilot_smoke_small_runs.tsv",
+  "files_manifest": "manifests\\download_queue\\pilot_smoke_small_files.tsv",
+  "note": "Pilot data is for pipeline validation, not the scientific core matrix."
+}

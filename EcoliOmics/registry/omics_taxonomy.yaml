@@ -1,0 +1,67 @@
+version: 1
+snapshot_date: 2026-09-14
+classification_version: rule_v2_strategy_taxonomy_2026_09
+
+storage_layers:
+  L0:
+    purpose: metadata discovery and coverage
+    roots:
+      - manifests
+      - registry
+      - reports/coverage
+  L1:
+    purpose: selected core evidence and processed matrices
+    roots:
+      - raw/sequencing/MG1655
+      - raw/proteomics/PRIDE
+      - raw/metabolomics
+      - processed
+  L2:
+    purpose: species-wide assembly and pangenome catalog
+    roots:
+      - reference/universe
+  L3:
+    purpose: on-demand raw data not retained by default
+    roots:
+      - tmp
+
+omics:
+  genomics:
+    assays: [WGS, WGA, genome_finishing, validation]
+    layer: L1
+  transcriptomics:
+    assays: [RNA-Seq, ssRNA-seq, ncRNA-Seq, EST]
+    layer: L1
+  regulomics:
+    assays: [ChIP-Seq, RIP-Seq, SELEX, TF_binding]
+    layer: L1
+  translatomics:
+    assays: [Ribo-Seq, ribosome_profiling]
+    layer: L1
+  functional_genomics:
+    assays: [Tn-Seq, TraDIS, fitness]
+    layer: L1
+  methylomics:
+    assays: [Bisulfite-Seq, MeDIP-Seq, methylation_calls]
+    layer: L1
+  chromatin_accessibility:
+    assays: [ATAC-seq, MNase-Seq]
+    layer: L1
+  structural_genomics:
+    assays: [Hi-C, chromosome_conformation]
+    layer: L1
+  proteomics:
+    assays: [protein_identification, protein_quantification, PTM]
+    layer: L1
+  metabolomics:
+    assays: [LC-MS, GC-MS, NMR, metabolite_matrix]
+    layer: L1
+  fluxomics:
+    assays: [isotope_tracing, metabolic_flux]
+    layer: manual
+  interactomics:
+    assays: [PPI, protein_complex]
+    layer: manual
+  phenomics:
+    assays: [growth, stress_response, phenotype]
+    layer: manual

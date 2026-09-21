@@ -1,0 +1,14 @@
+{
+  "finished_at": "2026-09-14T11:14:46+00:00",
+  "queue": "manifests\\download_queue\\pilot_smoke_small_files.tsv",
+  "files": 8,
+  "counts": {
+    "skipped_verified": 1,
+    "downloaded": 7
+  },
+  "downloaded_bytes_by_status": {
+    "skipped_verified": 0,
+    "downloaded": 169019300
+  },
+  "downloaded_bytes": 169019300
+}

@@ -1,0 +1,15 @@
+{
+  "built_at": "2026-09-14T11:47:19+00:00",
+  "database": "manifests\\ecoli_catalog.sqlite",
+  "database_bytes": 841539584,
+  "run_manifests": [
+    "manifests\\ena_all_files.tsv.gz",
+    "manifests\\ena_mg1655_context.tsv.gz"
+  ],
+  "runs_loaded": 604829,
+  "files_manifest": "manifests\\ena_all_files.tsv.gz",
+  "files_loaded": 1141149,
+  "files_ineligible": 0,
+  "classifier_version": "rule_v2_strategy_taxonomy_2026_09",
+  "candidates": "see candidate_summary.tsv.gz"
+}

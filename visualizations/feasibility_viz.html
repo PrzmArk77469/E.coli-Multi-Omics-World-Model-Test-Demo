@@ -1,0 +1,603 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>三维信息空间·质点模型·元胞自动机 —— 可行性可视化</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+<style>
+:root {
+  --bg: #0d1117;
+  --surface: #161b22;
+  --border: #30363d;
+  --text: #c9d1d9;
+  --text-dim: #8b949e;
+  --green: #3fb950;
+  --yellow: #d2991d;
+  --orange: #db6d28;
+  --red: #f85149;
+  --blue: #58a6ff;
+  --purple: #a371f7;
+  --cyan: #39d2c0;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { 
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  background: var(--bg); color: var(--text); line-height: 1.6; padding: 20px;
+}
+h1 { text-align: center; font-size: 1.6em; margin-bottom: 8px; color: #fff; }
+h1 .sub { font-size: 0.5em; color: var(--text-dim); display: block; margin-top: 4px; }
+h2 { font-size: 1.15em; color: var(--blue); margin: 28px 0 12px; padding-bottom: 6px; border-bottom: 1px solid var(--border); }
+.tabs { display: flex; gap: 4px; margin: 16px 0; flex-wrap: wrap; }
+.tab-btn { 
+  padding: 8px 18px; border: 1px solid var(--border); border-radius: 6px 6px 0 0;
+  background: var(--surface); color: var(--text-dim); cursor: pointer; font-size: 0.9em;
+  transition: all 0.2s;
+}
+.tab-btn:hover { background: #1c2533; color: #fff; }
+.tab-btn.active { background: var(--blue); color: #fff; border-color: var(--blue); font-weight: 600; }
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+@media (max-width: 900px) { .grid-2 { grid-template-columns: 1fr; } }
+.card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 16px; }
+.card h3 { font-size: 0.95em; color: var(--cyan); margin-bottom: 10px; }
+.chart-wrap { position: relative; height: 320px; }
+.chart-wrap.tall { height: 420px; }
+.mermaid-wrap { background: #fff; border-radius: 6px; padding: 16px; overflow-x: auto; }
+.verdict { 
+  display: inline-block; padding: 3px 10px; border-radius: 12px; font-size: 0.8em; font-weight: 600;
+  margin-right: 6px;
+}
+.verdict.yes { background: #1a3a1a; color: var(--green); }
+.verdict.part { background: #3a2a0a; color: var(--yellow); }
+.verdict.no { background: #3a1a1a; color: var(--red); }
+.matrix { width: 100%; border-collapse: collapse; font-size: 0.85em; margin-top: 8px; }
+.matrix th { text-align: left; padding: 8px 10px; background: #1c2533; color: var(--text-dim); font-weight: 600; white-space: nowrap; }
+.matrix td { padding: 7px 10px; border-bottom: 1px solid var(--border); }
+.matrix tr:hover td { background: #1a2030; }
+.bar { height: 20px; border-radius: 4px; display: inline-block; min-width: 30px; }
+.bar.green { background: var(--green); }
+.bar.yellow { background: var(--yellow); }
+.bar.orange { background: var(--orange); }
+.bar.red { background: var(--red); }
+.legend { display: flex; gap: 16px; flex-wrap: wrap; margin: 10px 0; font-size: 0.82em; }
+.legend-item { display: flex; align-items: center; gap: 6px; }
+.legend-dot { width: 12px; height: 12px; border-radius: 3px; }
+.big-num { font-size: 2em; font-weight: 700; }
+.num-label { font-size: 0.75em; color: var(--text-dim); }
+.phase-card { border-left: 4px solid var(--blue); padding: 10px 14px; margin: 8px 0; background: #0d1a2d; border-radius: 0 6px 6px 0; }
+.phase-card.p1 { border-left-color: var(--green); }
+.phase-card.p2 { border-left-color: var(--yellow); }
+.phase-card.p3 { border-left-color: var(--purple); }
+ul { padding-left: 20px; }
+li { margin: 4px 0; font-size: 0.9em; }
+.callout { 
+  border-radius: 6px; padding: 14px 18px; margin: 14px 0; font-size: 0.88em;
+}
+.callout.info { background: #0d1a3a; border: 1px solid #1a3a6a; }
+.callout.warn { background: #3a1a0a; border: 1px solid #6a3a1a; }
+.callout.success { background: #0a2a1a; border: 1px solid #1a5a3a; }
+</style>
+</head>
+<body>
+
+<h1>🔬 三维信息空间 · 质点模型 · 元胞自动机<span class="sub">支持性辅助中间系统 —— 可行性全景可视化</span></h1>
+
+<!-- Tabs -->
+<div class="tabs">
+  <button class="tab-btn active" onclick="switchTab('arch')">🏗️ 系统架构</button>
+  <button class="tab-btn" onclick="switchTab('boundary')">🗺️ 可行边界</button>
+  <button class="tab-btn" onclick="switchTab('scale')">📊 规模与计算</button>
+  <button class="tab-btn" onclick="switchTab('methods')">⚙️ 方法对齐</button>
+  <button class="tab-btn" onclick="switchTab('challenges')">🧱 六层挑战</button>
+  <button class="tab-btn" onclick="switchTab('roadmap')">🛤️ 实施路线</button>
+</div>
+
+<!-- TAB 1: Architecture -->
+<div id="tab-arch" class="tab-panel active">
+  <h2>系统总体架构</h2>
+  <div class="mermaid-wrap">
+    <div class="mermaid">
+graph TD
+    subgraph INPUT["📥 输入层"]
+        VOCAB["词表 𝒱 ≈ 150K-200K tokens"]
+        SPEC["频谱签名 Φ(t) ∈ ℂᵈ"]
+        KB["结构生物学 + 发育生物学知识库"]
+    end
+    subgraph SPACE["🌐 三维信息空间"]
+        GRID["空间离散化（体素 / 自适应网格）"]
+        PM["质点集合 𝓟<br/>pᵢ = {id, x, y, z, t, state, Φ}"]
+        SPATIAL["空间索引（八叉树 / 空间哈希）"]
+    end
+    subgraph RULES["📐 规则引擎"]
+        CA["元胞自动机规则"]
+        BOID["Boid类集群规则"]
+        PSO["PSO类优化规则"]
+        PROB["概率规则引擎（知识库驱动）"]
+    end
+    subgraph EVOLUTION["⏳ 演化引擎"]
+        STEP["时间步进 Δt"]
+        INTERACT["质点互作计算"]
+        UPDATE["状态更新"]
+        LOG["轨迹记录"]
+    end
+    subgraph OUTPUT["📤 输出层"]
+        TRAJ["质点轨迹"]
+        EMERGENT["涌现行为"]
+        FEEDBACK["反馈至频谱模型"]
+    end
+    INPUT --> SPACE
+    SPACE --> RULES
+    RULES --> EVOLUTION
+    EVOLUTION --> OUTPUT
+    OUTPUT -.->|"在线学习"| RULES
+    OUTPUT -.->|"频谱精炼"| INPUT
+    </div>
+  </div>
+
+  <h2>在整体虚拟细胞模型中的定位</h2>
+  <div class="mermaid-wrap">
+    <div class="mermaid">
+graph LR
+    L1["层1<br/>词表 + 频谱签名<br/>✅ 已完成"] -->|"提供类型签名"| L2
+    L2["层2 ★<br/>三维质点·元胞自动机<br/>🟡 本报告探讨"] -->|"提供物理沙盒"| L3
+    L3["层3<br/>AI全细胞动态仿真<br/>⏳ 远期目标"]
+    style L2 fill:#d2991d,stroke:#fff,color:#000,stroke-width:3px
+    style L1 fill:#1a3a1a,stroke:#3fb950,color:#fff
+    style L3 fill:#0d1a3a,stroke:#58a6ff,color:#fff
+    </div>
+  </div>
+
+  <h2>频谱 ↔ 三维空间 双向信息流</h2>
+  <div class="mermaid-wrap">
+    <div class="mermaid">
+graph TD
+    subgraph TYPE["频谱空间（类型层）"]
+        PHI["Φ(t) 复数频谱签名"]
+        AMP["幅度 → 活性强度"]
+        PHA["相位 → 因果时序"]
+    end
+    subgraph INST["三维空间（实例层）"]
+        PARTICLES["质点行为"]
+        INTERACTIONS["互作统计量"]
+        TRAJECTORIES["轨迹模式"]
+    end
+    PHI -->|"下行：规则参数"| PARTICLES
+    INTERACTIONS -->|"上行：频谱精炼"| PHI
+    TRAJECTORIES -->|"上行：相位校准"| PHA
+    </div>
+  </div>
+</div>
+
+<!-- TAB 2: Feasibility Boundary -->
+<div id="tab-boundary" class="tab-panel">
+  <h2>可行边界地图</h2>
+  <div class="grid-2">
+    <div class="card">
+      <h3>✅ 明确可行</h3>
+      <ul>
+        <li>区室化三维空间（核/质/膜/细胞器）</li>
+        <li>100-1000种关键token × 10³-10⁴质点/类</li>
+        <li>代谢酶基于 k_cat / K_m 的概率规则</li>
+        <li>布朗运动 + Langevin动力学质点模型</li>
+        <li>异步概率元胞自动机规则引擎</li>
+        <li>频谱↔3D双向信息流</li>
+        <li>合成数据生成</li>
+        <li>单机/单GPU运行（10⁶质点）</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>🟡 原则可行（需非平凡工程）</h3>
+      <ul>
+        <li>覆盖全150K token类型</li>
+        <li>Boid启发相分离凝聚模拟</li>
+        <li>事件驱动覆盖小时级生物时间</li>
+        <li>GPU加速到10⁷质点</li>
+        <li>与MERFISH/seqFISH空间组学校准</li>
+      </ul>
+    </div>
+  </div>
+  <div class="grid-2" style="margin-top:16px;">
+    <div class="card" style="border-color: var(--red);">
+      <h3 style="color: var(--red);">🔴 当前不可行</h3>
+      <ul>
+        <li><strong>每分子建模</strong>（10⁹-10¹⁰质点）——计算·存储·时间步"不可能三角"</li>
+        <li><strong>纳米精确初始坐标</strong>——数据原则不存在</li>
+        <li><strong>fs–h全尺度覆盖</strong>——已知科学难题</li>
+        <li><strong>ncRNA机制规则</strong>——功能未知</li>
+        <li><strong>从头算精度</strong>——经典力场近似，量子效应被忽略</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>混合方案：推荐策略</h3>
+      <div class="callout success">
+        <strong>混合质点-浓度场方案</strong><br>
+        高丰度分子（水、ATP、代谢物）→ PDE浓度场<br>
+        低丰度关键分子（信号蛋白、TF、miRNA）→ 质点<br>
+        规模：~10⁴-10⁶ 质点，单机承载
+      </div>
+      <div class="chart-wrap">
+        <canvas id="boundaryChart"></canvas>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TAB 3: Scale & Computation -->
+<div id="tab-scale" class="tab-panel">
+  <h2>规模估算：从每分子到粗粒化</h2>
+  <div class="grid-2">
+    <div class="card">
+      <h3>一个人类细胞的分子数量级</h3>
+      <div class="chart-wrap tall">
+        <canvas id="scaleChart"></canvas>
+      </div>
+    </div>
+    <div class="card">
+      <h3>不同粗粒化方案的质点数</h3>
+      <table class="matrix">
+        <tr><th>策略</th><th>质点数</th><th>可行性</th></tr>
+        <tr><td>每分子建模</td><td><span class="big-num">10⁹-10¹⁰</span></td><td><span class="verdict no">不可行</span></td></tr>
+        <tr><td>超粒子(1:100)</td><td><span class="big-num">10⁷-10⁸</span></td><td><span class="verdict part">勉强</span></td></tr>
+        <tr><td>超粒子(1:1000)</td><td><span class="big-num">10⁶-10⁷</span></td><td><span class="verdict part">可行（GPU）</span></td></tr>
+        <tr><td style="background:#0a2a1a;">★ 混合方案</td><td style="background:#0a2a1a;"><span class="big-num" style="color:var(--green);">10⁴-10⁶</span></td><td><span class="verdict yes">推荐 ✓</span></td></tr>
+        <tr><td>区室平均</td><td><span class="big-num">10⁴-10⁵</span></td><td><span class="verdict yes">可行</span></td></tr>
+      </table>
+    </div>
+  </div>
+
+  <h2>存储与计算估算（混合方案，10⁶质点）</h2>
+  <div class="grid-2">
+    <div class="card">
+      <h3>每时间步存储</h3>
+      <div class="chart-wrap">
+        <canvas id="storageChart"></canvas>
+      </div>
+    </div>
+    <div class="card">
+      <h3>核心计算复杂度</h3>
+      <table class="matrix">
+        <tr><th>操作</th><th>算法</th><th>10⁶质点估算</th></tr>
+        <tr><td>空间索引更新</td><td>空间哈希 / 八叉树</td><td>~2×10⁷ ops</td></tr>
+        <tr><td>邻域搜索(r=10nm)</td><td>网格法 / Verlet列表</td><td>~10⁷-10⁸ ops</td></tr>
+        <tr><td>质点运动更新</td><td>Langevin</td><td>~10⁶ ops</td></tr>
+        <tr><td>互作判定</td><td>O(N × ⟨neighbors⟩)</td><td>~10⁸-10⁹ ops</td></tr>
+        <tr><td>状态转移</td><td>规则引擎</td><td>~10⁶-10⁷ ops</td></tr>
+      </table>
+      <div class="callout info" style="margin-top:12px;">
+        <strong>时间步约束</strong><br>
+        扩散主导系统：Δt ~ (Δx)²/(6D)，若 Δx=10nm, D=10μm²/s → Δt≈1.7μs<br>
+        ⚠️ 模拟1秒需~6×10⁵步 → 推荐：<strong>事件驱动</strong>或<strong>逻辑时间</strong>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TAB 4: Methods Alignment -->
+<div id="tab-methods" class="tab-panel">
+  <h2>CA / Boid / PSO 对生物分子系统的适用性</h2>
+  
+  <div class="grid-2">
+    <div class="card">
+      <h3>🧩 元胞自动机 (CA)</h3>
+      <table class="matrix">
+        <tr><th>CA特性</th><th>生物分子系统</th><th>对齐</th></tr>
+        <tr><td>离散格点</td><td>连续空间运动</td><td><span class="verdict part">需离散化</span></td></tr>
+        <tr><td>局部邻域规则</td><td>仅近邻分子直接互作</td><td><span class="verdict yes">完美对齐 ✓</span></td></tr>
+        <tr><td>同步更新</td><td>异步事件</td><td><span class="verdict part">改异步CA</span></td></tr>
+        <tr><td>简单状态</td><td>多维内部状态</td><td><span class="verdict part">扩为向量CA</span></td></tr>
+        <tr><td>确定规则</td><td>概率性事件</td><td><span class="verdict part">扩为概率CA</span></td></tr>
+      </table>
+      <div class="callout success">
+        ✅ <strong>总体适用</strong>。成功先例：反应-扩散CA、Cellular Potts模型(CompuCell3D)。
+      </div>
+    </div>
+    <div class="card">
+      <h3>🐦 Boid算法</h3>
+      <table class="matrix">
+        <tr><th>Boid规则</th><th>生物分子类比</th><th>对齐</th></tr>
+        <tr><td>分离</td><td>排除体积效应</td><td><span class="verdict yes">完美 ✓</span></td></tr>
+        <tr><td>对齐</td><td>分子马达定向运输</td><td><span class="verdict part">部分适用</span></td></tr>
+        <tr><td>凝聚</td><td>液-液相分离凝聚体</td><td><span class="verdict yes">惊人适用 ✓</span></td></tr>
+      </table>
+      <div class="callout success">
+        ✅ <strong>创新性类比</strong>。需重建规则集：结合/催化/降解/合成/排斥体积/趋化。
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-top:16px;">
+    <div class="card">
+      <h3>🔮 粒子群优化 (PSO)</h3>
+      <table class="matrix">
+        <tr><th>PSO概念</th><th>生物分子重解释</th><th>适用性</th></tr>
+        <tr><td>pbest（个体最优）</td><td>分子最低自由能构象</td><td><span class="verdict yes">物理合理 ✓</span></td></tr>
+        <tr><td>gbest（全局最优）</td><td>系统热力学平衡态 / 稳态吸引子</td><td><span class="verdict yes">合理 ✓</span></td></tr>
+        <tr><td>速度更新</td><td>Langevin动力学（涨落-耗散定理）</td><td><span class="verdict yes">理论完备 ✓</span></td></tr>
+        <tr><td>目标函数</td><td>自由能景观</td><td><span class="verdict yes">统计力学基础 ✓</span></td></tr>
+      </table>
+      <div class="callout warn">
+        ⚠️ PSO可作<strong>计算启发式</strong>加速寻找稳态构型，但<strong>不建议作为核心动力学引擎</strong>——真正分子动力学由Langevin方程描述。
+      </div>
+    </div>
+  </div>
+
+  <h2>综合推荐：混合计算范式</h2>
+  <div class="mermaid-wrap">
+    <div class="mermaid">
+graph LR
+    CA2["核心引擎<br/>向量概率CA<br/>（异步更新）"] --> MIX
+    LANG["质点运动<br/>Langevin动力学<br/>（布朗+主动力+排除体积）"] --> MIX
+    BOID2["集群行为<br/>Boid启发规则<br/>（相分离+定向运输）"] --> MIX
+    PSO2["稳态分析<br/>PSO启发<br/>（自由能极小搜索）"] --> MIX
+    PDE["全局约束<br/>反应-扩散PDE<br/>（浓度场连续极限）"] --> MIX
+    MIX["混合计算范式"]
+    </div>
+  </div>
+</div>
+
+<!-- TAB 5: Six-Layer Challenges -->
+<div id="tab-challenges" class="tab-panel">
+  <h2>六层挑战的重评估</h2>
+  <div class="chart-wrap tall">
+    <canvas id="challengesChart"></canvas>
+  </div>
+  <div class="grid-2" style="margin-top:16px;">
+    <div class="card">
+      <h3>三维质点系统对各层挑战的影响</h3>
+      <table class="matrix">
+        <tr><th>挑战层</th><th>原严重度</th><th>三维系统影响</th></tr>
+        <tr><td>L1 知识缺陷</td><td>🔴 根本性</td><td>❌ 不解决——仍需已知参数</td></tr>
+        <tr><td>L2 建模困难</td><td>🔴 根本性</td><td>✅ 部分解决——提供多尺度空间框架</td></tr>
+        <tr><td>L3 数据不足</td><td>🟠 部分解决</td><td>✅ 成为解决者——生成合成训练数据</td></tr>
+        <tr><td>L4 AI局限</td><td>🟠 部分解决</td><td>✅ 显著改善——物理沙盒约束防非物理输出</td></tr>
+        <tr><td>L5 评价困难</td><td>🟡 可解决</td><td>✅ 改善——新量化指标（空间精度、守恒律违反度）</td></tr>
+        <tr><td>L6 工程限制</td><td>🟢 已可解决</td><td>🟡 基本不变——增加了新系统</td></tr>
+      </table>
+    </div>
+    <div class="card">
+      <h3>新评价指标体系</h3>
+      <table class="matrix">
+        <tr><th>指标</th><th>定义</th><th>可量化性</th></tr>
+        <tr><td>空间排布精度</td><td>模拟分布 vs 成像数据(MERFISH)</td><td><span class="verdict yes">高</span></td></tr>
+        <tr><td>互作频率保真度</td><td>模拟 vs Co-IP/MS实验</td><td><span class="verdict yes">高</span></td></tr>
+        <tr><td>动力学一致性</td><td>模拟浓度时序 vs 活细胞成像</td><td><span class="verdict yes">高</span></td></tr>
+        <tr><td>守恒律违反度</td><td>质量/电荷/能量不守恒程度</td><td><span class="verdict yes">完美</span></td></tr>
+        <tr><td>涌现模式匹配</td><td>模拟斑图 vs 真实斑图(Min系统)</td><td><span class="verdict part">中</span></td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- TAB 6: Roadmap -->
+<div id="tab-roadmap" class="tab-panel">
+  <h2>三阶段渐进式构建路线</h2>
+  
+  <div class="phase-card p1">
+    <h3>🟢 阶段0：MVP（2-3个月）</h3>
+    <div class="grid-2">
+      <div>
+        <table class="matrix">
+          <tr><td>空间</td><td>球形细胞，3区室，体素~50nm</td></tr>
+          <tr><td>质点</td><td><strong>20种token × 100质点</strong></td></tr>
+          <tr><td>规则</td><td>布朗扩散 + 简单绑/解离（~30条）</td></tr>
+          <tr><td>时间</td><td>逻辑时间步，~1000步</td></tr>
+        </table>
+      </div>
+      <div>
+        <strong>目标：</strong>验证全流水线技术可行性<br><br>
+        <strong>输入：</strong>词表→频谱→空间排布<br>
+        <strong>过程：</strong>规则驱动→轨迹记录<br>
+        <strong>输出：</strong>反馈至频谱模型
+      </div>
+    </div>
+  </div>
+
+  <div class="phase-card p2">
+    <h3>🟡 阶段1：核心通路扩展（6-12个月）</h3>
+    <div class="grid-2">
+      <div>
+        <table class="matrix">
+          <tr><td>空间</td><td>+ER/线粒体/高尔基体，分辨率~20nm</td></tr>
+          <tr><td>质点</td><td><strong>200-500种token × 10²-10³</strong></td></tr>
+          <tr><td>规则</td><td>3-5条信号通路 + 中心代谢 + 转录/翻译（~200条）</td></tr>
+          <tr><td>时间</td><td>事件驱动（Gillespie类），覆盖~分钟级</td></tr>
+        </table>
+      </div>
+      <div>
+        <strong>目标：</strong>生成有生物学意义的模拟数据<br><br>
+        <strong>校准：</strong>与公开空间组学/活细胞成像数据交叉验证<br>
+        <strong>核心通路：</strong>以代谢网络为起点（数据最丰富）
+      </div>
+    </div>
+  </div>
+
+  <div class="phase-card p3">
+    <h3>🟣 阶段2：规模化与频谱集成（1-2年）</h3>
+    <div class="grid-2">
+      <div>
+        <table class="matrix">
+          <tr><td>空间</td><td>自适应分辨率，~10⁶体素</td></tr>
+          <tr><td>质点</td><td><strong>2000-5000种token，~10⁶质点</strong></td></tr>
+          <tr><td>规则</td><td>概率规则知识库（~2000条），支持在线更新</td></tr>
+          <tr><td>运行</td><td>GPU加速，单机/小集群</td></tr>
+        </table>
+      </div>
+      <div>
+        <strong>目标：</strong>作为AI模型的"物理沙盒"<br><br>
+        <strong>集成：</strong>频谱↔3D双向闭环<br>
+        &nbsp;&nbsp;Φ(t)→规则参数（下行）<br>
+        &nbsp;&nbsp;轨迹统计→Φ(t)精炼（上行）<br>
+        <strong>产出：</strong>定期生成合成数据供给AI训练
+      </div>
+    </div>
+  </div>
+
+  <h2>路线时间线</h2>
+  <div class="chart-wrap tall">
+    <canvas id="roadmapChart"></canvas>
+  </div>
+
+  <h2>最终建议</h2>
+  <div class="callout success">
+    <strong>✅ 立即启动阶段0 MVP</strong>——低风险，高信息收益，快速验证技术可行性。<br>
+    <strong>✅ 以代谢网络为核心起点</strong>——酶动力学数据最丰富、确定性最高。<br>
+    <strong>✅ 接受统计性排布</strong>——放弃纳米精确坐标的幻想，用统计分布+区室约束。<br>
+    <strong>✅ 采纳混合质点-浓度场方案</strong>——高丰度分子用PDE浓度场，关键分子用质点。<br>
+    <strong>✅ 频谱签名作为规则调制器</strong>——两个架构间最自然的接口。<br>
+    <strong>✅ 建立与实验数据的校准循环</strong>——空间组学+活细胞成像作为ground truth。<br>
+    <strong>✅ 明确辅助定位</strong>——是沙盒/合成数据源/因果校验层，非完整虚拟细胞模型。
+  </div>
+</div>
+
+<script>
+// === Chart.js instances ===
+function drawCharts() {
+  // Boundary Chart
+  new Chart(document.getElementById('boundaryChart'), {
+    type: 'doughnut',
+    data: {
+      labels: ['明确可行', '原则可行', '不可行'],
+      datasets: [{
+        data: [45, 30, 25],
+        backgroundColor: ['#3fb950', '#d2991d', '#f85149'],
+        borderColor: '#161b22',
+        borderWidth: 3
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { labels: { color: '#c9d1d9' } } }
+    }
+  });
+
+  // Scale Chart
+  new Chart(document.getElementById('scaleChart'), {
+    type: 'bar',
+    data: {
+      labels: ['水', '蛋白质', 'ATP', '代谢物', '脂质', '核糖体', 'mRNA', 'tRNA'],
+      datasets: [{
+        label: '每细胞分子数（对数）',
+        data: [10.6, 9.5, 9.3, 8.3, 9.7, 6.5, 5.6, 6.5],
+        backgroundColor: [
+          '#58a6ff','#f85149','#3fb950','#d2991d','#a371f7',
+          '#39d2c0','#db6d28','#8b949e'
+        ],
+        borderColor: '#161b22', borderWidth: 1
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      indexAxis: 'y',
+      scales: {
+        x: { title: { display: true, text: 'log₁₀(分子数)', color: '#8b949e' }, ticks: { color: '#8b949e' }, grid: { color: '#21262d' } },
+        y: { ticks: { color: '#c9d1d9' }, grid: { display: false } }
+      },
+      plugins: {
+        legend: { display: false },
+        tooltip: { callbacks: { label: ctx => '≈ 10^' + ctx.raw.toFixed(1) + ' 个分子' } }
+      }
+    }
+  });
+
+  // Storage Chart
+  new Chart(document.getElementById('storageChart'), {
+    type: 'bar',
+    data: {
+      labels: ['分子ID', 'XYZ位置', '速度向量', '内部状态', '频谱指针', '时间戳'],
+      datasets: [{
+        label: '每时间步 (MB)',
+        data: [4, 12, 12, 4, 4, 8],
+        backgroundColor: ['#58a6ff','#3fb950','#d2991d','#a371f7','#39d2c0','#db6d28'],
+        borderColor: '#161b22', borderWidth: 1
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { labels: { color: '#c9d1d9' } },
+        subtitle: { display: true, text: '10⁶质点 × 每步总计 ≈ 44 MB', color: '#8b949e' }
+      },
+      scales: {
+        y: { title: { display: true, text: 'MB', color: '#8b949e' }, ticks: { color: '#8b949e' }, grid: { color: '#21262d' } },
+        x: { ticks: { color: '#c9d1d9' }, grid: { display: false } }
+      }
+    }
+  });
+
+  // Challenges Radar
+  new Chart(document.getElementById('challengesChart'), {
+    type: 'radar',
+    data: {
+      labels: ['L1 知识缺陷', 'L2 建模困难', 'L3 数据不足', 'L4 AI局限', 'L5 评价困难', 'L6 工程限制'],
+      datasets: [{
+        label: '原六层报告严重度',
+        data: [95, 90, 70, 65, 50, 25],
+        borderColor: '#f85149', backgroundColor: 'rgba(248,81,73,0.15)',
+        borderWidth: 2, pointBackgroundColor: '#f85149'
+      }, {
+        label: '三维系统介入后',
+        data: [90, 60, 35, 30, 20, 25],
+        borderColor: '#3fb950', backgroundColor: 'rgba(63,185,80,0.15)',
+        borderWidth: 2, pointBackgroundColor: '#3fb950'
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      scales: {
+        r: {
+          beginAtZero: true, max: 100,
+          ticks: { display: false },
+          pointLabels: { color: '#c9d1d9', font: { size: 11 } },
+          grid: { color: '#21262d' },
+          angleLines: { color: '#21262d' }
+        }
+      },
+      plugins: { legend: { labels: { color: '#c9d1d9' } } }
+    }
+  });
+
+  // Roadmap Chart (Gantt-like)
+  new Chart(document.getElementById('roadmapChart'), {
+    type: 'bar',
+    data: {
+      labels: ['阶段0 MVP', '阶段1 核心通路', '阶段2 规模化集成'],
+      datasets: [{
+        label: '工期（月）',
+        data: [3, 9, 18],
+        backgroundColor: ['#3fb950', '#d2991d', '#a371f7'],
+        borderColor: '#161b22', borderWidth: 1
+      }]
+    },
+    options: {
+      indexAxis: 'y',
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { labels: { color: '#c9d1d9' } },
+        tooltip: { callbacks: { label: ctx => ctx.raw + ' 个月' } }
+      },
+      scales: {
+        x: { title: { display: true, text: '月数', color: '#8b949e' }, ticks: { color: '#8b949e' }, grid: { color: '#21262d' }, max: 24 },
+        y: { ticks: { color: '#c9d1d9', font: { size: 13 } }, grid: { display: false } }
+      }
+    }
+  });
+}
+
+// Tab switching
+function switchTab(name) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  event.target.classList.add('active');
+}
+
+// Init
+mermaid.initialize({ startOnLoad: true, theme: 'neutral', securityLevel: 'loose' });
+setTimeout(drawCharts, 300);
+</script>
+
+</body>
+</html>

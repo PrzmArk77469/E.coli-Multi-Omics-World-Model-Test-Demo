@@ -1,0 +1,237 @@
+{
+  "generated_at": "2026-09-14T13:52:14+00:00",
+  "queues": [
+    {
+      "prefix": "core_mg1655_batch01",
+      "description": "ENA MG1655 sequencing",
+      "queue": "manifests\\download_queue\\core_mg1655_batch01_files.tsv",
+      "files_expected": 64,
+      "bytes_expected": 4794168235,
+      "files_present_and_complete": 64,
+      "bytes_present": 4794168235,
+      "files_missing": 0,
+      "files_zero_byte": 0,
+      "files_size_mismatch": 0,
+      "unique_runs": 45,
+      "unique_studies": 30,
+      "omics_file_counts": {
+        "chromatin_accessibility": 4,
+        "functional_genomics": 7,
+        "genomics": 9,
+        "methylomics": 8,
+        "regulomics": 11,
+        "structural_genomics": 6,
+        "transcriptomics": 19
+      },
+      "status_counts": {
+        "downloaded": 1,
+        "skipped_verified": 63
+      },
+      "status_note": ""
+    },
+    {
+      "prefix": "core_mg1655_batch02",
+      "description": "ENA MG1655 sequencing",
+      "queue": "manifests\\download_queue\\core_mg1655_batch02_files.tsv",
+      "files_expected": 68,
+      "bytes_expected": 4856039912,
+      "files_present_and_complete": 68,
+      "bytes_present": 4856039912,
+      "files_missing": 0,
+      "files_zero_byte": 0,
+      "files_size_mismatch": 0,
+      "unique_runs": 46,
+      "unique_studies": 31,
+      "omics_file_counts": {
+        "chromatin_accessibility": 4,
+        "functional_genomics": 7,
+        "genomics": 11,
+        "methylomics": 5,
+        "regulomics": 17,
+        "structural_genomics": 6,
+        "transcriptomics": 18
+      },
+      "status_counts": {
+        "downloaded": 42,
+        "skipped_verified": 26
+      },
+      "status_note": ""
+    },
+    {
+      "prefix": "core_mg1655_translatomics01",
+      "description": "ENA MG1655 translatomics",
+      "queue": "manifests\\download_queue\\core_mg1655_translatomics01_files.tsv",
+      "files_expected": 8,
+      "bytes_expected": 1270614243,
+      "files_present_and_complete": 8,
+      "bytes_present": 1270614243,
+      "files_missing": 0,
+      "files_zero_byte": 0,
+      "files_size_mismatch": 0,
+      "unique_runs": 5,
+      "unique_studies": 3,
+      "omics_file_counts": {
+        "translatomics": 8
+      },
+      "status_counts": {
+        "skipped_verified": 8
+      },
+      "status_note": ""
+    },
+    {
+      "prefix": "pride_processed_batch01",
+      "description": "PRIDE processed proteomics",
+      "queue": "manifests\\download_queue\\pride_processed_batch01_files.tsv",
+      "files_expected": 20,
+      "bytes_expected": 21399003,
+      "files_present_and_complete": 20,
+      "bytes_present": 21399003,
+      "files_missing": 0,
+      "files_zero_byte": 0,
+      "files_size_mismatch": 0,
+      "unique_runs": 0,
+      "unique_studies": 20,
+      "omics_file_counts": {
+        "RESULT": 1,
+        "SEARCH": 19
+      },
+      "status_counts": {
+        "size_verified": 20
+      },
+      "status_note": "Original status file was overwritten by a later PRIDE batch; counts are derived from current local size verification."
+    },
+    {
+      "prefix": "pride_processed_batch02",
+      "description": "PRIDE processed proteomics",
+      "queue": "manifests\\download_queue\\pride_processed_batch02_files.tsv",
+      "files_expected": 300,
+      "bytes_expected": 2064461519,
+      "files_present_and_complete": 300,
+      "bytes_present": 2064461519,
+      "files_missing": 0,
+      "files_zero_byte": 0,
+      "files_size_mismatch": 0,
+      "unique_runs": 0,
+      "unique_studies": 300,
+      "omics_file_counts": {
+        "RESULT": 11,
+        "SEARCH": 289
+      },
+      "status_counts": {
+        "downloaded": 38,
+        "skipped_size_verified": 262
+      },
+      "status_note": ""
+    },
+    {
+      "prefix": "metabolights_ecoli_metadata",
+      "description": "MetaboLights metadata",
+      "queue": "manifests\\download_queue\\metabolights_ecoli_metadata_files.tsv",
+      "files_expected": 813,
+      "bytes_expected": 0,
+      "files_present_and_complete": 813,
+      "bytes_present": 224818715,
+      "files_missing": 0,
+      "files_zero_byte": 0,
+      "files_size_mismatch": 0,
+      "unique_runs": 0,
+      "unique_studies": 138,
+      "omics_file_counts": {
+        "metadata_assay": 285,
+        "metadata_investigation": 139,
+        "metadata_maf": 251,
+        "metadata_sample": 138
+      },
+      "status_counts": {
+        "skipped_existing": 813
+      },
+      "status_note": ""
+    }
+  ],
+  "unique_downloaded_files_across_selected_queues": 1273,
+  "unique_downloaded_bytes_across_selected_queues": 13231501627,
+  "supplemental": {
+    "metabolomics_workbench": {
+      "source": "Metabolomics Workbench REST API",
+      "finished_at": "2026-09-14T12:40:00+00:00",
+      "keyword": "Escherichia coli",
+      "ecoli_studies": 16,
+      "studies_downloaded": 16,
+      "study_failures": [],
+      "endpoint_errors": [],
+      "sample_rows": 676,
+      "metabolite_long_rows": 36747,
+      "manifest": "manifests\\download_queue\\metabolomics_workbench_ecoli_studies.tsv",
+      "manifest_sha256": "75d1a8b1acafc9ae4a5cf0200e54c3751ac53854b28923f2786d0976bb37aedb",
+      "raw_root": "raw\\metabolomics\\MetabolomicsWorkbench",
+      "processed_root": "processed\\metabolomics\\MetabolomicsWorkbench",
+      "license_policy": "CC BY 4.0 for listed studies; preserve attribution"
+    },
+    "regulondb": {
+      "normalized_files": 581,
+      "normalized_bytes": 4351456,
+      "normalized_rows": 109831,
+      "rows_by_type": {
+        "RNAP_BINDING_SITES": 0,
+        "TFBINDING": 24132,
+        "TSS": 68044,
+        "TTS": 5326,
+        "TUS": 12329
+      },
+      "invalid_files": 0
+    }
+  },
+  "local_tree": {
+    "raw": {
+      "files": 1353,
+      "bytes": 13233212624,
+      "by_top_level": {
+        "metabolomics": {
+          "files": 893,
+          "bytes": 226529712
+        },
+        "proteomics": {
+          "files": 320,
+          "bytes": 2085860522
+        },
+        "sequencing": {
+          "files": 140,
+          "bytes": 10920822390
+        }
+      }
+    },
+    "reference": {
+      "files": 612,
+      "bytes": 37703610,
+      "by_top_level": {
+        "BiGG": {
+          "files": 3,
+          "bytes": 14475314
+        },
+        "MG1655": {
+          "files": 21,
+          "bytes": 14680858
+        },
+        "RegulonDB": {
+          "files": 587,
+          "bytes": 8545698
+        },
+        "reference_assets_manifest.json": {
+          "files": 1,
+          "bytes": 1740
+        }
+      }
+    },
+    "processed": {
+      "files": 29,
+      "bytes": 4128577,
+      "by_top_level": {
+        "metabolomics": {
+          "files": 29,
+          "bytes": 4128577
+        }
+      }
+    }
+  },
+  "verification_note": "This report verifies queue presence and size. ENA files additionally carry MD5 values and can be rechecked with download_queue.py."
+}

@@ -1,0 +1,58 @@
+{
+  "generated_at": "2026-09-15T07:45:22+00:00",
+  "inputs": {
+    "catalog": "manifests/ecoli_catalog.sqlite",
+    "integrity_manifest": "reports/integrity/local_sha256_manifest.tsv.gz",
+    "metabolights_metadata": "manifests/metabolights_ecoli_studies.jsonl.gz",
+    "workbench_manifest": "manifests/download_queue/metabolomics_workbench_ecoli_studies.tsv",
+    "gff": "reference/MG1655/NCBI/GCF_000005845.2/GCF_000005845.2_ASM584v2_genomic.gff.gz",
+    "uniprot": "reference/MG1655/UniProt/uniprot_mg1655_UP000000625.tsv.gz"
+  },
+  "outputs": {
+    "sample_master": "integrated/sample_master.tsv.gz",
+    "experiment_master": "integrated/experiment_master.tsv.gz",
+    "feature_crosswalk": "integrated/feature_crosswalk.tsv.gz",
+    "gap_report": "reports/coverage/integration_gaps.md"
+  },
+  "rows": {
+    "sample_master": 602778,
+    "experiment_master": 606392,
+    "feature_crosswalk": 4524
+  },
+  "sample_sources": {
+    "ENA": 562314,
+    "MetaboLights": 39788,
+    "MetabolomicsWorkbench": 676
+  },
+  "experiment_sources": {
+    "ENA": 604829,
+    "PRIDE": 1409,
+    "MetaboLights": 138,
+    "MetabolomicsWorkbench": 16
+  },
+  "sample_field_completeness": {
+    "assay_types": 0.9329,
+    "condition": 0.0657,
+    "genotype": 0.0399,
+    "omics_types": 0.9329,
+    "sample_accession": 1.0,
+    "sample_name": 0.0671,
+    "scientific_name": 1.0,
+    "strain": 0.9329,
+    "study_accession": 0.9997,
+    "timepoint": 0.0001
+  },
+  "feature_crosswalk": {
+    "uniprot_loci": 4306,
+    "protein_id_loci": 4308,
+    "uniprot_entries": 4403,
+    "gff_loci": 4524
+  },
+  "integrity_license_counts": {
+    "derived_from_source": 32,
+    "license_unverified": 1273,
+    "metadata_only": 42,
+    "open_attribution_cc_by_4_0": 80,
+    "source_defined": 612
+  }
+}

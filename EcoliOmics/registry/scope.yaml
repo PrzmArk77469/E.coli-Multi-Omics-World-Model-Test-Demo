@@ -1,0 +1,56 @@
+version: 1
+snapshot_date: 2026-09-14
+
+project:
+  name: EcoliOmics
+  goal: sustainable E. coli multi-omics data lake
+  model: metadata-complete, core-curated, species-wide on demand
+
+taxonomy:
+  species:
+    name: Escherichia coli
+    taxid: 562
+    query: tax_tree(562)
+  core:
+    name: Escherichia coli K-12 MG1655
+    taxid: 511145
+    assembly: GCF_000005845.2
+    sequence: NC_000913.3
+  key_strains:
+    - BW25113
+    - W3110
+    - BL21
+    - REL606
+    - O157:H7
+    - CFT073
+
+omics_scope:
+  - genomics
+  - transcriptomics
+  - regulomics
+  - translatomics
+  - methylomics
+  - proteomics
+  - ptm
+  - metabolomics
+  - lipidomics
+  - fluxomics
+  - interactomics
+  - functional_genomics
+  - phenomics
+  - structural
+  - knowledge
+
+retention:
+  metadata: permanent
+  core_raw: selected
+  core_processed: permanent
+  species_raw: on_demand
+  assemblies: permanent
+
+excluded_from_default_download:
+  - metagenomes without isolate-level E. coli annotation
+  - mixed-organism studies without separable E. coli samples
+  - datasets with unknown license
+  - duplicate submissions when a higher-quality primary record exists
+

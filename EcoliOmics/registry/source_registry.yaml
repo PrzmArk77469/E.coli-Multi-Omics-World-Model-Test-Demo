@@ -1,0 +1,93 @@
+version: 1
+snapshot_date: 2026-09-14
+
+sources:
+  - id: ena
+    priority: P0
+    layer: L0
+    role: raw sequencing manifest and download execution
+    endpoint: https://www.ebi.ac.uk/ena/portal/api/search
+    query: tax_tree(562)
+    fields:
+      - run_accession
+      - study_accession
+      - sample_accession
+      - tax_id
+      - scientific_name
+      - library_strategy
+      - library_source
+      - fastq_bytes
+      - read_count
+      - base_count
+    license: per_study
+
+  - id: ncbi
+    priority: P0
+    layer: L0
+    role: taxonomy, bioproject, biosample, assembly and GEO authority
+    endpoint: https://eutils.ncbi.nlm.nih.gov/entrez/eutils
+    api_key_required_for_rate: recommended
+    license: mixed
+
+  - id: pride
+    priority: P0
+    layer: L0
+    role: proteomics project discovery
+    endpoint: https://www.ebi.ac.uk/pride/ws/archive/v2/search/projects
+    download_endpoint: https://ftp.pride.ebi.ac.uk
+    note: Use HTTPS for bulk file download; FTP connections were unstable.
+    keyword: Escherichia coli
+    license: per_project
+
+  - id: proteomexchange
+    priority: P1
+    layer: L0
+    role: proteomics federation and file discovery
+    endpoint: https://proteomecentral.proteomexchange.org
+    license: per_project
+
+  - id: metabolights
+    priority: P1
+    layer: L0
+    role: metabolomics studies
+    endpoint: https://www.ebi.ac.uk/metabolights/ws
+    license: per_study
+
+  - id: metabolomics_workbench
+    priority: P1
+    layer: L0
+    role: metabolomics studies and sample metadata
+    endpoint: https://www.metabolomicsworkbench.org/rest
+    license: per_study
+    implementation: scripts/fetch_metabolomics_workbench.py
+
+  - id: regulondb
+    priority: P0
+    layer: reference
+    role: transcription regulation knowledge
+    endpoint: https://regulondb.ccg.unam.mx
+    api_endpoint: https://regulondb.ccg.unam.mx/graphql
+    access_method: graphql_normalized_export
+    note: GFF3 links can return HTTP 200 with an empty body; GraphQL records are authoritative.
+    license: verify_release_terms
+
+  - id: ecoCyc
+    priority: P0
+    layer: reference
+    role: E. coli knowledge scaffold
+    endpoint: https://ecocyc.org
+    license: academic_or_restricted
+
+  - id: bigg
+    priority: P0
+    layer: reference
+    role: iML1515 metabolic model
+    endpoint: http://bigg.ucsd.edu/static/models/iML1515
+    license: verify_release_terms
+
+  - id: uniprot
+    priority: P0
+    layer: reference
+    role: protein identifiers and sequences
+    endpoint: https://rest.uniprot.org
+    license: CC_BY_4_0

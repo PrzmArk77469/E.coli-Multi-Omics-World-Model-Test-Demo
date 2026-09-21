@@ -1,0 +1,67 @@
+{
+  "retrieved_at": "2026-09-14T11:57:13+00:00",
+  "projects_requested": 1409,
+  "projects_succeeded": 1409,
+  "projects_failed": 0,
+  "files": 129949,
+  "file_bytes": 124626363813818,
+  "processed_candidates": 9249,
+  "by_category": {
+    "SEARCH": {
+      "files": 22788,
+      "bytes": 9022639406269,
+      "processed": 9028
+    },
+    "RAW": {
+      "files": 67388,
+      "bytes": 106346260597646,
+      "processed": 0
+    },
+    "FASTA": {
+      "files": 886,
+      "bytes": 29762331121,
+      "processed": 0
+    },
+    "OTHER": {
+      "files": 15627,
+      "bytes": 2502453475503,
+      "processed": 0
+    },
+    "EXPERIMENTAL DESIGN": {
+      "files": 821,
+      "bytes": 17955407,
+      "processed": 0
+    },
+    "PEAK": {
+      "files": 17637,
+      "bytes": 6488340404302,
+      "processed": 0
+    },
+    "RESULT": {
+      "files": 4532,
+      "bytes": 236794758460,
+      "processed": 221
+    },
+    "IMAGE DATA": {
+      "files": 255,
+      "bytes": 615075,
+      "processed": 0
+    },
+    "Gel": {
+      "files": 14,
+      "bytes": 69125150,
+      "processed": 0
+    },
+    "QUANTIFICATION": {
+      "files": 1,
+      "bytes": 25144885,
+      "processed": 0
+    }
+  },
+  "inventory": "manifests\\pride_file_inventory.jsonl.gz",
+  "inventory_bytes": 8536565,
+  "inventory_sha256": "12e21fbd72cbb20728f82f8b9fbab6fa3cca99ff4cf0e960c7c01c7751c0f200",
+  "failures": [],
+  "license_status": "license_unverified",
+  "redistribution_status": "blocked_until_reviewed"
+}

@@ -1,0 +1,28 @@
+{
+  "source": "ENA Portal API",
+  "retrieved_at": "2026-09-14T11:45:29+00:00",
+  "query": "tax_id=511145",
+  "fields": [
+    "run_accession",
+    "study_accession",
+    "sample_accession",
+    "tax_id",
+    "scientific_name",
+    "library_strategy",
+    "library_source",
+    "fastq_bytes",
+    "read_count",
+    "base_count",
+    "fastq_ftp",
+    "fastq_md5",
+    "study_title",
+    "experiment_title",
+    "sample_title",
+    "library_construction_protocol",
+    "instrument_platform",
+    "instrument_model"
+  ],
+  "manifest": "manifests\\ena_mg1655_context.tsv.gz",
+  "manifest_bytes": 2892854,
+  "manifest_sha256": "0759170f45c9ef9b192c4870020d1166d9b497a46504a67d5a3dae334620d103"
+}

@@ -1,0 +1,45 @@
+version: 1
+
+hard_gates:
+  require_accession: true
+  require_taxonomy: true
+  require_license_status: true
+  require_accessible_file: true
+  reject_exact_duplicate: true
+  reject_unknown_assay_type: true
+
+download_thresholds:
+  auto_download_score: 80
+  manual_review_score: 60
+  single_batch_auto_limit_gib: 500
+  single_batch_approval_limit_gib: 100000
+  l1_raw_capacity_tib: 8
+  capacity_warning_percent: 80
+  scratch_multiplier: 2
+
+scoring:
+  condition_metadata: 25
+  strain_reference_confidence: 20
+  assay_platform_quality: 20
+  scientific_relevance: 15
+  license_reusability: 10
+  file_completeness: 10
+
+integration_levels:
+  A:
+    definition: same biological sample across omics
+    automatic_integration: true
+  B:
+    definition: same study, strain and condition, different samples
+    automatic_integration: true
+  C:
+    definition: cross-study condition matching
+    automatic_integration: false
+
+default_actions:
+  metadata_only: retain
+  core_candidate: inspect
+  approved_core: download
+  license_blocked: quarantine
+  unresolved_strain: metadata_only
+

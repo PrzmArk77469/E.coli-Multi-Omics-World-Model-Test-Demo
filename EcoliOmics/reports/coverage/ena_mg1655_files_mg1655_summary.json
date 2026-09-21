@@ -1,0 +1,10 @@
+{
+  "source": "ENA Portal API",
+  "definition": "tax_id=511145 or scientific_name contains MG1655",
+  "snapshot_date": "2026-09-14T11:05:34+00:00",
+  "rows": 20864,
+  "fastq_bytes": 13849924930103,
+  "output_file": "manifests\\ena_mg1655_files_mg1655_runs.tsv.gz",
+  "output_bytes": 1591668,
+  "output_sha256": "4078244191a862790258f8d6d9a85c0479c688685d6fc1da40d1362694f8d0b5"
+}

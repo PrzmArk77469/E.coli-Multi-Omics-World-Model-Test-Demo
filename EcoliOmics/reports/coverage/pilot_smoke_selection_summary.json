@@ -1,0 +1,29 @@
+{
+  "selected_at": "2026-09-14T11:12:51+00:00",
+  "selection_reason": "pilot_pipeline_smoke_test",
+  "runs": 7,
+  "files": 9,
+  "fastq_bytes": 529547299,
+  "studies": 6,
+  "by_strategy": {
+    "Bisulfite-Seq": {
+      "runs": 1,
+      "fastq_bytes": 367793074
+    },
+    "ChIP-Seq": {
+      "runs": 1,
+      "fastq_bytes": 22450650
+    },
+    "Tn-Seq": {
+      "runs": 3,
+      "fastq_bytes": 94099028
+    },
+    "ncRNA-Seq": {
+      "runs": 2,
+      "fastq_bytes": 45204547
+    }
+  },
+  "runs_manifest": "manifests\\download_queue\\pilot_smoke_runs.tsv",
+  "files_manifest": "manifests\\download_queue\\pilot_smoke_files.tsv",
+  "note": "Pilot data is for pipeline validation, not the scientific core matrix."
+}

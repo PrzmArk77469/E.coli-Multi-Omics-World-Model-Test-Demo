@@ -1,0 +1,12 @@
+{
+  "retrieved_at": "2026-09-14T12:10:09+00:00",
+  "studies_scanned": 3408,
+  "studies_failed": 0,
+  "ecoli_studies": 138,
+  "ecoli_files": 813,
+  "inventory": "manifests\\metabolights_ecoli_studies.jsonl.gz",
+  "inventory_bytes": 98542,
+  "inventory_sha256": "69a826add9f0c34a58ff1a8625c57d4370de0f1c8547494e621a7d3cb76d9152",
+  "failures": [],
+  "license_policy": "per_study_dataset_license"
+}

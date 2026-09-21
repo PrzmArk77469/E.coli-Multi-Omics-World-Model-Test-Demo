@@ -1,0 +1,13 @@
+{
+  "source": "PRIDE Archive REST API",
+  "retrieved_at": "2026-09-14T10:30:58+00:00",
+  "keyword": "Escherichia coli",
+  "total_records_reported": 1409,
+  "projects_written": 1409,
+  "raw_manifest": "manifests\\pride_ecoli_projects.jsonl.gz",
+  "raw_bytes": 3490967,
+  "raw_sha256": "5c157ae1701d74a41cb1939bcbc273d3fc7077bdd393521ff58aab82693ef883",
+  "normalized_manifest": "manifests\\pride_ecoli_projects.tsv.gz",
+  "normalized_bytes": 1423655,
+  "normalized_sha256": "8fd56bf9d3c9ccadfc9aa7c9386b66aeddf625639a03d2264b04414a88e3c6c6"
+}

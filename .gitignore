@@ -1,0 +1,77 @@
+# Secrets and local configuration
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.pfx
+credentials.json
+settings.local.json
+
+# Runtime and logs
+logs/*
+!logs/README.md
+tmp/
+.tmp/
+.cache/
+*.log
+*.pid
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+venv/
+dist/
+build/
+*.egg-info/
+
+# Notebooks and execution metadata
+.ipynb_checkpoints/
+.jupyter/
+
+# Data and large artifacts
+data/
+artifacts/
+checkpoints/
+EcoliOmics/raw/
+EcoliOmics/reference/
+EcoliOmics/processed/
+EcoliOmics/integrated/
+EcoliOmics/tmp/
+EcoliOmics/manifests/
+**/*.fastq
+**/*.fastq.gz
+**/*.fq
+**/*.fq.gz
+**/*.bam
+**/*.cram
+**/*.bai
+**/*.sra
+**/*.parquet
+**/*.zarr
+**/*.h5
+**/*.hdf5
+**/*.tar
+**/*.tar.gz
+**/*.tgz
+**/*.zip
+**/*.gz
+
+# Infrastructure runtime state
+.wsl/
+docker-data/
+DockerDesktopData/
+
+# OS and editors
+.DS_Store
+Thumbs.db
+desktop.ini
+.idea/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+

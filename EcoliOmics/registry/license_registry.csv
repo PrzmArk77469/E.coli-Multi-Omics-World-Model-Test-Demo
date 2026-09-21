@@ -1,0 +1,9 @@
+license_tag,meaning,may_download,may_redistribute,quarantine
+license_unverified,Public repository access confirmed but per-study or per-record terms not yet reviewed; local analysis only,true,false,true
+pipeline_test_only,Selected solely to validate download and processing pipelines,true,false,true
+open_reusable,Explicitly reusable with no additional restriction,true,true,false
+open_attribution,Reusable with attribution or study terms,true,conditional,false
+download_only,Downloadable but redistribution restricted,true,false,false
+academic_only,Academic-use terms only,true,false,true
+commercial_restricted,Commercial use or redistribution restricted,true,false,true
+unknown,Terms not confirmed,false,false,true

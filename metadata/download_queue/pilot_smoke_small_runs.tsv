@@ -1,0 +1,8 @@
+selection_rank	run_accession	study_accession	sample_accession	scientific_name	library_strategy	omics_type	fastq_bytes	read_count	base_count	selection_reason	license_tag	download_status
+1	ERR10451692	PRJEB57220	SAMEA111539340	Escherichia coli str. K-12 substr. MG1655	Tn-Seq	functional_genomics	28499321	1050353	78354413	pilot_pipeline_smoke_test	download_only	pending
+2	SRR32574243	PRJNA1231458	SAMN47223694	Escherichia coli str. K-12 substr. MG1655	Tn-Seq	functional_genomics	30217947	868331	59914839	pilot_pipeline_smoke_test	download_only	pending
+3	ERR10451693	PRJEB57220	SAMEA111539341	Escherichia coli str. K-12 substr. MG1655	Tn-Seq	functional_genomics	35381760	1381947	103078520	pilot_pipeline_smoke_test	download_only	pending
+4	SRR32574242	PRJNA1231458	SAMN47223695	Escherichia coli str. K-12 substr. MG1655	Tn-Seq	functional_genomics	35764396	1014278	69985182	pilot_pipeline_smoke_test	download_only	pending
+5	SRR12301664	PRJNA648047	SAMN15617565	Escherichia coli str. K-12 substr. MG1655	ChIP-Seq	regulomics	22450650	324361	42082168	pilot_pipeline_smoke_test	download_only	pending
+6	SRR22879221	PRJNA915474	SAMN32386872	Escherichia coli str. K-12 substr. MG1655	ncRNA-Seq	transcriptomics	21084550	608759	24836392	pilot_pipeline_smoke_test	download_only	pending
+7	SRR38227385	PRJNA1456594	SAMN57412844	Escherichia coli str. K-12 substr. MG1655	ncRNA-Seq	transcriptomics	24119997	348778	105330956	pilot_pipeline_smoke_test	download_only	pending

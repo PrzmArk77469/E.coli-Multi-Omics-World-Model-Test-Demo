@@ -1,0 +1,2106 @@
+{
+  "source": "ENA Portal API",
+  "prefix": "ena_all_files",
+  "snapshot_date": "2026-09-14T11:27:10+00:00",
+  "input_file": "manifests\\ena_all_files.tsv.gz",
+  "input_bytes": 51422950,
+  "input_sha256": "a7e12300bb1297feb5c7376d566b85f3eb5bdb2c7fbd32fde0772fc9acb614de",
+  "totals": {
+    "rows": 604829,
+    "unique_studies": 9881,
+    "fastq_bytes": 251199233290734,
+    "read_count": 2132915344357,
+    "base_count": 458969372462919,
+    "rows_with_fastq_bytes": 601050,
+    "rows_missing_fastq_bytes": 3779,
+    "mg1655_rows": 20896,
+    "mg1655_fastq_bytes": 13870746950180
+  },
+  "top_library_strategies": [
+    {
+      "name": "WGS",
+      "runs": 522115,
+      "studies": 6709,
+      "fastq_bytes": 194253956902500,
+      "base_count": 332762736535890
+    },
+    {
+      "name": "RNA-Seq",
+      "runs": 25451,
+      "studies": 1691,
+      "fastq_bytes": 30971958415457,
+      "base_count": 66901739167189
+    },
+    {
+      "name": "OTHER",
+      "runs": 13017,
+      "studies": 652,
+      "fastq_bytes": 11331704478285,
+      "base_count": 23517592181090
+    },
+    {
+      "name": "AMPLICON",
+      "runs": 28300,
+      "studies": 623,
+      "fastq_bytes": 6820339659755,
+      "base_count": 20035364056414
+    },
+    {
+      "name": "WGA",
+      "runs": 4575,
+      "studies": 149,
+      "fastq_bytes": 2134516330477,
+      "base_count": 3774921745384
+    },
+    {
+      "name": "ChIP-Seq",
+      "runs": 2995,
+      "studies": 153,
+      "fastq_bytes": 1823512974438,
+      "base_count": 3145589715762
+    },
+    {
+      "name": "Tn-Seq",
+      "runs": 1392,
+      "studies": 80,
+      "fastq_bytes": 913060488675,
+      "base_count": 2127170532363
+    },
+    {
+      "name": "MNase-Seq",
+      "runs": 232,
+      "studies": 9,
+      "fastq_bytes": 887190062994,
+      "base_count": 2395719287459
+    },
+    {
+      "name": "POOLCLONE",
+      "runs": 1226,
+      "studies": 24,
+      "fastq_bytes": 696164716483,
+      "base_count": 1506034046386
+    },
+    {
+      "name": "RIP-Seq",
+      "runs": 353,
+      "studies": 29,
+      "fastq_bytes": 287420682985,
+      "base_count": 589049989861
+    },
+    {
+      "name": "ncRNA-Seq",
+      "runs": 471,
+      "studies": 36,
+      "fastq_bytes": 167243556420,
+      "base_count": 379301459515
+    },
+    {
+      "name": "Bisulfite-Seq",
+      "runs": 245,
+      "studies": 20,
+      "fastq_bytes": 160992618567,
+      "base_count": 306569816412
+    },
+    {
+      "name": "ssRNA-seq",
+      "runs": 130,
+      "studies": 13,
+      "fastq_bytes": 134761076560,
+      "base_count": 258598284302
+    },
+    {
+      "name": "Targeted-Capture",
+      "runs": 237,
+      "studies": 12,
+      "fastq_bytes": 128024222129,
+      "base_count": 292617281857
+    },
+    {
+      "name": "WCS",
+      "runs": 2225,
+      "studies": 16,
+      "fastq_bytes": 108091893954,
+      "base_count": 215239953976
+    },
+    {
+      "name": "Hi-C",
+      "runs": 69,
+      "studies": 8,
+      "fastq_bytes": 95482425010,
+      "base_count": 188652250893
+    },
+    {
+      "name": "CLONE",
+      "runs": 576,
+      "studies": 27,
+      "fastq_bytes": 92482571228,
+      "base_count": 191145549658
+    },
+    {
+      "name": "SELEX",
+      "runs": 173,
+      "studies": 6,
+      "fastq_bytes": 59237544198,
+      "base_count": 165130780436
+    },
+    {
+      "name": "EST",
+      "runs": 22,
+      "studies": 1,
+      "fastq_bytes": 39623466634,
+      "base_count": 63290247592
+    },
+    {
+      "name": "Synthetic-Long-Read",
+      "runs": 73,
+      "studies": 12,
+      "fastq_bytes": 24072034224,
+      "base_count": 45328604729
+    },
+    {
+      "name": "miRNA-Seq",
+      "runs": 90,
+      "studies": 10,
+      "fastq_bytes": 15717367445,
+      "base_count": 31197311440
+    },
+    {
+      "name": "MeDIP-Seq",
+      "runs": 11,
+      "studies": 2,
+      "fastq_bytes": 15338944581,
+      "base_count": 23660415700
+    },
+    {
+      "name": "ATAC-seq",
+      "runs": 43,
+      "studies": 4,
+      "fastq_bytes": 14837522145,
+      "base_count": 20054225174
+    },
+    {
+      "name": "VALIDATION",
+      "runs": 9,
+      "studies": 2,
+      "fastq_bytes": 7590955572,
+      "base_count": 11025983128
+    },
+    {
+      "name": "CLONEEND",
+      "runs": 757,
+      "studies": 8,
+      "fastq_bytes": 6877647608,
+      "base_count": 9115413215
+    },
+    {
+      "name": "FINISHING",
+      "runs": 33,
+      "studies": 5,
+      "fastq_bytes": 6753954503,
+      "base_count": 7284296590
+    },
+    {
+      "name": "WXS",
+      "runs": 7,
+      "studies": 4,
+      "fastq_bytes": 2186990900,
+      "base_count": 5048908970
+    },
+    {
+      "name": "RAD-Seq",
+      "runs": 1,
+      "studies": 1,
+      "fastq_bytes": 92149056,
+      "base_count": 188988900
+    },
+    {
+      "name": "FAIRE-seq",
+      "runs": 1,
+      "studies": 1,
+      "fastq_bytes": 1637951,
+      "base_count": 5432634
+    }
+  ],
+  "top_library_sources": [
+    {
+      "name": "GENOMIC",
+      "runs": 551777,
+      "studies": 7573,
+      "fastq_bytes": 203759255025741,
+      "base_count": 353977517739066
+    },
+    {
+      "name": "TRANSCRIPTOMIC",
+      "runs": 29045,
+      "studies": 1807,
+      "fastq_bytes": 34810458313797,
+      "base_count": 73469630648701
+    },
+    {
+      "name": "OTHER",
+      "runs": 9983,
+      "studies": 265,
+      "fastq_bytes": 4251477103769,
+      "base_count": 10993892412858
+    },
+    {
+      "name": "SYNTHETIC",
+      "runs": 7473,
+      "studies": 260,
+      "fastq_bytes": 4242360784001,
+      "base_count": 12511310969880
+    },
+    {
+      "name": "METAGENOMIC",
+      "runs": 5649,
+      "studies": 155,
+      "fastq_bytes": 2717304037253,
+      "base_count": 5257052737285
+    },
+    {
+      "name": "GENOMIC SINGLE CELL",
+      "runs": 625,
+      "studies": 47,
+      "fastq_bytes": 648646250190,
+      "base_count": 1013047216600
+    },
+    {
+      "name": "TRANSCRIPTOMIC SINGLE CELL",
+      "runs": 191,
+      "studies": 17,
+      "fastq_bytes": 446291248018,
+      "base_count": 1037248750000
+    },
+    {
+      "name": "METATRANSCRIPTOMIC",
+      "runs": 86,
+      "studies": 11,
+      "fastq_bytes": 323440527965,
+      "base_count": 709671988529
+    }
+  ],
+  "top_scientific_names": [
+    {
+      "name": "Escherichia coli",
+      "runs": 550582,
+      "fastq_bytes": 218007200691590
+    },
+    {
+      "name": "Escherichia coli str. K-12 substr. MG1655",
+      "runs": 20863,
+      "fastq_bytes": 13849885063656
+    },
+    {
+      "name": "Escherichia coli K-12",
+      "runs": 5221,
+      "fastq_bytes": 3696926244139
+    },
+    {
+      "name": "Escherichia coli BW25113",
+      "runs": 3032,
+      "fastq_bytes": 1621524565366
+    },
+    {
+      "name": "Escherichia coli ATCC 8739",
+      "runs": 180,
+      "fastq_bytes": 1196131870831
+    },
+    {
+      "name": "Escherichia coli O157:H7",
+      "runs": 1736,
+      "fastq_bytes": 1037950231882
+    },
+    {
+      "name": "Escherichia coli BL21(DE3)",
+      "runs": 1915,
+      "fastq_bytes": 897873915924
+    },
+    {
+      "name": "Escherichia coli B str. REL606",
+      "runs": 3291,
+      "fastq_bytes": 892680521884
+    },
+    {
+      "name": "Escherichia coli O25b:H4-ST131",
+      "runs": 1316,
+      "fastq_bytes": 551192045823
+    },
+    {
+      "name": "Escherichia coli O157:H7 str. EDL933",
+      "runs": 407,
+      "fastq_bytes": 502746874796
+    },
+    {
+      "name": "Escherichia coli O157",
+      "runs": 1170,
+      "fastq_bytes": 449048176679
+    },
+    {
+      "name": "Escherichia coli str. K-12 substr. W3110",
+      "runs": 469,
+      "fastq_bytes": 426284666557
+    },
+    {
+      "name": "Escherichia coli B",
+      "runs": 465,
+      "fastq_bytes": 367714906718
+    },
+    {
+      "name": "Escherichia coli Nissle 1917",
+      "runs": 608,
+      "fastq_bytes": 336217018520
+    },
+    {
+      "name": "Escherichia coli BL21",
+      "runs": 1397,
+      "fastq_bytes": 324393370179
+    },
+    {
+      "name": "Escherichia coli LF82",
+      "runs": 310,
+      "fastq_bytes": 291847718131
+    },
+    {
+      "name": "Escherichia coli str. K-12 substr. MDS42",
+      "runs": 502,
+      "fastq_bytes": 268476361689
+    },
+    {
+      "name": "Escherichia coli CFT073",
+      "runs": 252,
+      "fastq_bytes": 267233335511
+    },
+    {
+      "name": "Escherichia coli HS",
+      "runs": 371,
+      "fastq_bytes": 249557493342
+    },
+    {
+      "name": "Escherichia coli 103385",
+      "runs": 78,
+      "fastq_bytes": 241237720726
+    },
+    {
+      "name": "Escherichia coli O26:H11",
+      "runs": 371,
+      "fastq_bytes": 233619948683
+    },
+    {
+      "name": "Escherichia coli UTI89",
+      "runs": 133,
+      "fastq_bytes": 215375585664
+    },
+    {
+      "name": "Escherichia coli H10407_1968",
+      "runs": 1110,
+      "fastq_bytes": 172353027711
+    },
+    {
+      "name": "Escherichia coli MC1061",
+      "runs": 22,
+      "fastq_bytes": 160020332013
+    },
+    {
+      "name": "Escherichia coli REL606",
+      "runs": 221,
+      "fastq_bytes": 144555254962
+    },
+    {
+      "name": "Escherichia coli ETEC H10407",
+      "runs": 120,
+      "fastq_bytes": 141820711494
+    },
+    {
+      "name": "Escherichia coli 103573",
+      "runs": 35,
+      "fastq_bytes": 124662616526
+    },
+    {
+      "name": "Escherichia coli DH5[alpha]",
+      "runs": 276,
+      "fastq_bytes": 113817754674
+    },
+    {
+      "name": "Escherichia coli O157:H7 str. Sakai",
+      "runs": 92,
+      "fastq_bytes": 108052072495
+    },
+    {
+      "name": "Escherichia coli IS25",
+      "runs": 138,
+      "fastq_bytes": 88271756599
+    },
+    {
+      "name": "Escherichia coli HB101",
+      "runs": 46,
+      "fastq_bytes": 85104999941
+    },
+    {
+      "name": "Escherichia coli ACE527",
+      "runs": 22,
+      "fastq_bytes": 79763998231
+    },
+    {
+      "name": "Escherichia coli O111:H8",
+      "runs": 49,
+      "fastq_bytes": 79504474956
+    },
+    {
+      "name": "Escherichia coli 2729250",
+      "runs": 19,
+      "fastq_bytes": 77509780926
+    },
+    {
+      "name": "Escherichia coli J53",
+      "runs": 143,
+      "fastq_bytes": 74127241496
+    },
+    {
+      "name": "Escherichia coli 2846750",
+      "runs": 19,
+      "fastq_bytes": 69952452646
+    },
+    {
+      "name": "Escherichia coli DH1",
+      "runs": 46,
+      "fastq_bytes": 65793115382
+    },
+    {
+      "name": "Escherichia coli BCE032",
+      "runs": 17,
+      "fastq_bytes": 65775599390
+    },
+    {
+      "name": "Escherichia coli O17 str. K12a",
+      "runs": 67,
+      "fastq_bytes": 58084916900
+    },
+    {
+      "name": "Escherichia coli O145:H28",
+      "runs": 173,
+      "fastq_bytes": 57566366148
+    },
+    {
+      "name": "Escherichia coli ATCC 25922",
+      "runs": 20,
+      "fastq_bytes": 52761694509
+    },
+    {
+      "name": "Escherichia coli O127:H6 str. E2348/69",
+      "runs": 24,
+      "fastq_bytes": 52428874691
+    },
+    {
+      "name": "Escherichia coli 401140",
+      "runs": 10,
+      "fastq_bytes": 50557004729
+    },
+    {
+      "name": "Escherichia coli str. K-12 substr. DH10B",
+      "runs": 84,
+      "fastq_bytes": 49765936927
+    },
+    {
+      "name": "Escherichia coli W",
+      "runs": 60,
+      "fastq_bytes": 48507029626
+    },
+    {
+      "name": "Escherichia coli 55989",
+      "runs": 30,
+      "fastq_bytes": 43930834016
+    },
+    {
+      "name": "Escherichia coli O26",
+      "runs": 102,
+      "fastq_bytes": 43018719302
+    },
+    {
+      "name": "Escherichia coli 102651",
+      "runs": 12,
+      "fastq_bytes": 41976379777
+    },
+    {
+      "name": "Escherichia coli O139:H28 str. E24377A",
+      "runs": 19,
+      "fastq_bytes": 41366896521
+    },
+    {
+      "name": "Escherichia coli O103:H2",
+      "runs": 94,
+      "fastq_bytes": 39465351060
+    }
+  ],
+  "top_studies": [
+    {
+      "study_accession": "PRJNA218110",
+      "runs": 79835,
+      "fastq_bytes": 23538900803889,
+      "base_count": 35754327270110,
+      "strategies": [
+        "AMPLICON",
+        "WGS"
+      ],
+      "scientific_names": [
+        "Escherichia coli",
+        "Escherichia coli O103",
+        "Escherichia coli O103:H2",
+        "Escherichia coli O106:H18",
+        "Escherichia coli O11",
+        "Escherichia coli O111",
+        "Escherichia coli O111:H8",
+        "Escherichia coli O111:H8 str. 2009C-4126",
+        "Escherichia coli O111:H8 str. 2011C-3453",
+        "Escherichia coli O111:NM str. 08-4487",
+        "Escherichia coli O111:NM str. 2009C-4052",
+        "Escherichia coli O118:H16 str. 06-3612",
+        "Escherichia coli O118:H16 str. 07-4255",
+        "Escherichia coli O118:H16 str. 08-3651",
+        "Escherichia coli O121:H19",
+        "Escherichia coli O121:H19 str. 06-3822",
+        "Escherichia coli O121:H19 str. 2009C-4050",
+        "Escherichia coli O121:H19 str. 2010C-3609",
+        "Escherichia coli O121:H19 str. 2010C-3794",
+        "Escherichia coli O121:H19 str. 2010C-3840",
+        "Escherichia coli O121:H19 str. 2011C-3609",
+        "Escherichia coli O121:H7 str. 2009C-3299",
+        "Escherichia coli O128:H2 str. 2011C-3317",
+        "Escherichia coli O145",
+        "Escherichia coli O145:H25 str. 07-3858",
+        "Escherichia coli O145:NM str. 2010C-3507",
+        "Escherichia coli O145:NM str. 2010C-3508",
+        "Escherichia coli O145:NM str. 2010C-3509",
+        "Escherichia coli O145:NM str. 2010C-3510",
+        "Escherichia coli O145:NM str. 2010C-3511",
+        "Escherichia coli O145:NM str. 2010C-3516",
+        "Escherichia coli O145:NM str. 2010C-3518",
+        "Escherichia coli O145:NM str. 2010C-3521",
+        "Escherichia coli O145:NM str. 2010C-3526",
+        "Escherichia coli O157",
+        "Escherichia coli O157:H7",
+        "Escherichia coli O157:H7 str. 06-4039",
+        "Escherichia coli O157:H7 str. 07-3391",
+        "Escherichia coli O157:H7 str. 08-3037",
+        "Escherichia coli O157:H7 str. 08-3527",
+        "Escherichia coli O157:H7 str. 08-4169",
+        "Escherichia coli O157:H7 str. 08-4529",
+        "Escherichia coli O157:H7 str. 2010C-4979C1",
+        "Escherichia coli O157:H7 str. F6749",
+        "Escherichia coli O157:H7 str. K5602",
+        "Escherichia coli O157:H7 str. K5607",
+        "Escherichia coli O157:NM",
+        "Escherichia coli O25:NM",
+        "Escherichia coli O26",
+        "Escherichia coli O26:H11",
+        "Escherichia coli O26:H11 str. 06-3464",
+        "Escherichia coli O26:H11 str. 2010C-3472",
+        "Escherichia coli O26:H11 str. 2011C-3274",
+        "Escherichia coli O69:H11 str. 07-3763",
+        "Escherichia coli O69:H11 str. 07-4281",
+        "Escherichia coli O69:H11 str. 08-4661",
+        "Escherichia coli O91:H14",
+        "Escherichia coli O91:H14 str. 06-3691",
+        "Escherichia coli P12b"
+      ]
+    },
+    {
+      "study_accession": "PRJEB39567",
+      "runs": 2710,
+      "fastq_bytes": 10944459430238,
+      "base_count": 23110090004284,
+      "strategies": [
+        "WGS"
+      ],
+      "scientific_names": [
+        "Escherichia coli"
+      ]
+    },
+    {
+      "study_accession": "PRJNA315192",
+      "runs": 38358,
+      "fastq_bytes": 9911561522670,
+      "base_count": 17085557977828,
+      "strategies": [
+        "WGS"
+      ],
+      "scientific_names": [
+        "Escherichia coli",
+        "Escherichia coli O145:H28",
+        "Escherichia coli O153:H7",
+        "Escherichia coli O26:H11"
+      ]
+    },
+    {
+      "study_accession": "PRJNA292663",
+      "runs": 13591,
+      "fastq_bytes": 5144313013659,
+      "base_count": 8117415321143,
+      "strategies": [
+        "WGA",
+        "WGS"
+      ],
+      "scientific_names": [
+        "Escherichia O24:H4",
+        "Escherichia O78:H4",
+        "Escherichia O88:H52",
+        "Escherichia coli",
+        "Escherichia coli :H16",
+        "Escherichia coli :H2",
+        "Escherichia coli :H21",
+        "Escherichia coli :H25",
+        "Escherichia coli :H4",
+        "Escherichia coli :H45",
+        "Escherichia coli :H49",
+        "Escherichia coli :H5",
+        "Escherichia coli :H7",
+        "Escherichia coli H9",
+        "Escherichia coli O102:H10",
+        "Escherichia coli O102:H6",
+        "Escherichia coli O109:H40",
+        "Escherichia coli O109:H7",
+        "Escherichia coli O110:H5",
+        "Escherichia coli O115:H20",
+        "Escherichia coli O117:H4",
+        "Escherichia coli O11:H6",
+        "Escherichia coli O123/O186:H49",
+        "Escherichia coli O125:H19",
+        "Escherichia coli O125:H4",
+        "Escherichia coli O12:H48",
+        "Escherichia coli O13/O135:H23",
+        "Escherichia coli O13/O135:H4",
+        "Escherichia coli O130:H26",
+        "Escherichia coli O134/O8:H19",
+        "Escherichia coli O134:H31",
+        "Escherichia coli O143:H4",
+        "Escherichia coli O153/O178:H19",
+        "Escherichia coli O153/O178:H7",
+        "Escherichia coli O155/O8:H41",
+        "Escherichia coli O157:H11",
+        "Escherichia coli O157:H26",
+        "Escherichia coli O158/O8:H27",
+        "Escherichia coli O159:H19",
+        "Escherichia coli O15:H10",
+        "Escherichia coli O15:H18",
+        "Escherichia coli O15:H33",
+        "Escherichia coli O15:H6",
+        "Escherichia coli O161:H4",
+        "Escherichia coli O162/O89:H9",
+        "Escherichia coli O162:H10",
+        "Escherichia coli O16:H2",
+        "Escherichia coli O17/O44/O77:H1",
+        "Escherichia coli O175:H16",
+        "Escherichia coli O18:H49",
+        "Escherichia coli O18:H7",
+        "Escherichia coli O19:H7",
+        "Escherichia coli O2/O50:H1",
+        "Escherichia coli O2/O50:H5",
+        "Escherichia coli O21:H19",
+        "Escherichia coli O21:H21",
+        "Escherichia coli O23:H16",
+        "Escherichia coli O25:H4",
+        "Escherichia coli O26:H18",
+        "Escherichia coli O26:H40",
+        "Escherichia coli O30/O9:H25",
+        "Escherichia coli O32/O8:H8",
+        "Escherichia coli O33:H18",
+        "Escherichia coli O36:H5",
+        "Escherichia coli O4:H1",
+        "Escherichia coli O4:H45",
+        "Escherichia coli O54:H45",
+        "Escherichia coli O62/O68:H12",
+        "Escherichia coli O66:H2",
+        "Escherichia coli O6:H21",
+        "Escherichia coli O74:H8",
+        "Escherichia coli O75:H38/H55",
+        "Escherichia coli O76:H7",
+        "Escherichia coli O78:H4",
+        "Escherichia coli O80:H26",
+        "Escherichia coli O84:H14",
+        "Escherichia coli O84:H25",
+        "Escherichia coli O85:H1",
+        "Escherichia coli O88:H8",
+        "Escherichia coli O8:H11",
+        "Escherichia coli O8:H25",
+        "Escherichia coli O8:H49",
+        "Escherichia coli O9:H10",
+        "Escherichia coli O9:H25",
+        "Escherichia coli O9:H37",
+        "Escherichia coli O9:H4",
+        "Escherichia coli O9:H9"
+      ]
+    },
+    {
+      "study_accession": "PRJNA292667",
+      "runs": 8871,
+      "fastq_bytes": 3094777734694,
+      "base_count": 4363037836718,
+      "strategies": [
+        "WGS"
+      ],
+      "scientific_names": [
+        "Escherichia coli"
+      ]
+    },
+    {
+      "study_accession": "PRJNA357722",
+      "runs": 9022,
+      "fastq_bytes": 2586185229254,
+      "base_count": 3923355174826,
+      "strategies": [
+        "WGS"
+      ],
+      "scientific_names": [
+        "Escherichia coli",
+        "Escherichia coli H1",
+        "Escherichia coli H18",
+        "Escherichia coli H19",
+        "Escherichia coli H30",
+        "Escherichia coli H4",
+        "Escherichia coli H51",
+        "Escherichia coli H6",
+        "Escherichia coli H8",
+        "Escherichia coli O1",
+        "Escherichia coli O10",
+        "Escherichia coli O100",
+        "Escherichia coli O101",
+        "Escherichia coli O102",
+        "Escherichia coli O104",
+        "Escherichia coli O105",
+        "Escherichia coli O106",
+        "Escherichia coli O107",
+        "Escherichia coli O109",
+        "Escherichia coli O11",
+        "Escherichia coli O110",
+        "Escherichia coli O112",
+        "Escherichia coli O113",
+        "Escherichia coli O113:H36",
+        "Escherichia coli O115",
+        "Escherichia coli O116",
+        "Escherichia coli O117",
+        "Escherichia coli O119",
+        "Escherichia coli O11:H5",
+        "Escherichia coli O120",
+        "Escherichia coli O121",
+        "Escherichia coli O126",
+        "Escherichia coli O128:H2",
+        "Escherichia coli O130",
+        "Escherichia coli O135",
+        "Escherichia coli O136",
+        "Escherichia coli O139",
+        "Escherichia coli O139:H19",
+        "Escherichia coli O140",
+        "Escherichia coli O143:H4",
+        "Escherichia coli O145",
+        "Escherichia coli O146",
+        "Escherichia coli O148",
+        "Escherichia coli O15",
+        "Escherichia coli O150",
+        "Escherichia coli O153",
+        "Escherichia coli O156",
+        "Escherichia coli O157",
+        "Escherichia coli O157:H7",
+        "Escherichia coli O158",
+        "Escherichia coli O159:H19",
+        "Escherichia coli O16",
+        "Escherichia coli O160",
+        "Escherichia coli O162:H9",
+        "Escherichia coli O166:H6",
+        "Escherichia coli O17",
+        "Escherichia coli O171",
+        "Escherichia coli O174:H21",
+        "Escherichia coli O175",
+        "Escherichia coli O179:H8",
+        "Escherichia coli O180:H14",
+        "Escherichia coli O180:H5",
+        "Escherichia coli O19",
+        "Escherichia coli O2",
+        "Escherichia coli O20",
+        "Escherichia coli O20:H9",
+        "Escherichia coli O21",
+        "Escherichia coli O21:H28",
+        "Escherichia coli O21:H34",
+        "Escherichia coli O22",
+        "Escherichia coli O22:H8",
+        "Escherichia coli O24",
+        "Escherichia coli O25",
+        "Escherichia coli O26",
+        "Escherichia coli O26:H32",
+        "Escherichia coli O2:H1",
+        "Escherichia coli O2:H14",
+        "Escherichia coli O2:H6",
+        "Escherichia coli O3",
+        "Escherichia coli O32",
+        "Escherichia coli O35",
+        "Escherichia coli O39:H21",
+        "Escherichia coli O40",
+        "Escherichia coli O409",
+        "Escherichia coli O43:H2",
+        "Escherichia coli O45:H11",
+        "Escherichia coli O4:H5",
+        "Escherichia coli O5",
+        "Escherichia coli O53",
+        "Escherichia coli O54",
+        "Escherichia coli O55",
+        "Escherichia coli O57:H16",
+        "Escherichia coli O6",
+        "Escherichia coli O65",
+        "Escherichia coli O68",
+        "Escherichia coli O6:H31",
+        "Escherichia coli O7",
+        "Escherichia coli O73",
+        "Escherichia coli O74:H8",
+        "Escherichia coli O75",
+        "Escherichia coli O78",
+        "Escherichia coli O7:H7",
+        "Escherichia coli O8",
+        "Escherichia coli O83:H15",
+        "Escherichia coli O86",
+        "Escherichia coli O8:H10",
+        "Escherichia coli O8:H19",
+        "Escherichia coli O8:H28",
+        "Escherichia coli O8:H8",
+        "Escherichia coli O9",
+        "Escherichia coli O91",
+        "Escherichia coli O91:H21"
+      ]
+    },
+    {
+      "study_accession": "PRJEB97262",
+      "runs": 7498,
+      "fastq_bytes": 2500731628605,
+      "base_count": 4162084735149,
+      "strategies": [
+        "WGS"
+      ],
+      "scientific_names": [
+        "Escherichia coli"
+      ]
+    },
+    {
+      "study_accession": "PRJNA230969",
+      "runs": 5172,
+      "fastq_bytes": 1940477157764,
+      "base_count": 2899364000613,
+      "strategies": [
+        "WGS"
+      ],
+      "scientific_names": [
+        "Escherichia coli",
+        "Escherichia coli O1",
+        "Escherichia coli O100",
+        "Escherichia coli O101",
+        "Escherichia coli O103",
+        "Escherichia coli O104:H21 str. CFSAN002236",
+        "Escherichia coli O105",
+        "Escherichia coli O108:H9",
+        "Escherichia coli O112ac",
+        "Escherichia coli O113",
+        "Escherichia coli O117",
+        "Escherichia coli O119",
+        "Escherichia coli O11:H15",
+        "Escherichia coli O120:H10",
+        "Escherichia coli O121",
+        "Escherichia coli O124",
+        "Escherichia coli O128",
+        "Escherichia coli O128:H42",
+        "Escherichia coli O13",
+        "Escherichia coli O132",
+        "Escherichia coli O136:H26",
+        "Escherichia coli O14",
+        "Escherichia coli O144",
+        "Escherichia coli O145:H25",
+        "Escherichia coli O15",
+        "Escherichia coli O150",
+        "Escherichia coli O151:H8",
+        "Escherichia coli O152",
+        "Escherichia coli O153:H12",
+        "Escherichia coli O157",
+        "Escherichia coli O157:H7",
+        "Escherichia coli O15:H21",
+        "Escherichia coli O163",
+        "Escherichia coli O163:H38",
+        "Escherichia coli O166:H49",
+        "Escherichia coli O167",
+        "Escherichia coli O167:H9",
+        "Escherichia coli O171",
+        "Escherichia coli O174:H7",
+        "Escherichia coli O18:H7",
+        "Escherichia coli O19",
+        "Escherichia coli O19:H42",
+        "Escherichia coli O1:H7",
+        "Escherichia coli O2",
+        "Escherichia coli O25",
+        "Escherichia coli O25:H4",
+        "Escherichia coli O26",
+        "Escherichia coli O28ac",
+        "Escherichia coli O2:H1",
+        "Escherichia coli O2:H32",
+        "Escherichia coli O33",
+        "Escherichia coli O36",
+        "Escherichia coli O36:H5",
+        "Escherichia coli O38:H26",
+        "Escherichia coli O39:H4",
+        "Escherichia coli O40:H32",
+        "Escherichia coli O41:H11",
+        "Escherichia coli O41:H45",
+        "Escherichia coli O43:H14",
+        "Escherichia coli O45",
+        "Escherichia coli O49:H9",
+        "Escherichia coli O5",
+        "Escherichia coli O51",
+        "Escherichia coli O53",
+        "Escherichia coli O53:H10",
+        "Escherichia coli O55:H7",
+        "Escherichia coli O70:H25",
+        "Escherichia coli O73",
+        "Escherichia coli O74",
+        "Escherichia coli O78:H42",
+        "Escherichia coli O79",
+        "Escherichia coli O79:H40",
+        "Escherichia coli O7:H18",
+        "Escherichia coli O8",
+        "Escherichia coli O80:H45",
+        "Escherichia coli O83",
+        "Escherichia coli O83:H28",
+        "Escherichia coli O83:H31",
+        "Escherichia coli O85:H32",
+        "Escherichia coli O86:H8",
+        "Escherichia coli O88:H1",
+        "Escherichia coli O88:H4",
+        "Escherichia coli O8:H21",
+        "Escherichia coli O8:H31",
+        "Escherichia coli O8:H36",
+        "Escherichia coli O8:H49",
+        "Escherichia coli O8:H9",
+        "Escherichia coli O91",
+        "Escherichia coli O91:H28",
+        "Escherichia coli O96",
+        "Escherichia coli O99:H27",
+        "Escherichia coli OX01:H8",
+        "Escherichia coli OX38:H47"
+      ]
+    },
+    {
+      "study_accession": "PRJNA962904",
+      "runs": 5893,
+      "fastq_bytes": 1927961321293,
+      "base_count": 3839766864910,
+      "strategies": [
+        "WGS"
+      ],
+      "scientific_names": [
+        "Escherichia coli"
+      ]
+    },
+    {
+      "study_accession": "PRJNA1036687",
+      "runs": 25,
+      "fastq_bytes": 1610102061518,
+      "base_count": 1770831089643,
+      "strategies": [
+        "OTHER",
+        "RNA-Seq"
+      ],
+      "scientific_names": [
+        "Escherichia coli"
+      ]
+    },
+    {
+      "study_accession": "PRJNA288601",
+      "runs": 6047,
+      "fastq_bytes": 1607090808147,
+      "base_count": 2952075159628,
+      "strategies": [
+        "AMPLICON",
+        "WGS"
+      ],
+      "scientific_names": [
+        "Escherichia coli",
+        "Escherichia coli O2:H6"
+      ]
+    },
+    {
+      "study_accession": "PRJNA848841",
+      "runs": 1120,
+      "fastq_bytes": 1567622257844,
+      "base_count": 3630118788532,
+      "strategies": [
+        "RNA-Seq"
+      ],
+      "scientific_names": [
+        "Escherichia coli str. K-12 substr. MG1655"
+      ]
+    },
+    {
+      "study_accession": "PRJEB61522",
+      "runs": 1556,
+      "fastq_bytes": 1456689244101,
+      "base_count": 2255774949141,
+      "strategies": [
+        "WGS"
+      ],
+      "scientific_names": [
+        "Escherichia coli"
+      ]
+    },
+    {
+      "study_accession": "PRJNA1135229",
+      "runs": 33,
+      "fastq_bytes": 1405643150134,
+      "base_count": 2260350400092,
+      "strategies": [
+        "OTHER"
+      ],
+      "scientific_names": [
+        "Escherichia coli",
+        "Escherichia coli str. K-12 substr. MG1655"
+      ]
+    },
+    {
+      "study_accession": "PRJNA1345719",
+      "runs": 306,
+      "fastq_bytes": 1288745848882,
+      "base_count": 2486570659439,
+      "strategies": [
+        "WGS"
+      ],
+      "scientific_names": [
+        "Escherichia coli"
+      ]
+    },
+    {
+      "study_accession": "PRJNA1068194",
+      "runs": 2935,
+      "fastq_bytes": 1249458478906,
+      "base_count": 2004916203774,
+      "strategies": [
+        "WGS"
+      ],
+      "scientific_names": [
+        "Escherichia coli"
+      ]
+    },
+    {
+      "study_accession": "PRJEB31347",
+      "runs": 8857,
+      "fastq_bytes": 1105077690966,
+      "base_count": 3343367602602,
+      "strategies": [
+        "WGS"
+      ],
+      "scientific_names": [
+        "Escherichia coli"
+      ]
+    },
+    {
+      "study_accession": "PRJNA407956",
+      "runs": 2904,
+      "fastq_bytes": 1090051501272,
+      "base_count": 1205994956813,
+      "strategies": [
+        "WGS"
+      ],
+      "scientific_names": [
+        "Escherichia coli"
+      ]
+    },
+    {
+      "study_accession": "PRJNA1149523",
+      "runs": 2692,
+      "fastq_bytes": 1055082611253,
+      "base_count": 1565124476720,
+      "strategies": [
+        "WGS"
+      ],
+      "scientific_names": [
+        "Escherichia coli"
+      ]
+    },
+    {
+      "study_accession": "PRJNA677988",
+      "runs": 4678,
+      "fastq_bytes": 1048936756899,
+      "base_count": 2167603384002,
+      "strategies": [
+        "WGS"
+      ],
+      "scientific_names": [
+        "Escherichia coli",
+        "Escherichia coli O145",
+        "Escherichia coli O157",
+        "Escherichia coli O174",
+        "Escherichia coli O26"
+      ]
+    },
+    {
+      "study_accession": "PRJNA528511",
+      "runs": 778,
+      "fastq_bytes": 1028260431211,
+      "base_count": 1606566050492,
+      "strategies": [
+        "WGS"
+      ],
+      "scientific_names": [
+        "Escherichia coli"
+      ]
+    },
+    {
+      "study_accession": "PRJNA510384",
+      "runs": 3035,
+      "fastq_bytes": 1007252430131,
+      "base_count": 1956716064148,
+      "strategies": [
+        "WGS"
+      ],
+      "scientific_names": [
+        "Escherichia coli"
+      ]
+    },
+    {
+      "study_accession": "PRJNA1176193",
+      "runs": 24,
+      "fastq_bytes": 1001530918957,
+      "base_count": 3086268028516,
+      "strategies": [
+        "AMPLICON",
+        "RNA-Seq"
+      ],
+      "scientific_names": [
+        "Escherichia coli"
+      ]
+    },
+    {
+      "study_accession": "PRJEB8667",
+      "runs": 3203,
+      "fastq_bytes": 957539689276,
+      "base_count": 2132879159676,
+      "strategies": [
+        "WGS"
+      ],
+      "scientific_names": [
+        "Escherichia coli"
+      ]
+    },
+    {
+      "study_accession": "PRJNA966974",
+      "runs": 2739,
+      "fastq_bytes": 939486278837,
+      "base_count": 1406201758222,
+      "strategies": [
+        "WGS"
+      ],
+      "scientific_names": [
+        "Escherichia coli"
+      ]
+    },
+    {
+      "study_accession": "PRJEB53835",
+      "runs": 7517,
+      "fastq_bytes": 891171225646,
+      "base_count": 2780515876628,
+      "strategies": [
+        "WGS"
+      ],
+      "scientific_names": [
+        "Escherichia coli"
+      ]
+    },
+    {
+      "study_accession": "PRJNA605147",
+      "runs": 1372,
+      "fastq_bytes": 859471868134,
+      "base_count": 1176039608201,
+      "strategies": [
+        "WGS"
+      ],
+      "scientific_names": [
+        "Escherichia coli"
+      ]
+    },
+    {
+      "study_accession": "PRJNA168337",
+      "runs": 2695,
+      "fastq_bytes": 855379836997,
+      "base_count": 1336629820415,
+      "strategies": [
+        "WGS"
+      ],
+      "scientific_names": [
+        "Escherichia coli",
+        "Escherichia coli K-12"
+      ]
+    },
+    {
+      "study_accession": "PRJNA1185485",
+      "runs": 1016,
+      "fastq_bytes": 830367695593,
+      "base_count": 857873835468,
+      "strategies": [
+        "WGS"
+      ],
+      "scientific_names": [
+        "Escherichia coli"
+      ]
+    },
+    {
+      "study_accession": "PRJNA1165464",
+      "runs": 948,
+      "fastq_bytes": 829224750298,
+      "base_count": 926219827906,
+      "strategies": [
+        "WGS"
+      ],
+      "scientific_names": [
+        "Escherichia coli"
+      ]
+    },
+    {
+      "study_accession": "PRJEB105337",
+      "runs": 9,
+      "fastq_bytes": 828721473511,
+      "base_count": 835853307825,
+      "strategies": [
+        "WGS"
+      ],
+      "scientific_names": [
+        "Escherichia coli"
+      ]
+    },
+    {
+      "study_accession": "PRJNA230968",
+      "runs": 1810,
+      "fastq_bytes": 763569320400,
+      "base_count": 1362106439099,
+      "strategies": [
+        "WGS"
+      ],
+      "scientific_names": [
+        "Escherichia coli"
+      ]
+    },
+    {
+      "study_accession": "PRJNA476837",
+      "runs": 27,
+      "fastq_bytes": 729019661558,
+      "base_count": 1291875573000,
+      "strategies": [
+        "WGS"
+      ],
+      "scientific_names": [
+        "Escherichia coli ATCC 8739"
+      ]
+    },
+    {
+      "study_accession": "PRJEB75816",
+      "runs": 1858,
+      "fastq_bytes": 728484106509,
+      "base_count": 1094861484875,
+      "strategies": [
+        "WGS"
+      ],
+      "scientific_names": [
+        "Escherichia coli"
+      ]
+    },
+    {
+      "study_accession": "PRJNA688002",
+      "runs": 1214,
+      "fastq_bytes": 726695390688,
+      "base_count": 863795264800,
+      "strategies": [
+        "WGS"
+      ],
+      "scientific_names": [
+        "Escherichia coli"
+      ]
+    },
+    {
+      "study_accession": "PRJNA912639",
+      "runs": 566,
+      "fastq_bytes": 704692462162,
+      "base_count": 1321654928311,
+      "strategies": [
+        "WGS"
+      ],
+      "scientific_names": [
+        "Escherichia coli"
+      ]
+    },
+    {
+      "study_accession": "PRJEB37378",
+      "runs": 4178,
+      "fastq_bytes": 686793032405,
+      "base_count": 1552898454022,
+      "strategies": [
+        "WGS"
+      ],
+      "scientific_names": [
+        "Escherichia coli"
+      ]
+    },
+    {
+      "study_accession": "PRJNA809394",
+      "runs": 2076,
+      "fastq_bytes": 673619911848,
+      "base_count": 1060737075203,
+      "strategies": [
+        "WGS"
+      ],
+      "scientific_names": [
+        "Escherichia coli"
+      ]
+    },
+    {
+      "study_accession": "PRJEB87756",
+      "runs": 60,
+      "fastq_bytes": 652016499111,
+      "base_count": 1836314275740,
+      "strategies": [
+        "MNase-Seq",
+        "RNA-Seq"
+      ],
+      "scientific_names": [
+        "Escherichia coli str. K-12 substr. MG1655"
+      ]
+    },
+    {
+      "study_accession": "PRJNA857526",
+      "runs": 1915,
+      "fastq_bytes": 650019816713,
+      "base_count": 1143712977187,
+      "strategies": [
+        "WGS"
+      ],
+      "scientific_names": [
+        "Escherichia coli"
+      ]
+    },
+    {
+      "study_accession": "PRJNA268206",
+      "runs": 1244,
+      "fastq_bytes": 619955946725,
+      "base_count": 849207999061,
+      "strategies": [
+        "WGS"
+      ],
+      "scientific_names": [
+        "Escherichia coli"
+      ]
+    },
+    {
+      "study_accession": "PRJEB90648",
+      "runs": 804,
+      "fastq_bytes": 614644742060,
+      "base_count": 1242123575513,
+      "strategies": [
+        "WGS"
+      ],
+      "scientific_names": [
+        "Escherichia coli"
+      ]
+    },
+    {
+      "study_accession": "PRJNA1297298",
+      "runs": 762,
+      "fastq_bytes": 605822046952,
+      "base_count": 1147893049456,
+      "strategies": [
+        "WGS"
+      ],
+      "scientific_names": [
+        "Escherichia coli"
+      ]
+    },
+    {
+      "study_accession": "PRJEB32607",
+      "runs": 1643,
+      "fastq_bytes": 590750367828,
+      "base_count": 824546357867,
+      "strategies": [
+        "WGS"
+      ],
+      "scientific_names": [
+        "Escherichia coli"
+      ]
+    },
+    {
+      "study_accession": "PRJNA604975",
+      "runs": 3177,
+      "fastq_bytes": 581614795555,
+      "base_count": 1416292221701,
+      "strategies": [
+        "OTHER",
+        "WGS"
+      ],
+      "scientific_names": [
+        "Escherichia coli"
+      ]
+    },
+    {
+      "study_accession": "PRJNA1055474",
+      "runs": 833,
+      "fastq_bytes": 580916602741,
+      "base_count": 1190771740987,
+      "strategies": [
+        "WGS"
+      ],
+      "scientific_names": [
+        "Escherichia coli"
+      ]
+    },
+    {
+      "study_accession": "PRJDB10842",
+      "runs": 3211,
+      "fastq_bytes": 579998449351,
+      "base_count": 1230705754748,
+      "strategies": [
+        "WGS"
+      ],
+      "scientific_names": [
+        "Escherichia coli"
+      ]
+    },
+    {
+      "study_accession": "PRJEB51937",
+      "runs": 1598,
+      "fastq_bytes": 570989667250,
+      "base_count": 1186123355971,
+      "strategies": [
+        "AMPLICON",
+        "WGS"
+      ],
+      "scientific_names": [
+        "Escherichia coli"
+      ]
+    },
+    {
+      "study_accession": "PRJEB50837",
+      "runs": 1377,
+      "fastq_bytes": 548064618904,
+      "base_count": 791673384898,
+      "strategies": [
+        "WGS"
+      ],
+      "scientific_names": [
+        "Escherichia coli"
+      ]
+    },
+    {
+      "study_accession": "PRJNA293225",
+      "runs": 1918,
+      "fastq_bytes": 537326461379,
+      "base_count": 891572806586,
+      "strategies": [
+        "WGS"
+      ],
+      "scientific_names": [
+        "Escherichia coli"
+      ]
+    },
+    {
+      "study_accession": "PRJEB50273",
+      "runs": 1083,
+      "fastq_bytes": 497545846539,
+      "base_count": 790246326100,
+      "strategies": [
+        "WGS"
+      ],
+      "scientific_names": [
+        "Escherichia coli"
+      ]
+    },
+    {
+      "study_accession": "PRJEB12887",
+      "runs": 3898,
+      "fastq_bytes": 497291322727,
+      "base_count": 1150839843054,
+      "strategies": [
+        "WGS"
+      ],
+      "scientific_names": [
+        "Escherichia coli"
+      ]
+    },
+    {
+      "study_accession": "PRJNA1062516",
+      "runs": 470,
+      "fastq_bytes": 491404351174,
+      "base_count": 863825596254,
+      "strategies": [
+        "RNA-Seq"
+      ],
+      "scientific_names": [
+        "Escherichia coli"
+      ]
+    },
+    {
+      "study_accession": "PRJEB32059",
+      "runs": 3490,
+      "fastq_bytes": 470914456130,
+      "base_count": 1170406300402,
+      "strategies": [
+        "WGS"
+      ],
+      "scientific_names": [
+        "Escherichia coli"
+      ]
+    },
+    {
+      "study_accession": "PRJNA707214",
+      "runs": 679,
+      "fastq_bytes": 462662204542,
+      "base_count": 1002648208368,
+      "strategies": [
+        "WGS"
+      ],
+      "scientific_names": [
+        "Escherichia coli"
+      ]
+    },
+    {
+      "study_accession": "PRJNA593695",
+      "runs": 688,
+      "fastq_bytes": 454214570339,
+      "base_count": 1016202486938,
+      "strategies": [
+        "WGS"
+      ],
+      "scientific_names": [
+        "Escherichia coli"
+      ]
+    },
+    {
+      "study_accession": "PRJNA611810",
+      "runs": 512,
+      "fastq_bytes": 451580496533,
+      "base_count": 684277480590,
+      "strategies": [
+        "WGS"
+      ],
+      "scientific_names": [
+        "Escherichia coli"
+      ]
+    },
+    {
+      "study_accession": "PRJNA380528",
+      "runs": 2443,
+      "fastq_bytes": 440658116925,
+      "base_count": 642245077050,
+      "strategies": [
+        "WGS"
+      ],
+      "scientific_names": [
+        "Escherichia coli B str. REL606"
+      ]
+    },
+    {
+      "study_accession": "PRJEB103832",
+      "runs": 460,
+      "fastq_bytes": 437721142101,
+      "base_count": 853271650130,
+      "strategies": [
+        "WGS"
+      ],
+      "scientific_names": [
+        "Escherichia coli BW25113"
+      ]
+    },
+    {
+      "study_accession": "PRJNA917048",
+      "runs": 134,
+      "fastq_bytes": 437238636574,
+      "base_count": 1127425355528,
+      "strategies": [
+        "AMPLICON"
+      ],
+      "scientific_names": [
+        "Escherichia coli"
+      ]
+    },
+    {
+      "study_accession": "PRJNA739205",
+      "runs": 1090,
+      "fastq_bytes": 435061179592,
+      "base_count": 670058885663,
+      "strategies": [
+        "WGS"
+      ],
+      "scientific_names": [
+        "Escherichia coli"
+      ]
+    },
+    {
+      "study_accession": "PRJEB73531",
+      "runs": 1668,
+      "fastq_bytes": 432727927438,
+      "base_count": 874389165055,
+      "strategies": [
+        "WGS"
+      ],
+      "scientific_names": [
+        "Escherichia coli"
+      ]
+    },
+    {
+      "study_accession": "PRJEB4681",
+      "runs": 1532,
+      "fastq_bytes": 432060553878,
+      "base_count": 602380811400,
+      "strategies": [
+        "WGS"
+      ],
+      "scientific_names": [
+        "Escherichia coli"
+      ]
+    },
+    {
+      "study_accession": "PRJNA1237276",
+      "runs": 9,
+      "fastq_bytes": 419934201397,
+      "base_count": 656243498372,
+      "strategies": [
+        "OTHER"
+      ],
+      "scientific_names": [
+        "Escherichia coli"
+      ]
+    },
+    {
+      "study_accession": "PRJDB18396",
+      "runs": 266,
+      "fastq_bytes": 418176830121,
+      "base_count": 799283873267,
+      "strategies": [
+        "WGS"
+      ],
+      "scientific_names": [
+        "Escherichia coli"
+      ]
+    },
+    {
+      "study_accession": "PRJNA861272",
+      "runs": 1644,
+      "fastq_bytes": 416353551967,
+      "base_count": 874546507244,
+      "strategies": [
+        "WGS"
+      ],
+      "scientific_names": [
+        "Escherichia coli"
+      ]
+    },
+    {
+      "study_accession": "PRJNA924946",
+      "runs": 410,
+      "fastq_bytes": 412901644775,
+      "base_count": 1055952282756,
+      "strategies": [
+        "WGS"
+      ],
+      "scientific_names": [
+        "Escherichia coli",
+        "Escherichia coli O25b:H4-ST131"
+      ]
+    },
+    {
+      "study_accession": "PRJNA278956",
+      "runs": 61,
+      "fastq_bytes": 384715560240,
+      "base_count": 527724799212,
+      "strategies": [
+        "RNA-Seq"
+      ],
+      "scientific_names": [
+        "Escherichia coli"
+      ]
+    },
+    {
+      "study_accession": "PRJNA248042",
+      "runs": 787,
+      "fastq_bytes": 380822486095,
+      "base_count": 435546705997,
+      "strategies": [
+        "WGS"
+      ],
+      "scientific_names": [
+        "Escherichia coli"
+      ]
+    },
+    {
+      "study_accession": "PRJNA1007570",
+      "runs": 882,
+      "fastq_bytes": 376636941641,
+      "base_count": 634175619174,
+      "strategies": [
+        "WGS"
+      ],
+      "scientific_names": [
+        "Escherichia coli"
+      ]
+    },
+    {
+      "study_accession": "PRJEB15226",
+      "runs": 1356,
+      "fastq_bytes": 366633076931,
+      "base_count": 477374199994,
+      "strategies": [
+        "WGS"
+      ],
+      "scientific_names": [
+        "Escherichia coli"
+      ]
+    },
+    {
+      "study_accession": "PRJEB45949",
+      "runs": 628,
+      "fastq_bytes": 362590473462,
+      "base_count": 464911362002,
+      "strategies": [
+        "WGS"
+      ],
+      "scientific_names": [
+        "Escherichia coli"
+      ]
+    },
+    {
+      "study_accession": "PRJNA687255",
+      "runs": 1639,
+      "fastq_bytes": 358808368540,
+      "base_count": 574954277693,
+      "strategies": [
+        "WGS"
+      ],
+      "scientific_names": [
+        "Escherichia coli"
+      ]
+    },
+    {
+      "study_accession": "PRJEB38313",
+      "runs": 493,
+      "fastq_bytes": 356252047584,
+      "base_count": 723312487500,
+      "strategies": [
+        "WGS"
+      ],
+      "scientific_names": [
+        "Escherichia coli"
+      ]
+    },
+    {
+      "study_accession": "PRJNA231221",
+      "runs": 274,
+      "fastq_bytes": 354026698720,
+      "base_count": 679923138648,
+      "strategies": [
+        "WGS"
+      ],
+      "scientific_names": [
+        "Escherichia coli"
+      ]
+    },
+    {
+      "study_accession": "PRJNA1150548",
+      "runs": 1798,
+      "fastq_bytes": 351686042423,
+      "base_count": 694572399313,
+      "strategies": [
+        "WGS"
+      ],
+      "scientific_names": [
+        "Escherichia coli"
+      ]
+    },
+    {
+      "study_accession": "PRJNA1197522",
+      "runs": 195,
+      "fastq_bytes": 351046937810,
+      "base_count": 1495222046100,
+      "strategies": [
+        "OTHER"
+      ],
+      "scientific_names": [
+        "Escherichia coli"
+      ]
+    },
+    {
+      "study_accession": "PRJNA1008428",
+      "runs": 1062,
+      "fastq_bytes": 349994952977,
+      "base_count": 474531942383,
+      "strategies": [
+        "WGS"
+      ],
+      "scientific_names": [
+        "Escherichia coli"
+      ]
+    },
+    {
+      "study_accession": "PRJEB60270",
+      "runs": 237,
+      "fastq_bytes": 346039566048,
+      "base_count": 666244814106,
+      "strategies": [
+        "WGS"
+      ],
+      "scientific_names": [
+        "Escherichia coli"
+      ]
+    },
+    {
+      "study_accession": "PRJEB50545",
+      "runs": 914,
+      "fastq_bytes": 346006846312,
+      "base_count": 542070890732,
+      "strategies": [
+        "WGA",
+        "WGS"
+      ],
+      "scientific_names": [
+        "Escherichia coli"
+      ]
+    },
+    {
+      "study_accession": "PRJEB20357",
+      "runs": 2309,
+      "fastq_bytes": 342196615495,
+      "base_count": 781329790272,
+      "strategies": [
+        "WGS"
+      ],
+      "scientific_names": [
+        "Escherichia coli"
+      ]
+    },
+    {
+      "study_accession": "PRJNA1221946",
+      "runs": 658,
+      "fastq_bytes": 340108004694,
+      "base_count": 550624488175,
+      "strategies": [
+        "WGS"
+      ],
+      "scientific_names": [
+        "Escherichia coli"
+      ]
+    },
+    {
+      "study_accession": "PRJEB55855",
+      "runs": 1076,
+      "fastq_bytes": 332939152711,
+      "base_count": 537518671009,
+      "strategies": [
+        "WGS"
+      ],
+      "scientific_names": [
+        "Escherichia coli"
+      ]
+    },
+    {
+      "study_accession": "PRJDB5579",
+      "runs": 943,
+      "fastq_bytes": 332428225767,
+      "base_count": 419381014934,
+      "strategies": [
+        "WGS"
+      ],
+      "scientific_names": [
+        "Escherichia coli"
+      ]
+    },
+    {
+      "study_accession": "PRJEB61153",
+      "runs": 847,
+      "fastq_bytes": 329499994801,
+      "base_count": 511416367928,
+      "strategies": [
+        "WGS"
+      ],
+      "scientific_names": [
+        "Escherichia coli"
+      ]
+    },
+    {
+      "study_accession": "PRJNA1404875",
+      "runs": 112,
+      "fastq_bytes": 322666833991,
+      "base_count": 452060384302,
+      "strategies": [
+        "AMPLICON"
+      ],
+      "scientific_names": [
+        "Escherichia coli"
+      ]
+    },
+    {
+      "study_accession": "PRJEB83274",
+      "runs": 419,
+      "fastq_bytes": 321173695466,
+      "base_count": 643990836187,
+      "strategies": [
+        "WGS"
+      ],
+      "scientific_names": [
+        "Escherichia coli"
+      ]
+    },
+    {
+      "study_accession": "PRJNA271899",
+      "runs": 371,
+      "fastq_bytes": 319599099271,
+      "base_count": 494989678780,
+      "strategies": [
+        "WGS"
+      ],
+      "scientific_names": [
+        "Escherichia coli"
+      ]
+    },
+    {
+      "study_accession": "PRJNA1230821",
+      "runs": 338,
+      "fastq_bytes": 317635684421,
+      "base_count": 553949919600,
+      "strategies": [
+        "WGS"
+      ],
+      "scientific_names": [
+        "Escherichia coli O25b:H4-ST131"
+      ]
+    },
+    {
+      "study_accession": "PRJEB54735",
+      "runs": 989,
+      "fastq_bytes": 316857521801,
+      "base_count": 534253094322,
+      "strategies": [
+        "WGS"
+      ],
+      "scientific_names": [
+        "Escherichia coli"
+      ]
+    },
+    {
+      "study_accession": "PRJNA786867",
+      "runs": 1113,
+      "fastq_bytes": 315954940490,
+      "base_count": 566523881004,
+      "strategies": [
+        "WGS"
+      ],
+      "scientific_names": [
+        "Escherichia coli"
+      ]
+    },
+    {
+      "study_accession": "PRJNA80049",
+      "runs": 174,
+      "fastq_bytes": 315704811370,
+      "base_count": 447594041260,
+      "strategies": [
+        "EST",
+        "WGS"
+      ],
+      "scientific_names": [
+        "Escherichia coli str. K-12 substr. MG1655"
+      ]
+    },
+    {
+      "study_accession": "PRJEB76066",
+      "runs": 433,
+      "fastq_bytes": 312316792081,
+      "base_count": 618641400316,
+      "strategies": [
+        "WGS"
+      ],
+      "scientific_names": [
+        "Escherichia coli"
+      ]
+    },
+    {
+      "study_accession": "PRJEB35000",
+      "runs": 527,
+      "fastq_bytes": 302351468176,
+      "base_count": 413708481456,
+      "strategies": [
+        "WGS"
+      ],
+      "scientific_names": [
+        "Escherichia coli"
+      ]
+    },
+    {
+      "study_accession": "PRJEB29743",
+      "runs": 2179,
+      "fastq_bytes": 300262294262,
+      "base_count": 715267788874,
+      "strategies": [
+        "WGS"
+      ],
+      "scientific_names": [
+        "Escherichia coli"
+      ]
+    },
+    {
+      "study_accession": "PRJNA301160",
+      "runs": 1023,
+      "fastq_bytes": 299801331356,
+      "base_count": 555303245497,
+      "strategies": [
+        "RNA-Seq",
+        "WGS"
+      ],
+      "scientific_names": [
+        "Escherichia coli",
+        "Escherichia coli str. K-12 substr. MG1655"
+      ]
+    },
+    {
+      "study_accession": "PRJEB57600",
+      "runs": 600,
+      "fastq_bytes": 297986414507,
+      "base_count": 469042145963,
+      "strategies": [
+        "WGS"
+      ],
+      "scientific_names": [
+        "Escherichia coli"
+      ]
+    },
+    {
+      "study_accession": "PRJEB56918",
+      "runs": 887,
+      "fastq_bytes": 297770806101,
+      "base_count": 444849125578,
+      "strategies": [
+        "WGS"
+      ],
+      "scientific_names": [
+        "Escherichia coli"
+      ]
+    },
+    {
+      "study_accession": "PRJEB23294",
+      "runs": 2280,
+      "fastq_bytes": 296223656900,
+      "base_count": 706047667266,
+      "strategies": [
+        "WGS"
+      ],
+      "scientific_names": [
+        "Escherichia coli"
+      ]
+    },
+    {
+      "study_accession": "PRJNA901044",
+      "runs": 75,
+      "fastq_bytes": 295112986795,
+      "base_count": 851397785700,
+      "strategies": [
+        "POOLCLONE"
+      ],
+      "scientific_names": [
+        "Escherichia coli"
+      ]
+    }
+  ]
+}
