@@ -41,8 +41,16 @@ try {
         throw "uv is unavailable inside $DistroName."
     }
 
-    $dockerVersion = (& wsl.exe -d $DistroName -- docker version --format "{{.Server.Version}}" | Out-String).Trim()
-    if ($LASTEXITCODE -ne 0) {
+    $dockerVersion = $null
+    for ($attempt = 1; $attempt -le 12; $attempt++) {
+        $dockerVersion = (& wsl.exe -d $DistroName -- docker version --format "{{.Server.Version}}" 2>$null | Out-String).Trim()
+        if ($LASTEXITCODE -eq 0 -and $dockerVersion) {
+            break
+        }
+        Write-Host "Waiting for Docker Desktop integration, attempt $attempt/12."
+        Start-Sleep -Seconds 10
+    }
+    if (-not $dockerVersion) {
         throw "Docker Desktop integration is not available inside $DistroName."
     }
 
@@ -61,4 +69,3 @@ try {
 finally {
     Stop-Transcript
 }
-

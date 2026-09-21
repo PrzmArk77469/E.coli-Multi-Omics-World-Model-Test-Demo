@@ -66,15 +66,15 @@ try {
         Start-Sleep -Seconds 20
     }
 
-    $dockerCli = Get-Command docker.exe -ErrorAction SilentlyContinue
-    if ($dockerCli) {
-        & $dockerCli.Source desktop enable integration --distro $DistroName
+    $dockerCliPath = Join-Path $InstallRoot "resources\bin\docker.exe"
+    if (Test-Path $dockerCliPath) {
+        & $dockerCliPath desktop enable integration --distro $DistroName
         if ($LASTEXITCODE -ne 0) {
             Write-Warning "Docker Desktop CLI integration command was not accepted. Enable $DistroName manually in Settings > Resources > WSL integration."
         }
     }
     else {
-        Write-Warning "Docker CLI is not on PATH yet. Sign out or restart Docker Desktop, then enable $DistroName in WSL integration settings."
+        Write-Warning "Docker CLI was not found at $dockerCliPath. Enable $DistroName manually in Settings > Resources > WSL integration."
     }
 
     $settingsDir = Join-Path $env:APPDATA "Docker"

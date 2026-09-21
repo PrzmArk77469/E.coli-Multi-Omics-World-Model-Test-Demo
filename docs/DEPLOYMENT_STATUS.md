@@ -17,6 +17,10 @@ Last updated: 2026-09-21 16:15 +08:00
   signature verification succeeded.
 - Installed Docker Desktop to `D:\DockerDesktop`.
 - Configured Docker WSL data root as `D:\DockerDesktopData`.
+- Pre-downloaded the Microsoft WSL2 kernel MSI. Its pre-reboot installation
+  returned `1603` because `LxssManager` does not exist until the pending WSL
+  feature activation reboot. `01-Install-Ubuntu2404.ps1` retries it after the
+  reboot.
 - Created the initial Git commit
   `dc7a5a1510acfac4df9b0a532c5e635bb1e4972f`.
 - Pushed `main` to the local rollback remote
