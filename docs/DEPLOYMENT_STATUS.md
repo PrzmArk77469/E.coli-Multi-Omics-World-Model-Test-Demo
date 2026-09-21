@@ -17,6 +17,10 @@ Last updated: 2026-09-21 16:15 +08:00
   signature verification succeeded.
 - Installed Docker Desktop to `D:\DockerDesktop`.
 - Configured Docker WSL data root as `D:\DockerDesktopData`.
+- Created the initial Git commit
+  `dc7a5a1510acfac4df9b0a532c5e635bb1e4972f`.
+- Pushed `main` to the local rollback remote
+  `D:\CodexApp\Project13\GitBackup.git`.
 
 ## Pending Windows reboot
 
@@ -60,4 +64,3 @@ git push -u origin main
 - Restart Windows when convenient to complete WSL2 import.
 - Decide whether to mirror GitHub to Alibaba Cloud Codeup for mainland ECS
   access.
-

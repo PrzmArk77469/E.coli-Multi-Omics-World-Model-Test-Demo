@@ -32,7 +32,8 @@ the project data tree outside this repository or an object-storage bucket.
 
 See `docs/INFRASTRUCTURE.md` for the complete topology and
 `docs/LOGGING_AND_ROLLBACK.md` for recovery instructions. Current progress is
-recorded in `docs/DEPLOYMENT_STATUS.md`.
+recorded in `docs/DEPLOYMENT_STATUS.md`. New Codex conversations should begin
+with `docs/NEW_CONVERSATION_CONTEXT.md`.
 
 ## Git workflow
 
