@@ -29,7 +29,10 @@ sparseVhd=true
 "@ | Set-Content -Encoding ASCII -Path $configPath
 
     Write-Host "Wrote $configPath"
-    & wsl.exe --shutdown
+    # On the inbox Windows 10 WSL build, --shutdown can leave LxssManager in
+    # STOP_PENDING. Terminating the distro applies the runtime limits for this
+    # run; the remaining VM settings apply on the next normal Windows restart.
+    & wsl.exe --terminate $DistroName
     & wsl.exe -d $DistroName -- uname -a
     if ($LASTEXITCODE -ne 0) {
         throw "Unable to start $DistroName."
@@ -38,4 +41,3 @@ sparseVhd=true
 finally {
     Stop-Transcript
 }
-
