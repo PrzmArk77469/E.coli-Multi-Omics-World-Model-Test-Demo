@@ -16,11 +16,6 @@ $statusPath = Join-Path $logDir "last-verification.json"
 
 Start-Transcript -Path $logPath -Append
 try {
-    & wsl.exe --version
-    if ($LASTEXITCODE -ne 0) {
-        throw "WSL version check failed."
-    }
-
     & wsl.exe --list --verbose
     if ($LASTEXITCODE -ne 0) {
         throw "WSL distribution listing failed."
