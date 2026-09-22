@@ -18,7 +18,7 @@ the project data tree outside this repository or an object-storage bucket.
 ## System at a glance
 
 ```mermaid
-flowchart LR
+flowchart TB
     Data["Observed multi-omics metadata"] --> Mapping["Unified sample and condition mapping"]
     Mapping --> Synthetic["Labeled synthetic sidecar"]
     Synthetic --> Engine["2,000-agent event engine"]
