@@ -66,6 +66,14 @@ Last updated: 2026-09-22
 - Hermes configuration was migrated to version `v45`. Its reviewed installer
   hash, idempotent WSL installer, and operating procedure are recorded in the
   repository. No API key or OAuth credential is stored in Git.
+- Hermes is configured with provider `deepseek`, model `deepseek-flash`, and
+  base URL `https://api.deepseek.com/v1`. The credential remains only in
+  `/home/mars/.hermes/.env`.
+- Hermes passed a real inference smoke test with output `HERMES_OK` and a real
+  terminal-tool test that returned the repository's `main` branch status.
+- Hermes terminal commands now default to
+  `/mnt/d/CodexApp/Project13/Git`, so repository-scoped work starts in the
+  correct directory.
 - `docs/SYSTEM_ARCHITECTURE.md` is the canonical system map for onboarding,
   deployment review, provenance review, and rollback planning.
 
@@ -73,14 +81,14 @@ Last updated: 2026-09-22
 
 The local execution, container, Git, network, condition-aware simulation, and
 observed/synthetic separation foundations are operational. The official
-Nous Research Hermes Agent is installed and diagnostically healthy, but model
-authentication remains pending. Alibaba Cloud resources and bulk ENA BioSample
-retrieval have not yet been provisioned.
+Nous Research Hermes Agent is installed, authenticated to DeepSeek Flash, and
+verified through inference and terminal tools. Alibaba Cloud resources and bulk
+ENA BioSample retrieval have not yet been provisioned.
 
 ## Immediate next work
 
-1. Authenticate Hermes with Nous Portal or another hosted model provider, then
-   run one repository-scoped smoke task.
+1. Use Hermes for repository-scoped planning, implementation, and verification
+   tasks against the current commit.
 2. Deploy the Alibaba Cloud CPU control plane and private OSS before adding an
    on-demand GPU worker.
 3. Replace synthetic Demo fields with real BioSample attributes in the next ENA
@@ -91,4 +99,5 @@ retrieval have not yet been provisioned.
 - Decide whether to mirror GitHub to Alibaba Cloud Codeup for mainland ECS
   access.
 - Decide when to provision the first CPU ECS and private OSS bucket.
-- Decide which hosted inference provider Hermes should use.
+- Decide which optional external-tool credentials, if any, should be added
+  beyond the current DeepSeek inference configuration.

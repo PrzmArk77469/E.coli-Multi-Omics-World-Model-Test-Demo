@@ -27,7 +27,7 @@ flowchart TB
     Events --> Viewer["Interactive 3D replay"]
     Infra["Windows + WSL2 Ubuntu + Docker"] --> Engine
     Infra --> Viewer
-    Infra --> Hermes["Nous Research Hermes Agent<br/>installed, model auth pending"]
+    Infra --> Hermes["Nous Research Hermes Agent<br/>DeepSeek Flash verified"]
     Hermes --> Engine
     Cloud["Alibaba Cloud"] -. planned .-> Engine
 
@@ -60,8 +60,9 @@ The detailed component, provenance, deployment, and rollback maps are in
 - Docker Desktop `4.91.0` with Engine `29.8.0` is installed on D: and
   integrated with `Ubuntu-24.04`.
 - Nous Research Hermes Agent `v0.21.4` is installed in Ubuntu with its CLI,
-  browser/computer-use tools, memory, cron, and skills. Model authentication is
-  the remaining user setup step.
+  browser/computer-use tools, memory, cron, and skills. It uses provider
+  `deepseek`, model `deepseek-flash`, and has passed inference and terminal-tool
+  smoke tests.
 - Docker pulls use the local Clash Verge HTTP proxy at
   `http://127.0.0.1:7897`.
 - Ubuntu loads a generated proxy block from `~/.bashrc`; the source template
@@ -79,8 +80,8 @@ For an already configured machine:
 2. Run `Run-Infrastructure.cmd`; it self-elevates, bypasses the PowerShell
    execution-policy error, and runs the idempotent infrastructure sequence.
 3. Review the newest files under `logs` and `logs/last-verification.json`.
-4. Authenticate the installed Nous Research Hermes Agent with
-   `hermes setup --portal` or `hermes model`.
+4. Start the installed Nous Research Hermes Agent and run the documented
+   DeepSeek Flash smoke test.
 5. Deploy the Alibaba Cloud CPU control plane before enabling GPU workers.
 
 See `docs/INFRASTRUCTURE.md` for the complete topology and

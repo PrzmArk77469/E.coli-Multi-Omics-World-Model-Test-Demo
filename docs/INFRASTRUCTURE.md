@@ -75,8 +75,13 @@ trusted CA bundle.
 - Installer source: `https://hermes-agent.nousresearch.com/install.sh`.
 - Reviewed installer SHA256:
   `00f9080c6452bf87f03ef2fffb4b2c23b9f43f946aaae956e4c547d17e310b22`.
-- Model authentication is user-owned and intentionally excluded from
-  automation. The current recommended path is `hermes setup --portal`.
+- Active inference provider: `deepseek`.
+- Active model: `deepseek-flash`.
+- API base URL: `https://api.deepseek.com/v1`.
+- Credentials remain local in `/home/mars/.hermes/.env` and are excluded from
+  Git and documentation.
+- Hermes terminal commands default to
+  `/mnt/d/CodexApp/Project13/Git`.
 - Hermes is an orchestration client, not the authority for scientific state,
   provenance, container pins, or cloud credentials.
 

@@ -23,11 +23,15 @@ foundation. The installer and runtime come only from the official
 | Persona | `/home/mars/.hermes/SOUL.md` |
 | Runtime state | `/home/mars/.hermes/` |
 | Browser cache | `/home/mars/.cache/ms-playwright` |
+| Provider | `deepseek` |
+| Default model | `deepseek-flash` |
+| API base URL | `https://api.deepseek.com/v1` |
+| Default terminal directory | `/mnt/d/CodexApp/Project13/Git` |
 
 The installation includes the Hermes CLI, ACP entry point, browser and
 computer-use support, terminal and file tools, memory, skills, cron, and
-Playwright Chromium. Model inference is not authenticated yet, so chat is the
-only major workflow that remains disabled.
+Playwright Chromium. DeepSeek Flash inference and terminal-tool execution have
+been verified with real calls, so the local agent workflow is operational.
 
 ## Install or refresh
 
@@ -53,23 +57,34 @@ cd /mnt/d/CodexApp/Project13/Git
 bash infra/wsl/install-hermes.sh --update
 ```
 
-## Configure inference
+## Current inference configuration
 
-The recommended first setup is the Nous Portal OAuth path:
-
-```bash
-hermes setup --portal
-```
-
-Alternatively, run the interactive model picker:
+The active configuration is:
 
 ```bash
-hermes model
+hermes config get model.provider
+hermes config get model.default
+hermes config get model.base_url
 ```
 
-The machine has no NVIDIA GPU, so a local large model is not the default path.
-Use Nous Portal or another hosted provider. Credentials stay in
-`~/.hermes/.env` or the provider's OAuth store and must never be committed.
+Expected values:
+
+```text
+deepseek
+deepseek-flash
+https://api.deepseek.com/v1
+```
+
+The API credential is stored only in `~/.hermes/.env`. Verify inference without
+reading or printing that file:
+
+```bash
+hermes -z "Reply with exactly HERMES_OK and nothing else."
+```
+
+To replace the provider or model later, use `hermes model` or
+`hermes setup --reconfigure`. The machine has no NVIDIA GPU, so a local large
+model is not the default path.
 
 ## Start and inspect
 
@@ -89,12 +104,13 @@ hermes doctor --fix
 hermes security
 ```
 
-`hermes doctor` reports one expected remaining issue until a model provider is
-authenticated. Optional messaging, X Search, image generation, and vision
-tools remain disabled until their credentials or dependencies are configured.
-The bundled Python also reports a non-blocking SQLite `3.45.1` WAL-reset
-advisory; Hermes currently uses rollback journal mode for `state.db`, which the
-installation workflow treats as an accepted local warning.
+`hermes doctor` reports DeepSeek connectivity as healthy. Its remaining
+actionable message concerns optional full-tool credentials such as messaging,
+X Search, image generation, or vision; these tools remain disabled until their
+own credentials or dependencies are configured. The bundled Python also
+reports a non-blocking SQLite `3.45.1` WAL-reset advisory; Hermes currently
+uses rollback journal mode for `state.db`, which the installation workflow
+treats as an accepted local warning.
 
 ## Logs and rollback
 

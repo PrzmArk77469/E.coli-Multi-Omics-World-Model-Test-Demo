@@ -17,7 +17,7 @@ biological predictions.
 
 Solid nodes are implemented and locally verified. Dashed nodes are planned
 extensions and must not be treated as deployed infrastructure. Hermes is
-installed locally, but model authentication is still pending.
+installed locally and verified through DeepSeek Flash inference and tools.
 
 ```mermaid
 flowchart TB
@@ -34,7 +34,7 @@ flowchart TB
     Engine["2,000-agent event engine"]
     Events["Events, complexes, summary, manifest"]
     Viewer["Interactive 3D replay viewer"]
-    Hermes["Nous Research Hermes Agent<br/>installed; model auth pending"]
+    Hermes["Nous Research Hermes Agent<br/>DeepSeek Flash verified"]
     ECS["Alibaba Cloud CPU ECS<br/>planned"]
     OSS["Private OSS bucket<br/>planned"]
     GPU["On-demand GPU ECS<br/>planned"]
@@ -180,7 +180,7 @@ does not require renaming this stable local directory.
 | `visualizations/demo_engine.html` | Interactive Three.js replay interface | Implemented |
 | `infra/windows/` | WSL, Ubuntu, Docker installation and verification | Implemented locally |
 | `infra/wsl/` | Ubuntu bootstrap and proxy configuration | Implemented locally |
-| Nous Research Hermes Agent | Agent-assisted planning and orchestration | Installed; model authentication pending |
+| Nous Research Hermes Agent | Agent-assisted planning and orchestration | Installed; DeepSeek Flash verified |
 | Alibaba Cloud | CPU control plane, private OSS, on-demand GPU | Planned |
 
 ## 7. Repository map
@@ -224,8 +224,9 @@ Runtime evidence is stored locally under `logs/` and includes infrastructure
 verification plus `condition-demo-42.json` hashes and outcome totals. The local
 `backup` remote provides an additional rollback point independent of GitHub.
 Hermes `v0.21.4` passes core dependency, tool, and configuration diagnostics.
-Its remaining actionable item is model authentication; SQLite and optional
-tool warnings are non-blocking.
+Provider `deepseek` and model `deepseek-flash` passed both an inference smoke
+test and a terminal-tool test. SQLite and optional-tool warnings are
+non-blocking.
 
 ## 9. Review checklist
 
@@ -235,18 +236,18 @@ tool warnings are non-blocking.
 4. Confirm that the event engine emits all three required outcomes.
 5. Confirm that summary, manifest, event log, and replay payload agree.
 6. Treat all current simulation positions and rules as engineering fixtures.
-7. Keep the verified simulation baseline intact while Hermes is connected to a
-   hosted model provider.
+7. Keep the verified simulation baseline intact while Hermes is used for
+   repository-scoped agent workflows.
 8. Add Alibaba Cloud and bulk ENA retrieval only after preserving this verified
    local baseline.
 
 ## 10. Next milestones
 
 1. Rename and maintain the canonical GitHub repository.
-2. Authenticate the installed Hermes Agent and run a repository-scoped smoke
-   task.
-3. Connect Hermes to the remote execution model after local authentication is
-   verified.
+2. Use the verified Hermes Agent for repository-scoped planning,
+   implementation, and verification tasks.
+3. Connect Hermes to the remote execution model after the cloud SSH boundary is
+   provisioned.
 4. Provision the Alibaba Cloud CPU control plane and private OSS bucket.
 5. Expand ENA BioSample retrieval and reduce synthetic condition coverage.
 6. Add a GPU worker only for a measured model-training or inference workload.

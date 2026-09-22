@@ -85,6 +85,15 @@ try {
     if ($hermesVersionResult.ExitCode -ne 0 -or $hermesVersion -notmatch "Hermes Agent") {
         throw "Hermes Agent verification failed.`n$hermesVersion"
     }
+    $hermesProvider = Invoke-WslCommand -Arguments @(
+        "-d", $DistroName, "-u", $LinuxUser, "--", "bash", "-lc", "hermes config get model.provider"
+    )
+    $hermesModel = Invoke-WslCommand -Arguments @(
+        "-d", $DistroName, "-u", $LinuxUser, "--", "bash", "-lc", "hermes config get model.default"
+    )
+    $hermesBaseUrl = Invoke-WslCommand -Arguments @(
+        "-d", $DistroName, "-u", $LinuxUser, "--", "bash", "-lc", "hermes config get model.base_url"
+    )
 
     $dockerServer = $null
     for ($attempt = 1; $attempt -le 12; $attempt++) {
@@ -142,7 +151,8 @@ try {
     if ($hermesDoctorResult.ExitCode -notin @(0, 1)) {
         throw "Hermes doctor returned exit code $($hermesDoctorResult.ExitCode).`n$hermesDoctor"
     }
-    $hermesAuthPending = $hermesDoctor -match "hermes setup"
+    $hermesInferenceVerified = $hermesDoctor -match "DeepSeek"
+    $hermesOptionalSetupRecommended = $hermesDoctor -match "hermes setup"
 
     $gitProxy = "http://${wslHost}:${ProxyPort}"
     $gitRemote = Invoke-WslCommand -Arguments @(
@@ -172,7 +182,11 @@ try {
         docker_hello_world = "ok"
         hermes_version = $hermesVersion
         hermes_doctor_exit = $hermesDoctorResult.ExitCode
-        hermes_auth_pending = $hermesAuthPending
+        hermes_provider = $hermesProvider
+        hermes_model = $hermesModel
+        hermes_base_url = $hermesBaseUrl
+        hermes_inference_verified = $hermesInferenceVerified
+        hermes_optional_setup_recommended = $hermesOptionalSetupRecommended
         clash_proxy_port = $ProxyPort
         clash_reachable = $clashReachable
         wsl_host = $wslHost

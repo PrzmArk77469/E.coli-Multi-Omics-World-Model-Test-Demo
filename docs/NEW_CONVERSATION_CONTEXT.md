@@ -1,5 +1,12 @@
 # New Conversation Context
 
+Last updated: 2026-09-22
+
+This is the canonical handoff file for a new Codex or Hermes conversation. It
+records the verified local infrastructure and the exact commands needed to
+resume work without rebuilding the environment. Secrets are never recorded
+here.
+
 ## Read these first
 
 1. `README.md`
@@ -11,6 +18,32 @@
 7. `docs/HERMES_WSL.md`
 8. `docs/CONDITION_MAPPING.md`
 9. `docs/SYNTHETIC_CONDITIONS.md`
+
+## Fast start
+
+Open Ubuntu and start Hermes from the project repository:
+
+```powershell
+& 'C:\Program Files\WSL\wsl.exe' -d Ubuntu-24.04 -u mars
+```
+
+```bash
+cd /mnt/d/CodexApp/Project13/Git
+hermes --tui
+```
+
+Non-interactive smoke test:
+
+```bash
+cd /mnt/d/CodexApp/Project13/Git
+hermes -z "Reply with exactly HERMES_OK and nothing else."
+```
+
+Expected output:
+
+```text
+HERMES_OK
+```
 
 ## Current machine layout
 
@@ -26,10 +59,11 @@
 | Docker WSL data | `D:\DockerDesktopData` |
 | Hermes home | `/home/mars/.hermes` in `Ubuntu-24.04` |
 | Hermes code | `/home/mars/.hermes/hermes-agent` in `Ubuntu-24.04` |
+| Hermes default terminal directory | `/mnt/d/CodexApp/Project13/Git` |
 | Logs | `D:\CodexApp\Project13\Git\logs` |
 | Local Git backup | `D:\CodexApp\Project13\GitBackup.git` |
 
-## Current state
+## Verified runtime
 
 - Windows remains Windows 10 Home 22H2 build 19045; no Windows upgrade was
   performed.
@@ -40,6 +74,7 @@
   stored in this repository.
 - Git, Python, build tools, `uv 0.12.17`, and the base developer packages are
   installed in Ubuntu.
+- Node.js `v22.23.2` and npm `10.9.8` are installed through nvm.
 - Docker Desktop `4.91.0` and Engine `29.8.0` are installed and working.
 - Docker WSL integration is enabled for `Ubuntu-24.04`.
 - Docker Desktop is configured to use the Clash Verge proxy
@@ -51,21 +86,49 @@
   Windows Firewall rule `Project13 Clash Verge WSL 7897` is restricted to
   `172.16.0.0/12`.
 - The `hello-world` image was pulled and executed successfully from Ubuntu.
-- Nous Research Hermes Agent `v0.21.4` is installed at
-  `/home/mars/.local/bin/hermes`. It includes the CLI, ACP entry point,
-  browser/computer-use tools, Playwright Chromium, skills, memory, cron,
-  terminal, and file tools.
-- Hermes configuration is version `v45`. Model authentication is pending:
-  run `hermes setup --portal` or `hermes model`. No credential belongs in Git.
-- Hermes runtime diagnostics report one expected setup item until a model
-  provider is authenticated. Optional messaging, X Search, vision, and image
-  generation tools remain unavailable until configured.
+
+## Hermes Agent
+
+- Version: `v0.21.4 (2026.9.21)`, upstream `836b5f82`.
+- Command: `/home/mars/.local/bin/hermes`.
+- Configuration version: `v45`.
+- Provider: `deepseek`.
+- Default model: `deepseek-flash`.
+- API base URL: `https://api.deepseek.com/v1`.
+- Credential location: `/home/mars/.hermes/.env` on this machine only.
+- Terminal backend: local.
+- Default terminal directory: `/mnt/d/CodexApp/Project13/Git`.
+- Verified capabilities include CLI and ACP, terminal, file, browser,
+  browser-use, computer_use, web search/extract, memory, skills, cron,
+  project, todo, session search, TTS, and code execution.
+- DeepSeek connectivity is reported healthy by `hermes doctor`.
+- A real inference smoke test returned `HERMES_OK`.
+- A real terminal-tool test returned the repository worktree and
+  `## main...origin/main`.
+- Optional integrations requiring separate credentials or systems remain
+  disabled when their dependency is absent. The current actionable doctor item
+  is only for optional full-tool credentials, not core agent inference.
+
+Do not print, copy, commit, or include the API key in a conversation. A new
+conversation should verify behavior through commands, not by reading `.env`.
+
+## Git and network
+
 - The repository is connected to
   `https://github.com/PrzmArk77469/E.coli-Multi-Omics-World-Model-Test-Demo.git`
   as `origin`.
 - A local rollback remote named `backup` points to
   `D:\CodexApp\Project13\GitBackup.git`.
-- The latest verification is recorded in `logs/last-verification.json`.
+- Current branch: `main`.
+- Current verified commit before the next change:
+  `9e70c48f55c1763c6c433b295551e3d319e7a235`.
+- `origin/main` and `backup/main` include that commit.
+- Docker and GitHub traffic use the verified Clash Verge proxy path.
+- The latest complete infrastructure verification is
+  `logs/last-verification.json`.
+
+## Project data and Demo
+
 - An observed-only sample-condition registry is generated at
   `D:\CodexApp\Project13\EcoliOmics\integrated\condition_completion`. It keeps
   source evidence separate from any future synthetic sidecar.
@@ -78,7 +141,34 @@
   provenance. Serve that directory over local HTTP; the generated data file is
   intentionally not committed.
 
-## Resume command
+## Verification commands
+
+Project tests:
+
+```bash
+cd /mnt/d/CodexApp/Project13/Git
+PYTHONPATH=src python3 -m unittest discover -s tests -v
+```
+
+Expected result: `16` tests pass.
+
+Hermes inference:
+
+```bash
+hermes config get model.provider
+hermes config get model.default
+hermes doctor
+hermes -z "Reply with exactly HERMES_OK and nothing else."
+```
+
+Expected model settings:
+
+```text
+deepseek
+deepseek-flash
+```
+
+## Resume the infrastructure
 
 Start Clash Verge so port `7897` is listening, then run:
 
@@ -87,7 +177,7 @@ Start Clash Verge so port `7897` is listening, then run:
 ```
 
 The launcher self-elevates and bypasses the execution-policy restriction. If
-the infrastructure is already running, the preferred direct checks are:
+the infrastructure is already running, use:
 
 ```powershell
 & 'C:\Program Files\WSL\wsl.exe' -l -v
@@ -98,6 +188,18 @@ the infrastructure is already running, the preferred direct checks are:
 & 'C:\Program Files\WSL\wsl.exe' -d Ubuntu-24.04 -u mars -- bash -lc 'hermes doctor'
 & 'C:\Users\Mars\.cache\codex-runtimes\codex-primary-runtime\dependencies\native\powershell\pwsh.exe' -NoProfile -ExecutionPolicy Bypass -File D:\CodexApp\Project13\Git\infra\windows\04-Verify-Infrastructure.ps1
 ```
+
+## New conversation protocol
+
+1. Read this file, `docs/SYSTEM_ARCHITECTURE.md`, and
+   `docs/DEPLOYMENT_STATUS.md`.
+2. Run `git status --short --branch` before edits.
+3. Use Hermes from `/mnt/d/CodexApp/Project13/Git`; its terminal commands
+   already default to that directory.
+4. Run the inference smoke test before relying on Hermes for a long workflow.
+5. Keep observed data, synthetic data, generated artifacts, credentials, and
+   logs in their documented local locations.
+6. Commit and push verified repository changes to both `origin` and `backup`.
 
 ## Do not do
 
