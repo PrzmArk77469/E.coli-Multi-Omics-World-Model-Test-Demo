@@ -39,20 +39,28 @@ Last updated: 2026-09-22
   queue, JSONL event logging, and `NO_EFFECT`, `MODIFY`, and `BIND` outcomes.
 - The 2,000-agent / 80-step integration test completes in seconds and produces
   all three required outcomes and abstract complexes.
+- An observed-only condition-mapping layer assigns stable unified sample IDs and
+  condition IDs without modifying `sample_master.tsv.gz`.
+- The first full mapping covers 602,778 source rows, 601,616 unified sample IDs,
+  and 558 observed condition signatures; evidence, confidence, and conflicts
+  remain attached to every field.
+- A resumable ENA BioSample XML fetcher is implemented. Three MG1655 samples
+  are cached as a contract demonstration; bulk retrieval remains a deliberate
+  later operation.
 
 ## Current boundary
 
-The local execution, container, Git, network, and first simulation foundations
-are operational. NemoHermes, Alibaba Cloud resources, condition completion, and
-synthetic gap-filling have not yet been implemented.
+The local execution, container, Git, network, first simulation, and observed
+condition-mapping foundations are operational. NemoHermes, Alibaba Cloud
+resources, bulk ENA BioSample retrieval, and synthetic gap-filling have not yet
+been implemented.
 
 ## Immediate next work
 
-1. Define condition-field completion and unified sample-id mapping.
-2. Add clearly labeled biologically plausible synthetic fixtures where source
+1. Add clearly labeled biologically plausible synthetic fixtures where source
    data is incomplete.
-3. Deploy NemoHermes after repeatable local workflows exist.
-4. Deploy the Alibaba Cloud CPU control plane and private OSS before adding an
+2. Deploy NemoHermes after repeatable local workflows exist.
+3. Deploy the Alibaba Cloud CPU control plane and private OSS before adding an
    on-demand GPU worker.
 
 ## Required user decisions

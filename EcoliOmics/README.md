@@ -52,6 +52,9 @@ D:\Python314\python.exe .\scripts\summarize_downloads.py
 D:\Python314\python.exe .\scripts\build_integrity_manifest.py --workers 4
 D:\Python314\python.exe .\scripts\verify_integrity_manifest.py --workers 4
 D:\Python314\python.exe .\scripts\build_integrated_master.py
+D:\Python314\python.exe .\scripts\fetch_ena_biosamples.py --sample-master .\integrated\sample_master.tsv.gz --cache-dir .\manifests\biosample_xml --proxy http://127.0.0.1:7897 --limit 100
+$env:PYTHONPATH = '..\Git\src'
+D:\Python314\python.exe -m ecoli_world.conditions --sample-master .\integrated\sample_master.tsv.gz --output-dir .\integrated\condition_completion --biosample-cache .\manifests\biosample_xml
 ```
 
 Network access may require running these commands outside the sandbox.

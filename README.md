@@ -71,6 +71,16 @@ PYTHONPATH=src python3 -m ecoli_world.cli \
 
 See `docs/SIMULATION_MVP.md` for the architecture and test command.
 
+## Condition mapping
+
+The condition mapping layer assigns stable `unified_sample_id` values to source
+samples and `condition_id` values to normalized condition signatures. It keeps
+observed fields, evidence, confidence, and conflicts separate from any later
+synthetic gap filling.
+
+See `docs/CONDITION_MAPPING.md` for the mapping rules and the resumable ENA
+BioSample fetch command.
+
 ## Git workflow
 
 ```powershell

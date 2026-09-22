@@ -50,6 +50,9 @@
 - A local rollback remote named `backup` points to
   `D:\CodexApp\Project13\GitBackup.git`.
 - The latest verification is recorded in `logs/last-verification.json`.
+- An observed-only sample-condition registry is generated at
+  `D:\CodexApp\Project13\EcoliOmics\integrated\condition_completion`. It keeps
+  source evidence separate from any future synthetic sidecar.
 
 ## Resume command
 
