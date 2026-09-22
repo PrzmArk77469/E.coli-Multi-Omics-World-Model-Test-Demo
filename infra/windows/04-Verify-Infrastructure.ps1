@@ -75,6 +75,17 @@ try {
     $uname = Invoke-WslCommand -Arguments @("-d", $DistroName, "--", "uname", "-a")
     $gitVersion = Invoke-WslCommand -Arguments @("-d", $DistroName, "--", "git", "--version")
     $uvVersion = Invoke-WslCommand -Arguments @("-d", $DistroName, "--", "uv", "--version")
+    $nodeVersion = Invoke-WslCommand -Arguments @("-d", $DistroName, "--", "node", "--version")
+    $npmVersion = Invoke-WslCommand -Arguments @("-d", $DistroName, "--", "npm", "--version")
+    $npxVersion = Invoke-WslCommand -Arguments @("-d", $DistroName, "--", "npx", "--version")
+    $corepackVersion = Invoke-WslCommand -Arguments @("-d", $DistroName, "--", "corepack", "--version")
+    $nodeExecutable = Invoke-WslCommand -Arguments @("-d", $DistroName, "--", "bash", "-c", "command -v node")
+    if ($nodeVersion -ne "v22.23.2") {
+        throw "Expected Node.js v22.23.2, got '$nodeVersion'."
+    }
+    if ($nodeExecutable -ne "/usr/local/bin/node") {
+        throw "Expected /usr/local/bin/node, got '$nodeExecutable'."
+    }
     $dockerClient = Invoke-WslCommand -Arguments @(
         "-d", $DistroName, "--", "docker", "version", "--format", "{{.Client.Version}}"
     )
@@ -177,6 +188,11 @@ try {
         uname = $uname
         git = $gitVersion
         uv = $uvVersion
+        node = $nodeVersion
+        npm = $npmVersion
+        npx = $npxVersion
+        corepack = $corepackVersion
+        node_executable = $nodeExecutable
         docker_client = $dockerClient
         docker_server = $dockerServer
         docker_hello_world = "ok"

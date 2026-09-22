@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-LOG_DIR="/mnt/d/CodexApp/Project13/Git/logs"
+REPO_ROOT="${REPO_ROOT:-/mnt/d/CodexApp/Project13/Git}"
+LOG_DIR="${LOG_DIR:-${REPO_ROOT}/logs}"
 APT_HTTP_MIRROR="${APT_HTTP_MIRROR:-http://mirrors.aliyun.com/ubuntu/}"
 APT_HTTPS_MIRROR="${APT_HTTPS_MIRROR:-https://mirrors.aliyun.com/ubuntu/}"
 mkdir -p "${LOG_DIR}"
@@ -137,6 +138,9 @@ if ! command -v uv >/dev/null 2>&1; then
     --index-url https://mirrors.aliyun.com/pypi/simple/ \
     uv
 fi
+
+echo "Configuring Node.js through nvm"
+bash "${REPO_ROOT}/infra/wsl/configure-node.sh"
 
 mkdir -p /home/mars/.ssh
 chown -R mars:mars /home/mars/.ssh

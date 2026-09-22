@@ -220,6 +220,11 @@ PYTHONPATH=src python3 -m unittest discover -s tests -v
 
 Result: 16 tests pass, including the 2,000-agent end-to-end condition Demo.
 
+The Ubuntu runtime also exposes nvm-managed Node.js `v22.23.2`, npm `10.9.8`,
+npx, and corepack through stable `/usr/local/bin` links, so Hermes browser
+tooling can resolve the Linux toolchain without relying on login-shell PATH
+initialization.
+
 Runtime evidence is stored locally under `logs/` and includes infrastructure
 verification plus `condition-demo-42.json` hashes and outcome totals. The local
 `backup` remote provides an additional rollback point independent of GitHub.

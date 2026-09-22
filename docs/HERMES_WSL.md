@@ -23,6 +23,8 @@ foundation. The installer and runtime come only from the official
 | Persona | `/home/mars/.hermes/SOUL.md` |
 | Runtime state | `/home/mars/.hermes/` |
 | Browser cache | `/home/mars/.cache/ms-playwright` |
+| Node.js | `v22.23.2` through nvm `0.40.4` |
+| npm | `10.9.8` |
 | Provider | `deepseek` |
 | Default model | `deepseek-flash` |
 | API base URL | `https://api.deepseek.com/v1` |
@@ -32,6 +34,8 @@ The installation includes the Hermes CLI, ACP entry point, browser and
 computer-use support, terminal and file tools, memory, skills, cron, and
 Playwright Chromium. DeepSeek Flash inference and terminal-tool execution have
 been verified with real calls, so the local agent workflow is operational.
+Node.js, npm, npx, and corepack are available from `/usr/local/bin` in
+non-login shells; `infra/wsl/configure-node.sh` maintains that integration.
 
 ## Install or refresh
 
@@ -46,9 +50,11 @@ The script:
 
 1. checks the reviewed installer SHA256;
 2. installs the small set of Ubuntu build and media dependencies if missing;
-3. runs the official installer with `CI=1` and `--skip-setup`;
-4. runs configuration repair and diagnostics without writing API keys; and
-5. writes a timestamped log under `logs/`.
+3. configures the nvm-managed Node.js toolchain and stable `/usr/local/bin`
+   links;
+4. runs the official installer with `CI=1` and `--skip-setup`;
+5. runs configuration repair and diagnostics without writing API keys; and
+6. writes a timestamped log under `logs/`.
 
 To update an existing installation, use:
 

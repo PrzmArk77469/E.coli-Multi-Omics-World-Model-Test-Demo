@@ -24,13 +24,9 @@ echo "Starting Nous Research Hermes Agent installation at $(date -Is)"
 echo "Log: ${LOG_FILE}"
 
 export DEBIAN_FRONTEND=noninteractive
-export PATH="${HOME}/.local/bin:${PATH}"
+export PATH="/usr/local/bin:${HOME}/.local/bin:${PATH}"
 
-if [[ -s "${HOME}/.nvm/nvm.sh" ]]; then
-  # shellcheck source=/dev/null
-  source "${HOME}/.nvm/nvm.sh"
-  nvm use default >/dev/null 2>&1 || true
-fi
+bash "${REPO_ROOT}/infra/wsl/configure-node.sh"
 
 missing_packages=()
 for package in \

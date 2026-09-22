@@ -54,6 +54,20 @@ HTTP mirror only to install `ca-certificates`, then switches to the Aliyun
 HTTPS mirror. This is required because the Ubuntu Base rootfs initially has no
 trusted CA bundle.
 
+## Node.js toolchain
+
+- nvm `0.40.4` is installed at `/home/mars/.nvm`.
+- The nvm default is Node.js `v22.23.2` with npm `10.9.8`.
+- `infra/wsl/configure-node.sh` is the idempotent setup and repair entry point.
+- The script initializes nvm from `/home/mars/.bashrc`, makes login Bash load
+  that file through `/home/mars/.profile`, and records the active Node tree at
+  `/home/mars/.nvm/current`.
+- Stable links for `node`, `npm`, `npx`, and `corepack` are installed under
+  `/usr/local/bin`, so non-login shells, Hermes, and verification scripts see
+  the Linux Node toolchain instead of the Windows npm shim.
+- `infra/wsl/bootstrap-ubuntu.sh` and `infra/wsl/install-hermes.sh` invoke the
+  Node configuration script automatically.
+
 ## Container policy
 
 - Use Docker Desktop with the WSL2 backend.

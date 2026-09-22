@@ -12,6 +12,9 @@ Last updated: 2026-09-22
   VHDX under `D:\WSL\Ubuntu-24.04`.
 - Ubuntu user `mars` is configured. Git `2.43.0`, Python `3.12.3`, and
   `uv 0.12.17` are available.
+- Node.js `v22.23.2` and npm `10.9.8` are installed through nvm `0.40.4`.
+  Stable `/usr/local/bin` links make `node`, `npm`, `npx`, and `corepack`
+  available to non-login shells and Hermes.
 - Docker Desktop `4.91.0` with Linux Engine `29.8.0` is installed at
   `D:\DockerDesktop`; persistent data is under `D:\DockerDesktopData`.
 - Docker Desktop WSL integration is enabled for `Ubuntu-24.04`.

@@ -74,7 +74,9 @@ HERMES_OK
   stored in this repository.
 - Git, Python, build tools, `uv 0.12.17`, and the base developer packages are
   installed in Ubuntu.
-- Node.js `v22.23.2` and npm `10.9.8` are installed through nvm.
+- Node.js `v22.23.2` and npm `10.9.8` are installed through nvm `0.40.4`.
+  `node`, `npm`, `npx`, and `corepack` are linked through `/usr/local/bin`, and
+  `infra/wsl/configure-node.sh` maintains shell and non-login-shell support.
 - Docker Desktop `4.91.0` and Engine `29.8.0` are installed and working.
 - Docker WSL integration is enabled for `Ubuntu-24.04`.
 - Docker Desktop is configured to use the Clash Verge proxy
