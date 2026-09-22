@@ -53,6 +53,11 @@ Last updated: 2026-09-22
 - The condition-aware event run completed with 58,558 events, all three
   required outcomes, and 237 complexes. The event and agent-context logs are
   local reproducibility artifacts, not Git payloads.
+- The condition-aware Demo now exports an offline browser replay viewer with a
+  Three.js 3D cell envelope, all 2,000 agents, 58,558 event records, complexes,
+  timeline controls, provenance filters, and agent inspection. The reusable
+  viewer template and vendor assets are versioned; generated data remains a
+  local artifact.
 
 ## Current boundary
 

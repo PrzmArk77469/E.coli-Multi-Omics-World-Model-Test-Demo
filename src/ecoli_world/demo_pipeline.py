@@ -16,6 +16,7 @@ from .synthetic_conditions import (
     read_demo_contexts,
     sha256_file,
 )
+from .visualization import export_visualization
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -93,6 +94,15 @@ def main(argv: list[str] | None = None) -> int:
         )
         result = engine.run()
     write_agent_contexts(agent_contexts_path, engine)
+    visualization = export_visualization(
+        output_dir=output_dir / "visualization",
+        engine=engine,
+        result=result,
+        contexts=contexts,
+        template_path=Path(__file__).resolve().parents[2]
+        / "visualizations"
+        / "demo_engine.html",
+    )
 
     summary = result.to_summary_dict()
     summary.update(
@@ -100,6 +110,8 @@ def main(argv: list[str] | None = None) -> int:
             "events_file": str(events_path),
             "agent_contexts_file": str(agent_contexts_path),
             "contexts_file": str(contexts_path),
+            "visualization_html": str(visualization["html"]),
+            "visualization_data": str(visualization["data"]),
             "synthetic_fill": synthetic_summary,
             "synthetic_notice": (
                 "Agents and molecular rules are synthetic workflow fixtures. "
@@ -117,6 +129,8 @@ def main(argv: list[str] | None = None) -> int:
             "behaviors": [behavior.to_dict() for behavior in behaviors],
             "condition_contexts": str(contexts_path),
             "agent_contexts": str(agent_contexts_path),
+            "visualization_html": str(visualization["html"]),
+            "visualization_data": str(visualization["data"]),
             "synthetic_fill_summary": synthetic_summary,
             "schema_files": [
                 "schemas/agent.schema.json",
@@ -139,6 +153,7 @@ def main(argv: list[str] | None = None) -> int:
         "events_sha256": sha256_file(events_path),
         "contexts_sha256": sha256_file(contexts_path),
         "sidecar_sha256": synthetic_summary["sidecar_sha256"],
+        "visualization_data_sha256": str(visualization["data_sha256"]),
         "summary_file": str(summary_path),
         "manifest_file": str(manifest_path),
     }

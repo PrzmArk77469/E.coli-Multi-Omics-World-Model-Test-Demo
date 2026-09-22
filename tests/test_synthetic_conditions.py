@@ -160,6 +160,23 @@ class SyntheticConditionTests(unittest.TestCase):
             self.assertTrue(
                 (root / "demo" / "simulation" / "agent_contexts.tsv").exists()
             )
+            self.assertTrue(
+                (
+                    root
+                    / "demo"
+                    / "visualization"
+                    / "demo_visualization.html"
+                ).exists()
+            )
+            self.assertTrue(
+                (
+                    root
+                    / "demo"
+                    / "visualization"
+                    / "vendor"
+                    / "three.min.js"
+                ).exists()
+            )
 
 
 if __name__ == "__main__":

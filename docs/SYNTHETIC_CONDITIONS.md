@@ -82,7 +82,8 @@ The command:
 4. attaches one condition context to every simulation agent;
 5. runs the event engine;
 6. writes event, agent-context, summary, manifest, and synthetic-provenance
-   files.
+   files;
+7. exports the replay viewer and its generated browser payload.
 
 For the full 602,778-row sidecar, file writes through `/mnt/d` are I/O-bound.
 The verified full build used native Windows Python. Ubuntu remains the required
@@ -116,6 +117,33 @@ ENA:                       1,804
 MetaboLights:                176
 Metabolomics Workbench:       20
 ```
+
+## Replay visualization
+
+The run above produced:
+
+```text
+D:\CodexApp\Project13\EcoliOmics\integrated\condition_completion\
+  demo_full\visualization\demo_visualization.html
+```
+
+Serve the generated `visualization` directory over local HTTP and open
+`demo_visualization.html`. The viewer uses the bundled Three.js and Lucide
+files in `visualizations/vendor`; network access is not required after the
+files have been generated.
+
+The controls provide:
+
+- play, pause, previous/next step, and reset;
+- direct timeline navigation across the 80-step run;
+- highlighting for `NO_EFFECT`, `MODIFY`, `BIND`, and generated complexes;
+- coloring by agent type, data origin, or condition source;
+- hover summaries and click-through detail for individual agents.
+
+The page was browser-verified with WebGL at step 1: 1,606 active agents, 4,079
+cumulative events, and 197 complexes were visible, with all four local icon
+assets loaded. The generated viewer directory is a local reproducibility
+artifact and is intentionally excluded from Git.
 
 ## Replacement rule
 

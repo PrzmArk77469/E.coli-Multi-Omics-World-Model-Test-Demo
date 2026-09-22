@@ -89,6 +89,25 @@ sample and condition IDs to all 2,000 agents, and runs the event engine.
 
 See `docs/SYNTHETIC_CONDITIONS.md` for the run command and provenance rules.
 
+## Interactive Demo replay
+
+Every successful condition-aware Demo run exports a self-contained replay
+viewer next to its generated artifacts:
+
+```text
+EcoliOmics/integrated/condition_completion/demo_full/
+  visualization/demo_visualization.html
+```
+
+Open the HTML through a local HTTP server so the browser can load the companion
+JavaScript files. The viewer renders the cell envelope and all 2,000 agents in
+3D, with play/pause, stepping, timeline navigation, outcome highlighting,
+condition/origin/source color modes, and agent inspection.
+
+The generated viewer and its large `demo_visualization_data.js` payload remain
+local artifacts. The reusable HTML template and licensed browser dependencies
+are versioned under `visualizations/`.
+
 ## Git workflow
 
 ```powershell

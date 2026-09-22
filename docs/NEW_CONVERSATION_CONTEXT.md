@@ -58,6 +58,11 @@
 - A condition-aware seed-42 Demo is generated under
   `D:\CodexApp\Project13\EcoliOmics\integrated\condition_completion\demo_full`.
   Its synthetic sidecar is explicitly separated from observed metadata.
+- The same Demo exports an offline interactive 3D replay viewer at
+  `demo_full\visualization\demo_visualization.html`. It shows all 2,000
+  agents, event outcomes, complexes, timeline controls, and condition
+  provenance. Serve that directory over local HTTP; the generated data file is
+  intentionally not committed.
 
 ## Resume command
 
