@@ -1,0 +1,37 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/ecoli-world/encounter.schema.json",
+  "title": "Encounter",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "event_id",
+    "simulation_time",
+    "step_index",
+    "agent_a_uid",
+    "agent_b_uid",
+    "distance",
+    "rule_id",
+    "outcome",
+    "a_state_before",
+    "a_state_after",
+    "b_state_before",
+    "b_state_after",
+    "new_complex_uid"
+  ],
+  "properties": {
+    "event_id": {"type": "integer", "minimum": 1},
+    "simulation_time": {"type": "number", "minimum": 0},
+    "step_index": {"type": "integer", "minimum": 0},
+    "agent_a_uid": {"type": "integer", "minimum": 0},
+    "agent_b_uid": {"type": "integer", "minimum": 0},
+    "distance": {"type": "number", "minimum": 0},
+    "rule_id": {"type": "string", "minLength": 1},
+    "outcome": {"type": "string", "enum": ["NO_EFFECT", "MODIFY", "BIND"]},
+    "a_state_before": {"type": "string"},
+    "a_state_after": {"type": "string"},
+    "b_state_before": {"type": "string"},
+    "b_state_after": {"type": "string"},
+    "new_complex_uid": {"type": ["string", "null"]}
+  }
+}

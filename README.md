@@ -53,6 +53,24 @@ recorded in `docs/DEPLOYMENT_STATUS.md`. New Codex conversations should begin
 with `docs/NEW_CONVERSATION_CONTEXT.md`. Docker and GitHub network rules are
 documented in `docs/NETWORK_AND_PROXY.md`.
 
+## Minimal simulation
+
+The first CPU-only simulation loop is implemented under `src/ecoli_world` with
+five schemas under `schemas/`. It exercises 2,000 synthetic agents through
+spatial hashing, neighborhood discovery, an event queue, and `NO_EFFECT`,
+`MODIFY`, and `BIND` outcomes.
+
+```bash
+cd /mnt/d/CodexApp/Project13/Git
+PYTHONPATH=src python3 -m ecoli_world.cli \
+  --agents 2000 \
+  --steps 80 \
+  --seed 42 \
+  --output artifacts/simulation_mvp
+```
+
+See `docs/SIMULATION_MVP.md` for the architecture and test command.
+
 ## Git workflow
 
 ```powershell

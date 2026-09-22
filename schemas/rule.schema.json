@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/ecoli-world/rule.schema.json",
+  "title": "Rule",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "rule_id",
+    "type_a",
+    "state_a",
+    "type_b",
+    "state_b",
+    "compartment",
+    "trigger_offset",
+    "action",
+    "probability",
+    "rate",
+    "output_type",
+    "cooldown",
+    "priority"
+  ],
+  "properties": {
+    "rule_id": {"type": "string", "minLength": 1},
+    "type_a": {"type": "string", "minLength": 1},
+    "state_a": {"type": "string", "minLength": 1},
+    "type_b": {"type": "string", "minLength": 1},
+    "state_b": {"type": "string", "minLength": 1},
+    "compartment": {"type": ["string", "null"]},
+    "trigger_offset": {"type": "number", "minimum": 0},
+    "action": {
+      "type": "string",
+      "enum": [
+        "NO_EFFECT",
+        "MODIFY_SELF",
+        "MODIFY_PEER",
+        "MODIFY_BOTH",
+        "BIND",
+        "TRANSFORM",
+        "DISSOCIATE"
+      ]
+    },
+    "probability": {"type": "number", "minimum": 0, "maximum": 1},
+    "rate": {"type": "number", "minimum": 0},
+    "output_type": {"type": ["string", "null"]},
+    "cooldown": {"type": "integer", "minimum": 0},
+    "priority": {"type": "integer"}
+  }
+}

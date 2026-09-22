@@ -34,23 +34,25 @@ Last updated: 2026-09-22
 - Existing omics data contains about 2,134 files and 13.27 GB on disk,
   including MG1655 references, ENA/PRIDE/MetaboLights assets, RegulonDB,
   iML1515, metabolomics, proteomics, and integrated metadata masters.
+- A CPU-only 2,000-agent simulation MVP is implemented with five schemas,
+  uniform-grid spatial hashing, neighborhood detection, a priority event
+  queue, JSONL event logging, and `NO_EFFECT`, `MODIFY`, and `BIND` outcomes.
+- The 2,000-agent / 80-step integration test completes in seconds and produces
+  all three required outcomes and abstract complexes.
 
 ## Current boundary
 
-The local execution, container, Git, and network foundations are operational.
-NemoHermes, Alibaba Cloud resources, the agent simulation engine, condition
-completion, and synthetic gap-filling have not yet been implemented.
+The local execution, container, Git, network, and first simulation foundations
+are operational. NemoHermes, Alibaba Cloud resources, condition completion, and
+synthetic gap-filling have not yet been implemented.
 
 ## Immediate next work
 
-1. Build the 2,000-agent minimal simulation loop.
-2. Add schemas, spatial hashing, neighborhood detection, event queueing, event
-   logs, and `NO_EFFECT` / `MODIFY` / `BIND` outcomes.
-3. Define condition-field completion and unified sample-id mapping.
-4. Add clearly labeled biologically plausible synthetic fixtures where source
+1. Define condition-field completion and unified sample-id mapping.
+2. Add clearly labeled biologically plausible synthetic fixtures where source
    data is incomplete.
-5. Deploy NemoHermes after repeatable local workflows exist.
-6. Deploy the Alibaba Cloud CPU control plane and private OSS before adding an
+3. Deploy NemoHermes after repeatable local workflows exist.
+4. Deploy the Alibaba Cloud CPU control plane and private OSS before adding an
    on-demand GPU worker.
 
 ## Required user decisions

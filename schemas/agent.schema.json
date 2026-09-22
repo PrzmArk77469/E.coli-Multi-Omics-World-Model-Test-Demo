@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/ecoli-world/agent.schema.json",
+  "title": "Agent",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "agent_uid",
+    "species_id",
+    "agent_type",
+    "state_id",
+    "compartment",
+    "x",
+    "y",
+    "z",
+    "r_eff",
+    "copy_weight",
+    "active",
+    "state_version",
+    "source_ref",
+    "confidence"
+  ],
+  "properties": {
+    "agent_uid": {"type": "integer", "minimum": 0},
+    "species_id": {"type": "string", "minLength": 1},
+    "agent_type": {"type": "string", "minLength": 1},
+    "state_id": {"type": "string", "minLength": 1},
+    "compartment": {"type": "string", "minLength": 1},
+    "x": {"type": "number"},
+    "y": {"type": "number"},
+    "z": {"type": "number"},
+    "r_eff": {"type": "number", "exclusiveMinimum": 0},
+    "copy_weight": {"type": "integer", "minimum": 1},
+    "active": {"type": "boolean"},
+    "complex_uid": {"type": ["string", "null"]},
+    "state_version": {"type": "integer", "minimum": 0},
+    "source_ref": {"type": "string", "minLength": 1},
+    "confidence": {"type": "number", "minimum": 0, "maximum": 1}
+  }
+}
