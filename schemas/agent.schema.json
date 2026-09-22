@@ -21,29 +21,100 @@
     "confidence",
     "unified_sample_id",
     "condition_id",
-    "data_origin"
+    "data_origin",
+    "coordinate_unit",
+    "radius_definition",
+    "condition_data_origin"
   ],
   "properties": {
-    "agent_uid": {"type": "integer", "minimum": 0},
-    "species_id": {"type": "string", "minLength": 1},
-    "agent_type": {"type": "string", "minLength": 1},
-    "state_id": {"type": "string", "minLength": 1},
-    "compartment": {"type": "string", "minLength": 1},
-    "x": {"type": "number"},
-    "y": {"type": "number"},
-    "z": {"type": "number"},
-    "r_eff": {"type": "number", "exclusiveMinimum": 0},
-    "copy_weight": {"type": "integer", "minimum": 1},
-    "active": {"type": "boolean"},
-    "complex_uid": {"type": ["string", "null"]},
-    "state_version": {"type": "integer", "minimum": 0},
-    "source_ref": {"type": "string", "minLength": 1},
-    "confidence": {"type": "number", "minimum": 0, "maximum": 1},
-    "unified_sample_id": {"type": "string"},
-    "condition_id": {"type": "string"},
+    "agent_uid": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "species_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "agent_type": {
+      "type": "string",
+      "minLength": 1
+    },
+    "state_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "compartment": {
+      "type": "string",
+      "minLength": 1
+    },
+    "x": {
+      "type": "number"
+    },
+    "y": {
+      "type": "number"
+    },
+    "z": {
+      "type": "number"
+    },
+    "r_eff": {
+      "type": "number",
+      "exclusiveMinimum": 0
+    },
+    "copy_weight": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "active": {
+      "type": "boolean"
+    },
+    "complex_uid": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "state_version": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "source_ref": {
+      "type": "string",
+      "minLength": 1
+    },
+    "confidence": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "unified_sample_id": {
+      "type": "string"
+    },
+    "condition_id": {
+      "type": "string"
+    },
     "data_origin": {
       "type": "string",
-      "enum": ["OBSERVED", "MIXED", "SYNTHETIC"]
+      "enum": [
+        "OBSERVED",
+        "MIXED",
+        "SYNTHETIC"
+      ],
+      "description": "Origin of molecular agents and geometry, independent of condition metadata."
+    },
+    "coordinate_unit": {
+      "const": "um"
+    },
+    "radius_definition": {
+      "const": "synthetic_agent_sphere"
+    },
+    "condition_data_origin": {
+      "type": "string",
+      "enum": [
+        "OBSERVED",
+        "MIXED",
+        "SYNTHETIC",
+        "UNSPECIFIED"
+      ]
     }
   }
 }

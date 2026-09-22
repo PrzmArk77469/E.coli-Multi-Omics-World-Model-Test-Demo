@@ -10,6 +10,7 @@ from dataclasses import asdict, dataclass
 from typing import Optional
 
 from .events import EventQueue, PendingEvent
+from .geometry import enclosing_sphere, sample_position
 from .models import Agent, Behavior, Complex, EncounterEvent, Rule
 from .rules import TriggeredRule, default_behaviors, default_rules, match_triggered_rule
 from .spatial import UniformGrid
@@ -28,6 +29,9 @@ class SimulationConfig:
     max_scheduled_events_per_step: int = 50000
 
     def validate(self) -> None:
+        for name in ("step_seconds", "cell_size_um", "cell_length_um", "cell_radius_um"):
+            if not math.isfinite(getattr(self, name)):
+                raise ValueError(f"{name} must be finite")
         if self.agent_count < 2:
             raise ValueError("agent_count must be at least 2")
         if self.steps < 1:
@@ -38,6 +42,8 @@ class SimulationConfig:
             raise ValueError("cell_size_um must be positive")
         if self.cell_length_um <= 0 or self.cell_radius_um <= 0:
             raise ValueError("cell geometry must be positive")
+        if self.cell_length_um < 2 * self.cell_radius_um:
+            raise ValueError("cell_length_um includes caps and must be at least the diameter")
         if self.event_delay_steps < 1:
             raise ValueError("event_delay_steps must be at least 1")
         if self.max_scheduled_events_per_step < 1:
@@ -58,6 +64,7 @@ class SimulationResult:
     conditioned_agents: int
     condition_count: int
     data_origin_counts: dict[str, int]
+    condition_data_origin_counts: dict[str, int]
     condition_distribution: list[tuple[str, int]]
 
     def to_summary_dict(self) -> dict[str, object]:
@@ -74,6 +81,9 @@ class SimulationResult:
                 "conditioned_agents": self.conditioned_agents,
                 "condition_count": self.condition_count,
                 "data_origin_counts": self.data_origin_counts,
+                "condition_data_origin_counts": self.condition_data_origin_counts,
+                "model_scope": "static_synthetic_event_demo",
+                "condition_effect": "provenance_only_not_parameterized",
                 "condition_distribution": self.condition_distribution,
             }
         )
@@ -91,11 +101,29 @@ class SimulationEngine:
     ) -> None:
         config.validate()
         self.config = config
-        self.rules = sorted(rules or default_rules(), key=lambda rule: (-rule.priority, rule.rule_id))
-        self.behaviors = behaviors or default_behaviors()
+        self.rules = sorted(default_rules() if rules is None else rules,
+                            key=lambda rule: (-rule.priority, rule.rule_id))
+        self.behaviors = default_behaviors() if behaviors is None else behaviors
+        if len({rule.rule_id for rule in self.rules}) != len(self.rules):
+            raise ValueError("rule IDs must be unique")
+        for rule in self.rules:
+            rule.validate()
+            if rule.action not in {"NO_EFFECT", "MODIFY_PEER", "BIND"}:
+                raise ValueError(f"action not implemented by this engine: {rule.action}")
+        for behavior in self.behaviors:
+            behavior.validate()
         self.event_sink = event_sink
-        if condition_contexts is not None and len(condition_contexts) < config.agent_count:
-            raise ValueError("condition_contexts must cover every agent")
+        if condition_contexts is not None:
+            if len(condition_contexts) != config.agent_count:
+                raise ValueError("condition_contexts must cover exactly every agent")
+            identities = {
+                (context.get("unified_sample_id", ""), context.get("effective_condition_id", ""))
+                for context in condition_contexts
+            }
+            if len(identities) != 1 or any(not sample or not condition for sample, condition in identities):
+                raise ValueError("one simulation requires one nonempty sample/condition context; run cohorts separately")
+            if any(context != condition_contexts[0] for context in condition_contexts[1:]):
+                raise ValueError("one simulation requires identical context metadata for every agent")
         self.condition_contexts = condition_contexts
         self.rng = random.Random(config.seed)
         self.agents: list[Agent] = []
@@ -107,6 +135,11 @@ class SimulationEngine:
         self.invalidated_events = 0
         self._complex_counter = 1
         self._initialize_agents()
+        self.initial_states = {agent.agent_uid: agent.state_id for agent in self.agents}
+        max_radius = max(agent.r_eff for agent in self.agents)
+        max_offset = max((rule.trigger_offset for rule in self.rules), default=0.0)
+        if config.cell_size_um < 2 * max_radius + max_offset:
+            raise ValueError("cell_size_um must cover the maximum contact distance (2 * max radius + offset)")
 
     def run(self) -> SimulationResult:
         for step_index in range(self.config.steps):
@@ -135,6 +168,7 @@ class SimulationEngine:
             conditioned_agents=len(condition_ids),
             condition_count=len(set(condition_ids)),
             data_origin_counts=dict(origin_counts),
+            condition_data_origin_counts=dict(Counter(agent.condition_data_origin for agent in self.agents)),
             condition_distribution=Counter(condition_ids).most_common(20),
         )
 
@@ -146,8 +180,9 @@ class SimulationEngine:
         self.rng.shuffle(agent_types)
 
         for agent_uid, agent_type in enumerate(agent_types):
-            x, y, z = self._random_rod_position()
             state_id, r_eff, copy_weight = self._type_defaults(agent_type)
+            x, y, z = sample_position(self.rng, r_eff, self.config.cell_length_um,
+                                      self.config.cell_radius_um)
             context = (
                 self.condition_contexts[agent_uid]
                 if self.condition_contexts is not None
@@ -168,7 +203,8 @@ class SimulationEngine:
                 confidence=0.5,
                 unified_sample_id=context.get("unified_sample_id", ""),
                 condition_id=context.get("effective_condition_id", ""),
-                data_origin=context.get("data_origin", "SYNTHETIC"),
+                data_origin="SYNTHETIC",
+                condition_data_origin=context.get("data_origin", "UNSPECIFIED"),
             )
             agent.validate()
             self.agents.append(agent)
@@ -198,14 +234,6 @@ class SimulationEngine:
             "Metabolite": ("pool", 0.025, self.rng.randint(20, 200)),
         }
         return defaults[agent_type]
-
-    def _random_rod_position(self) -> tuple[float, float, float]:
-        usable_radius = self.config.cell_radius_um * 0.90
-        usable_half_length = (self.config.cell_length_um * 0.5) - 0.05
-        radius = usable_radius * math.sqrt(self.rng.random())
-        theta = self.rng.uniform(0.0, 2.0 * math.pi)
-        x = self.rng.uniform(-usable_half_length, usable_half_length)
-        return (x, radius * math.cos(theta), radius * math.sin(theta))
 
     def _schedule_contacts(self, step_index: int) -> None:
         grid = UniformGrid(self.config.cell_size_um)
@@ -262,7 +290,7 @@ class SimulationEngine:
         outcome = "NO_EFFECT"
         new_complex_uid: Optional[str] = None
 
-        if triggered.rule.action != "NO_EFFECT" and self.rng.random() <= triggered.rule.probability:
+        if triggered.rule.action != "NO_EFFECT" and self.rng.random() < triggered.rule.probability:
             if triggered.rule.action == "MODIFY_PEER" and triggered.target_agent_uid is not None:
                 target = self.agents_by_uid[triggered.target_agent_uid]
                 if target.state_id != triggered.rule.output_type:
@@ -309,12 +337,14 @@ class SimulationEngine:
         agent_b.complex_uid = complex_uid
         agent_a.state_version += 1
         agent_b.state_version += 1
+        center, radius = enclosing_sphere(agent_a.position, agent_a.r_eff,
+                                          agent_b.position, agent_b.r_eff)
         complex_model = Complex(
             complex_uid=complex_uid,
-            representative_x=(agent_a.x + agent_b.x) / 2.0,
-            representative_y=(agent_a.y + agent_b.y) / 2.0,
-            representative_z=(agent_a.z + agent_b.z) / 2.0,
-            r_eff=math.sqrt((agent_a.r_eff ** 2) + (agent_b.r_eff ** 2)),
+            representative_x=center[0],
+            representative_y=center[1],
+            representative_z=center[2],
+            r_eff=radius,
             behavior_profile_id=str(rule.output_type),
             component_count=2,
             created_event_id=pending.event_id,

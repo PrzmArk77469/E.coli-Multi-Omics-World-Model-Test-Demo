@@ -4,10 +4,13 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "ecoli-world"
-version = "0.1.0"
+version = "0.2.0"
 description = "Minimal event-driven E. coli multi-omics world-model Demo"
 requires-python = ">=3.10"
 dependencies = []
+
+[project.optional-dependencies]
+test = ["jsonschema>=4.23,<5"]
 
 [project.scripts]
 ecoli-world-mvp = "ecoli_world.cli:main"

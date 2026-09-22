@@ -15,6 +15,8 @@ sys.path.insert(0, str(ROOT / "src"))
 from ecoli_world.conditions import (  # noqa: E402
     build_unified_condition_map,
     canonical_timepoint,
+    canonical_medium,
+    canonical_treatment,
     make_condition_id,
     make_sample_id,
     map_sample_row,
@@ -108,7 +110,7 @@ class ConditionMappingTests(unittest.TestCase):
             },
             biosample_xml=BIOSAMPLE_XML,
         )
-        self.assertEqual(mapped["medium"], "LB Lennox")
+        self.assertEqual(mapped["medium"], "Lennox LB to mid-exponential phase")
         self.assertEqual(mapped["genotype"], "MG1655 delta(mrr-hsdRMS-mcrB)")
         self.assertEqual(mapped["replicate"], "rep2")
         self.assertEqual(mapped["condition_status"], "core")
@@ -116,6 +118,36 @@ class ConditionMappingTests(unittest.TestCase):
             json.loads(mapped["field_origin_json"])["medium"][0]["origin"],
             "biosample.description:medium",
         )
+
+    def test_condition_identity_preserves_each_experimental_dimension(self) -> None:
+        base = {"source": "ENA", "sample_accession": "S1", "strain": "MG1655",
+                "medium": "LB", "genotype": "wild type", "treatment": "0.1 mM IPTG",
+                "timepoint": "10 min", "temperature": "37 C", "oxygen": "aerobic",
+                "ph": "7", "growth_phase": "exponential"}
+        original = map_sample_row(base)
+        for key, value in {"strain": "BW25113", "treatment": "1 mM IPTG",
+                           "medium": "LB + 0.2% glucose", "temperature": "42 C",
+                           "oxygen": "anaerobic", "ph": "6", "growth_phase": "stationary"}.items():
+            with self.subTest(key=key):
+                self.assertNotEqual(original["condition_id"], map_sample_row({**base, key: value})["condition_id"])
+        replicate = map_sample_row({**base, "sample_accession": "S2", "replicate": "2"})
+        self.assertEqual(original["condition_id"], replicate["condition_id"])
+        self.assertEqual(original["condition_identity_complete"], "true")
+
+    def test_missing_conditions_are_scoped_to_source_sample(self) -> None:
+        first = map_sample_row({"source": "ENA", "sample_accession": "S1", "medium": "LB"})
+        second = map_sample_row({"source": "ENA", "sample_accession": "S2", "medium": "LB"})
+        self.assertNotEqual(first["condition_id"], second["condition_id"])
+        self.assertEqual(first["condition_identity_complete"], "false")
+        missing = map_sample_row({"source": "ENA", "sample_accession": "S1", "treatment": "N/A"})
+        self.assertEqual(missing["treatment"], "")
+
+    def test_normalization_does_not_drop_units_doses_or_ranges(self) -> None:
+        self.assertEqual(canonical_timepoint("5"), ("5", ""))
+        self.assertEqual(canonical_timepoint("5-30 min"), ("5-30 min", ""))
+        self.assertEqual(canonical_timepoint("-5 min"), ("-5 min", "-5"))
+        self.assertNotEqual(canonical_medium("M9 + 0.2% glucose"), canonical_medium("M9 + 2% glucose"))
+        self.assertNotEqual(canonical_treatment("0.1 mM IPTG"), canonical_treatment("1 mM IPTG"))
 
     def test_builder_writes_a_streamable_registry(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:

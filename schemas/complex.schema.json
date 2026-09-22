@@ -14,23 +14,58 @@
     "component_count",
     "created_event_id",
     "created_at",
-    "member_agent_uids"
+    "member_agent_uids",
+    "coordinate_unit",
+    "radius_definition"
   ],
   "properties": {
-    "complex_uid": {"type": "string", "minLength": 1},
-    "representative_x": {"type": "number"},
-    "representative_y": {"type": "number"},
-    "representative_z": {"type": "number"},
-    "r_eff": {"type": "number", "exclusiveMinimum": 0},
-    "behavior_profile_id": {"type": "string", "minLength": 1},
-    "component_count": {"type": "integer", "minimum": 2},
-    "created_event_id": {"type": "integer", "minimum": 1},
-    "created_at": {"type": "number", "minimum": 0},
+    "complex_uid": {
+      "type": "string",
+      "minLength": 1
+    },
+    "representative_x": {
+      "type": "number"
+    },
+    "representative_y": {
+      "type": "number"
+    },
+    "representative_z": {
+      "type": "number"
+    },
+    "r_eff": {
+      "type": "number",
+      "exclusiveMinimum": 0
+    },
+    "behavior_profile_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "component_count": {
+      "type": "integer",
+      "minimum": 2
+    },
+    "created_event_id": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "created_at": {
+      "type": "number",
+      "minimum": 0
+    },
     "member_agent_uids": {
       "type": "array",
       "minItems": 2,
       "uniqueItems": true,
-      "items": {"type": "integer", "minimum": 0}
+      "items": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    "coordinate_unit": {
+      "const": "um"
+    },
+    "radius_definition": {
+      "const": "minimum_enclosing_member_spheres"
     }
   }
 }

@@ -2,6 +2,17 @@
 
 Last updated: 2026-09-22
 
+## Repository v0.2 hardening
+
+The source now fixes cross-cell contact omission, samples full spheres inside
+the viewer's capsule, computes enclosing complex spheres, isolates each run to
+one sample context, and distinguishes molecular from condition provenance.
+Condition identity v2 preserves doses and includes strain and growth context.
+Spatial exports, run fingerprints, overwrite protection, and CI are added.
+See [migration instructions](SCIENTIFIC_INTEGRITY.md). Machine/deployment and
+full-data counts below describe the earlier recorded environment; this change
+does not provision cloud resources or revalidate external data on that machine.
+
 ## Completed
 
 - Windows remains Windows 10 Home 22H2 build 19045; no Windows upgrade was

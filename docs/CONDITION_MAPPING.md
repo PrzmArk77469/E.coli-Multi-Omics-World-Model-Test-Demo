@@ -2,6 +2,10 @@
 
 ## Purpose
 
+This document's original architecture is extended by
+[condition-map-v2 migration](SCIENTIFIC_INTEGRITY.md#rebuild-condition-mappings).
+Rebuild old maps in a new directory; v1 and v2 condition IDs are incompatible.
+
 The integrated sample master is structurally complete but condition fields are
 sparse. This mapping layer gives every source sample a stable internal ID while
 keeping observed metadata, inferred metadata, conflicts, and later synthetic
@@ -27,15 +31,18 @@ This prevents many MetaboLights samples from collapsing into one identifier.
 ### `condition_id`
 
 ```text
-ECOLI_C_<sha256(canonical medium, genotype, treatment, timepoint)[:24]>
+ECOLI_C_<sha256(version, extended condition signature)[:24]>
 ```
 
 `replicate` is intentionally excluded. Replicates of the same condition share
 one `condition_id`, while retaining different `unified_sample_id` values and
 different replicate labels.
 
-Missing fields are represented as `UNKNOWN` in the condition signature. They
-are never silently replaced by zero or an empty value.
+The signature includes medium, genotype, treatment, timepoint, strain,
+temperature, oxygen, pH, and growth phase. Missing fields are `UNKNOWN`; any
+incomplete signature is additionally scoped to its source sample to avoid
+merging unrelated experiments. Fully populated signatures can share an ID
+across replicates, but this alone does not approve cross-study integration.
 
 ## Current source adapters
 
@@ -62,7 +69,8 @@ description. Such values receive lower confidence than explicit attributes.
 ## Normalization
 
 - Unicode is normalized, repeated whitespace is collapsed.
-- Timepoints are converted to minutes when a unit can be parsed.
+- Point timepoints are converted to minutes only with explicit units; intervals
+  and unitless values are preserved without assuming minutes.
 - Common media such as LB, LB Lennox, M9, M9 + glucose, M9 + glycerol, MOPS,
   and Terrific Broth are canonicalized.
 - Common treatments such as untreated/control, IPTG, glucose limitation, and
@@ -71,6 +79,9 @@ description. Such values receive lower confidence than explicit attributes.
   are not accepted as a genotype unless a mutation or explicit genotype is
   present.
 - Replicate labels are normalized to `rep1`, `rep2`, and so on when possible.
+
+Media/treatment aliases must match the entire value. Doses, supplements and
+qualifiers are retained. `N/A` is missing metadata, not an untreated control.
 
 Every field stores:
 

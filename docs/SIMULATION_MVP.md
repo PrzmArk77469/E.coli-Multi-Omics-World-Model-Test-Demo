@@ -2,6 +2,9 @@
 
 ## Scope
 
+For corrected geometry, output contracts, and migration notes, see
+[Scientific integrity](SCIENTIFIC_INTEGRITY.md). v0.1 event counts are historical.
+
 The first simulation milestone is intentionally synthetic. It validates the
 engineering loop rather than claiming calibrated biological predictions:
 
@@ -45,6 +48,12 @@ Outputs:
 - `events.jsonl`: one encounter event per line
 - `summary.json`: event totals, outcomes, active agents, and complexes
 - `run_manifest.json`: configuration, rules, behaviors, and schema references
+- `agents.jsonl`: final agent records with full coordinates, radius definition,
+  units, member activity, and separate molecular/condition provenance
+- `complexes.jsonl`: minimum enclosing member-sphere records
+
+Output directories must be new or empty. The manifest also records input
+hashes, code version/fingerprint, environment, seed, and artifact hashes.
 
 The command fails if any required outcome is absent unless
 `--allow-missing-outcomes` is supplied.
@@ -58,6 +67,11 @@ PYTHONPATH=src python3 -m unittest discover -s tests -v
 
 The integration test creates 2,000 agents for 80 steps and requires all three
 outcomes plus at least one complex.
+
+Install `python -m pip install -e '.[test]'` to run full JSON Schema conformance
+checks; otherwise that check is explicitly skipped. Tests also compare the
+spatial grid with brute force after renumbering, check full sphere containment,
+reject mixed sample contexts, and verify reproducible exports and input hashes.
 
 ## Current rules
 

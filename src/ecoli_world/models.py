@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from dataclasses import asdict, dataclass, field
+import math
 from typing import Any, Optional
 
 
@@ -35,12 +36,16 @@ class Agent:
     unified_sample_id: str = ""
     condition_id: str = ""
     data_origin: str = "SYNTHETIC"
+    condition_data_origin: str = "UNSPECIFIED"
+    radius_definition: str = "synthetic_agent_sphere"
+    coordinate_unit: str = "um"
 
     @property
     def position(self) -> tuple[float, float, float]:
         return (self.x, self.y, self.z)
 
     def validate(self) -> None:
+        require(all(math.isfinite(v) for v in (*self.position, self.r_eff)), "geometry must be finite")
         require(self.agent_uid >= 0, "agent_uid must be non-negative")
         require(bool(self.species_id), "species_id is required")
         require(bool(self.agent_type), "agent_type is required")
@@ -53,6 +58,8 @@ class Agent:
             self.data_origin in {"OBSERVED", "MIXED", "SYNTHETIC"},
             "unsupported data_origin",
         )
+        require(self.condition_data_origin in {"OBSERVED", "MIXED", "SYNTHETIC", "UNSPECIFIED"},
+                "unsupported condition_data_origin")
 
     def to_dict(self) -> dict[str, Any]:
         return asdict(self)
@@ -76,6 +83,8 @@ class Behavior:
         require(bool(self.structured_rule_id), "structured_rule_id is required")
         require(0.0 <= self.confidence <= 1.0, "confidence must be between 0 and 1")
         total = sum(self.action_distribution.values())
+        require(all(math.isfinite(p) and 0 <= p <= 1 for p in self.action_distribution.values()),
+                "action probabilities must be finite and between 0 and 1")
         require(total <= 1.000001, "action_distribution probabilities must sum to at most 1")
 
     def to_dict(self) -> dict[str, Any]:
@@ -100,6 +109,8 @@ class Rule:
 
     def validate(self) -> None:
         require(bool(self.rule_id), "rule_id is required")
+        require(all(math.isfinite(v) for v in (self.probability, self.rate, self.trigger_offset)),
+                "rule parameters must be finite")
         require(self.action in ACTIONS, f"unsupported action: {self.action}")
         require(0.0 <= self.probability <= 1.0, "probability must be between 0 and 1")
         require(self.rate >= 0.0, "rate must be non-negative")
@@ -147,9 +158,14 @@ class Complex:
     created_event_id: int
     created_at: float
     member_agent_uids: list[int] = field(default_factory=list)
+    radius_definition: str = "minimum_enclosing_member_spheres"
+    coordinate_unit: str = "um"
 
     def validate(self) -> None:
         require(bool(self.complex_uid), "complex_uid is required")
+        require(all(math.isfinite(v) for v in (self.representative_x, self.representative_y,
+                                               self.representative_z, self.r_eff)),
+                "complex geometry must be finite")
         require(self.r_eff > 0, "r_eff must be positive")
         require(self.component_count >= 2, "a complex requires at least two components")
         require(len(self.member_agent_uids) == self.component_count, "component_count must match members")

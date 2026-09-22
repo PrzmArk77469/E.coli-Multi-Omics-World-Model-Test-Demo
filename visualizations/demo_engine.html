@@ -431,7 +431,7 @@
       <label class="legend-item"><input id="show-bind" type="checkbox" checked><span class="dot" style="background:#4dd6c8"></span>结合</label>
       <select id="color-mode" class="text-button" aria-label="着色方式">
         <option value="type">按类型</option>
-        <option value="origin">按来源</option>
+        <option value="origin">按分子来源</option>
         <option value="condition">按条件</option>
       </select>
     </div>
@@ -584,7 +584,7 @@
       return new THREE.Color().setHSL((index * 0.618033988749895) % 1, 0.58, 0.66);
     }
 
-    const agentGeometry = new THREE.IcosahedronGeometry(0.014, 1);
+    const agentGeometry = new THREE.SphereGeometry(1, 12, 8);
     const agentMaterial = new THREE.MeshStandardMaterial({
       roughness: 0.65,
       metalness: 0.04,
@@ -651,7 +651,7 @@
     eventLines.frustumCulled = false;
     scene.add(eventLines);
 
-    const complexGeometry = new THREE.OctahedronGeometry(0.026, 0);
+    const complexGeometry = new THREE.SphereGeometry(1, 12, 8);
     const complexMaterial = new THREE.MeshStandardMaterial({
       color: 0x4dd6c8,
       emissive: 0x0b5b54,
@@ -683,21 +683,22 @@
 
     function setAgentInstances(step) {
       const active = new Array(DATA.agents.length).fill(true);
-      const complexed = new Array(DATA.agents.length).fill(false);
+      DATA.agents.forEach(agent => { agent.currentState = agent.initial_state; });
       DATA.events.forEach(event => {
         if (event.s > step) return;
+        DATA.agents[event.a].currentState = event.a_state;
+        DATA.agents[event.b].currentState = event.b_state;
         if (event.o === 2) {
           active[event.a] = false;
           active[event.b] = false;
-          complexed[event.a] = true;
-          complexed[event.b] = true;
         }
       });
 
       let activeCount = 0;
       DATA.agents.forEach((agent, index) => {
         dummy.position.set(agent.x, agent.y, agent.z);
-        const scale = complexed[index] ? 0.56 : active[index] ? 1 : 0.42;
+        agent.activeNow = active[index];
+        const scale = active[index] ? agent.r : 0;
         dummy.scale.setScalar(scale);
         dummy.updateMatrix();
         agents.setMatrixAt(index, dummy.matrix);
@@ -738,7 +739,7 @@
       complexMesh.count = visible.length;
       visible.forEach((item, index) => {
         dummy.position.set(item.x, item.y, item.z);
-        dummy.scale.setScalar(1);
+        dummy.scale.setScalar(item.r);
         dummy.updateMatrix();
         complexMesh.setMatrixAt(index, dummy.matrix);
       });
@@ -759,14 +760,20 @@
       title.textContent = `Agent ${agent.i}`;
       const rows = [
         ["类型", agent.t],
-        ["状态", agent.a ? "active" : "complexed"],
+        ["状态", agent.activeNow ? agent.currentState : "complexed"],
         ["copy_weight", agent.w],
-        ["数据来源", origin],
+        ["分子来源", origin],
+        ["条件来源", agent.co || "UNSPECIFIED"],
+        ["球半径（μm）", agent.r],
         ["条件 ID", condition ? condition.id : "—"],
+        ["样本 ID", condition ? condition.sample_id : "—"],
+        ["菌株", condition ? condition.strain : "—"],
         ["培养基", condition ? condition.medium : "—"],
         ["基因型", condition ? condition.genotype : "—"],
         ["处理", condition ? condition.treatment : "—"],
-        ["时间点", condition ? condition.timepoint : "—"]
+        ["时间点", condition ? condition.timepoint : "—"],
+        ["温度", condition ? condition.temperature || "未记录" : "—"],
+        ["供氧", condition ? condition.oxygen || "未记录" : "—"]
       ];
       const escapeHtml = value => String(value).replace(/[&<>"']/g, char => ({
         "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
@@ -793,6 +800,7 @@
       Array.from(timeline.children).forEach((bar, index) => {
         bar.classList.toggle("current", index === currentStep);
       });
+      if (selectedAgent) updateInspector(selectedAgent);
     }
 
     function animate(now) {

@@ -15,16 +15,19 @@ import json
 from collections import Counter
 from pathlib import Path
 from typing import Any, Iterable, Iterator, TextIO
+from .io import deterministic_gzip_text
+from .provenance import build_provenance, prepare_output_dir
 
 from .conditions import (
     CONDITION_FIELDS,
+    CONTEXT_FIELDS as OBSERVED_CONTEXT_FIELDS,
     clean_text,
     iter_tsv,
     make_condition_id,
 )
 
 
-GENERATION_METHOD = "deterministic_biological_condition_prior_v1"
+GENERATION_METHOD = "deterministic_condition_fixture_v2"
 SYNTHETIC_CONFIDENCE = 0.25
 SOURCE_QUOTAS = {
     "ENA": 1800,
@@ -95,6 +98,10 @@ CONTEXT_FIELDS = (
     "source_record_id",
     "study_accession",
     "strain",
+    "temperature",
+    "oxygen",
+    "ph",
+    "growth_phase",
     "medium",
     "genotype",
     "treatment",
@@ -165,6 +172,8 @@ def _synthetic_genotype(row: dict[str, str], seed: int) -> str:
             BW25113_GENOTYPES,
             _unit(seed, sample_id, "genotype"),
         )
+    if "mg1655" not in strain:
+        return f"{clean_text(row.get('strain')) or 'unspecified strain'} synthetic genotype"
     return _weighted_choice(
         WILDTYPE_GENOTYPES,
         _unit(seed, sample_id, "genotype"),
@@ -237,9 +246,9 @@ def synthetic_values(
     seed: int,
 ) -> dict[str, str]:
     sample_id = clean_text(row.get("unified_sample_id"))
-    genotype = _synthetic_genotype(row, seed)
-    medium = _synthetic_medium(row, seed)
-    treatment = _synthetic_treatment(genotype, seed, sample_id)
+    genotype = clean_text(row.get("genotype")) or _synthetic_genotype(row, seed)
+    medium = clean_text(row.get("medium")) or _synthetic_medium(row, seed)
+    treatment = clean_text(row.get("treatment")) or _synthetic_treatment(genotype, seed, sample_id)
     return {
         "medium": medium,
         "genotype": genotype,
@@ -316,7 +325,8 @@ def _context_from_rows(
         data_origin = "SYNTHETIC"
     else:
         data_origin = "MIXED"
-    condition_id = make_condition_id(effective)
+    effective.update({field: clean_text(observed.get(field)) for field in OBSERVED_CONTEXT_FIELDS})
+    condition_id = make_condition_id(effective, incomplete_scope=clean_text(observed.get("unified_sample_id")))
     effective_condition_id = condition_id.replace("ECOLI_C_", "ECOLI_DC_", 1)
     output: dict[str, Any] = {
         "unified_sample_id": clean_text(observed.get("unified_sample_id")),
@@ -325,7 +335,7 @@ def _context_from_rows(
         "source": clean_text(observed.get("source")),
         "source_record_id": clean_text(observed.get("source_record_id")),
         "study_accession": clean_text(observed.get("study_accession")),
-        "strain": clean_text(observed.get("strain")),
+        **{field: clean_text(observed.get(field)) for field in OBSERVED_CONTEXT_FIELDS},
         "data_origin": data_origin,
         "observed_condition_status": clean_text(
             observed.get("condition_status")
@@ -348,7 +358,7 @@ def _context_from_rows(
     for field in CONDITION_FIELDS:
         output[field] = effective[field]
         output[f"{field}_origin"] = (
-            "SYNTHETIC_PRIOR_V1" if field in synthetic_fields else "OBSERVED"
+            "SYNTHETIC_FIXTURE_V2" if field in synthetic_fields else "OBSERVED"
         )
     return output
 
@@ -372,7 +382,9 @@ def generate_synthetic_sidecar_and_contexts(
     seed: int = 42,
     context_count: int = 2000,
 ) -> tuple[dict[str, Any], Path]:
-    output_dir.mkdir(parents=True, exist_ok=True)
+    if context_count < 1:
+        raise ValueError("context_count must be positive")
+    prepare_output_dir(output_dir)
     sidecar_path = output_dir / "synthetic_condition_fill.tsv.gz"
     contexts_path = output_dir / "demo_condition_contexts.tsv"
     summary_path = output_dir / "synthetic_fill_summary.json"
@@ -386,7 +398,7 @@ def generate_synthetic_sidecar_and_contexts(
     }
     global_heap: list[Any] = []
 
-    with gzip.open(sidecar_path, "wt", encoding="utf-8", newline="") as handle:
+    with deterministic_gzip_text(sidecar_path) as handle:
         writer = csv.DictWriter(
             handle,
             fieldnames=SIDECAR_FIELDS,
@@ -419,17 +431,16 @@ def generate_synthetic_sidecar_and_contexts(
                 _keep_priority(source_heaps[source], SOURCE_QUOTAS[source], item)
 
     selected: dict[str, tuple[Any, ...]] = {}
-    for source, quota in SOURCE_QUOTAS.items():
+    for source, weight in SOURCE_QUOTAS.items():
+        quota = context_count * weight // sum(SOURCE_QUOTAS.values())
         for item in sorted(source_heaps[source], key=lambda value: -value[0])[:quota]:
             selected[item[1]] = item
     for item in sorted(global_heap, key=lambda value: -value[0]):
         if len(selected) >= context_count:
             break
         selected.setdefault(item[1], item)
-    if len(selected) < context_count:
-        raise RuntimeError(
-            f"only {len(selected)} demo contexts available, need {context_count}"
-        )
+    if not selected:
+        raise ValueError("observed map contains no usable sample contexts")
     ranked = sorted(
         selected.values(),
         key=lambda item: (
@@ -454,6 +465,8 @@ def generate_synthetic_sidecar_and_contexts(
         writer.writerows(contexts)
 
     summary = {
+        "provenance": build_provenance({"seed": seed, "context_count": context_count,
+                                        "generation_method": GENERATION_METHOD}, [observed_map]),
         "observed_map": str(observed_map),
         "sidecar": str(sidecar_path),
         "sidecar_sha256": sha256_file(sidecar_path),

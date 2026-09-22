@@ -22,7 +22,7 @@ from ecoli_world.demo_pipeline import main as demo_main  # noqa: E402
 
 
 class SyntheticConditionTests(unittest.TestCase):
-    def test_generation_is_deterministic_and_biologically_correlated(self) -> None:
+    def test_generation_is_deterministic_with_declared_domains(self) -> None:
         row = {
             "unified_sample_id": "ECOLI_S_test",
             "strain": "MG1655",

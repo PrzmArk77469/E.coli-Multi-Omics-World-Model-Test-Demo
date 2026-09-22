@@ -39,6 +39,11 @@ def build_visualization_payload(
                 "replicate": context.get("replicate", ""),
                 "origin": context.get("data_origin", "SYNTHETIC"),
                 "sample_id": context.get("unified_sample_id", ""),
+                "strain": context.get("strain", ""),
+                "temperature": context.get("temperature", ""),
+                "oxygen": context.get("oxygen", ""),
+                "ph": context.get("ph", ""),
+                "growth_phase": context.get("growth_phase", ""),
             }
         )
 
@@ -49,12 +54,14 @@ def build_visualization_payload(
             {
                 "i": agent.agent_uid,
                 "t": agent.agent_type,
+                "initial_state": engine.initial_states[agent.agent_uid],
                 "x": round(agent.x, 5),
                 "y": round(agent.y, 5),
                 "z": round(agent.z, 5),
                 "r": round(agent.r_eff, 5),
                 "c": condition_ids.get(agent.condition_id, -1),
                 "o": ORIGIN_CODES.get(agent.data_origin, 2),
+                "co": agent.condition_data_origin,
                 "a": int(agent.active),
                 "w": agent.copy_weight,
             }
@@ -68,9 +75,12 @@ def build_visualization_payload(
             "o": OUTCOME_CODES[event.outcome],
             "r": event.rule_id,
             "c": event.new_complex_uid or "",
+            "a_state": event.a_state_after,
+            "b_state": event.b_state_after,
         }
         for event in result.events
     ]
+    event_steps = {event.event_id: event.step_index for event in result.events}
     complexes = [
         {
             "id": complex_model.complex_uid,
@@ -78,12 +88,13 @@ def build_visualization_payload(
             "x": round(complex_model.representative_x, 5),
             "y": round(complex_model.representative_y, 5),
             "z": round(complex_model.representative_z, 5),
-            "step": int(complex_model.created_at / engine.config.step_seconds),
+            "r": complex_model.r_eff,
+            "step": event_steps[complex_model.created_event_id],
         }
         for complex_model in result.complexes
     ]
     return {
-        "schema": "ecoli-demo-visualization-v1",
+        "schema": "ecoli-demo-visualization-v2",
         "generated_at": utc_now(),
         "notice": (
             "Synthetic molecular agents and rules for workflow validation; "
@@ -110,9 +121,11 @@ def export_visualization(
     result: SimulationResult,
     contexts: list[dict[str, str]],
     template_path: Path,
-) -> dict[str, Path]:
+    provenance: dict[str, Any] | None = None,
+) -> dict[str, Any]:
     output_dir.mkdir(parents=True, exist_ok=True)
     payload = build_visualization_payload(engine, result, contexts)
+    payload["provenance"] = provenance
     data_path = output_dir / "demo_visualization_data.js"
     html_path = output_dir / "demo_visualization.html"
     data_path.write_text(

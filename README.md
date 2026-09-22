@@ -10,6 +10,7 @@ the project data tree outside this repository or an object-storage bucket.
 
 ## Start here
 
+- [Scientific integrity, portable quickstart, and v0.2 migration](docs/SCIENTIFIC_INTEGRITY.md)
 - [System architecture and review map](docs/SYSTEM_ARCHITECTURE.md)
 - [Documentation index](docs/README.md)
 - [New conversation handoff](docs/NEW_CONVERSATION_CONTEXT.md)
@@ -113,8 +114,11 @@ BioSample fetch command.
 ## Condition-aware Demo
 
 `src/ecoli_world/demo_pipeline.py` generates a clearly labeled synthetic
-condition sidecar, selects a deterministic Demo cohort, attaches the resulting
-sample and condition IDs to all 2,000 agents, and runs the event engine.
+condition sidecar and selects a deterministic Demo cohort. One selected source
+sample/condition context is shared by all 2,000 synthetic agents in a run; the
+cohort remains a separate metadata catalog. Conditions are provenance labels,
+not calibrated kinetic inputs. Molecular and condition origins are reported
+separately. See the v0.2 migration guide before reusing old condition IDs.
 
 See `docs/SYNTHETIC_CONDITIONS.md` for the run command and provenance rules.
 

@@ -61,8 +61,10 @@ class UniformGrid:
                     continue
                 for first in cell_agents:
                     for second in sorted(other_agents):
-                        if first < second:
-                            yield (first, second)
+                        # Forward cell offsets already visit each cell pair once.
+                        # IDs are unrelated to spatial ordering; filtering by ID
+                        # here would silently discard half the cross-cell pairs.
+                        yield (min(first, second), max(first, second))
 
     def _cell(self, position: tuple[float, float, float]) -> tuple[int, int, int]:
         return tuple(floor(value / self.cell_size) for value in position)

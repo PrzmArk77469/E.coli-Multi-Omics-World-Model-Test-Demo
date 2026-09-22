@@ -34,3 +34,7 @@
   cloud plans, data-download plans, and E. coli Demo designs.
 - [Early visualizations](../visualizations/): feasibility, spectral-mapping,
   and replay HTML pages.
+
+## Scientific integrity and migration
+
+- [v0.2 correctness contracts and migration](SCIENTIFIC_INTEGRITY.md)

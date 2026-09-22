@@ -20,10 +20,15 @@ from collections import Counter, defaultdict
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Iterable, Iterator, TextIO
+from .io import deterministic_gzip_text
+from .provenance import build_provenance, prepare_output_dir, sha256_file
 
 
 CONDITION_FIELDS = ("medium", "genotype", "treatment", "timepoint", "replicate")
-CONDITION_ID_FIELDS = ("medium", "genotype", "treatment", "timepoint")
+CONTEXT_FIELDS = ("strain", "temperature", "oxygen", "ph", "growth_phase")
+OBSERVED_FIELDS = CONDITION_FIELDS + CONTEXT_FIELDS
+CONDITION_ID_FIELDS = ("medium", "genotype", "treatment", "timepoint") + CONTEXT_FIELDS
+MAPPING_VERSION = "condition-map-v2"
 DIRECT_FIELDS = (
     "condition",
     "treatment",
@@ -31,9 +36,14 @@ DIRECT_FIELDS = (
     "medium",
     "genotype",
     "replicate",
-)
+) + CONTEXT_FIELDS
 
 BIOSAMPLE_TAG_ALIASES = {
+    "strain": ("strain", "strain name"),
+    "temperature": ("temperature", "growth temperature", "culture temperature"),
+    "oxygen": ("oxygen", "oxygenation", "aeration", "oxygen availability"),
+    "ph": ("ph", "culture ph", "growth ph"),
+    "growth_phase": ("growth phase", "growth_phase", "phase"),
     "medium": (
         "growth medium",
         "growth_medium",
@@ -135,20 +145,23 @@ def make_sample_id(source: str, source_record_id: str) -> str:
     return f"ECOLI_S_{stable_digest(source, source_record_id)}"
 
 
-def make_condition_id(values: dict[str, str]) -> str:
+def make_condition_id(values: dict[str, str], incomplete_scope: str = "") -> str:
     signature = {
         field: values.get(field) or "UNKNOWN" for field in CONDITION_ID_FIELDS
     }
+    # Unknown attributes do not establish equivalence between source samples.
+    if incomplete_scope and any(value == "UNKNOWN" for value in signature.values()):
+        signature["incomplete_sample_scope"] = incomplete_scope
     payload = json.dumps(signature, sort_keys=True, ensure_ascii=True)
-    return f"ECOLI_C_{stable_digest(payload)}"
+    return f"ECOLI_C_{stable_digest(MAPPING_VERSION, payload)}"
 
 
 def canonical_timepoint(value: object) -> tuple[str, str]:
     text = clean_text(value)
     if not text:
         return "", ""
-    numeric = re.search(
-        r"(?<!\w)(\d+(?:\.\d+)?)\s*(d|day|days|h|hr|hrs|hour|hours|m|min|mins|minute|minutes|s|sec|secs|second|seconds)\b",
+    numeric = re.fullmatch(
+        r"(-?\d+(?:\.\d+)?)\s*(d|day|days|h|hr|hrs|hour|hours|m|min|mins|minute|minutes|s|sec|secs|second|seconds)",
         text,
         flags=re.IGNORECASE,
     )
@@ -166,8 +179,7 @@ def canonical_timepoint(value: object) -> tuple[str, str]:
         minutes = round(minutes, 6)
         minutes_text = f"{minutes:g}"
         return f"{minutes_text} min", minutes_text
-    if re.fullmatch(r"\d+(?:\.\d+)?", text):
-        return f"{float(text):g} min", f"{float(text):g}"
+    # Unitless values and intervals must not silently become minutes or points.
     return text, ""
 
 
@@ -175,22 +187,15 @@ def canonical_medium(value: object) -> str:
     text = clean_text(value)
     if not text:
         return ""
-    lowered = text.casefold()
-    if "lennox" in lowered and re.search(r"\blb\b|luria", lowered):
-        return "LB Lennox"
-    if re.search(r"\blb\b|luria\s+bertani", lowered):
-        return "LB"
-    if "m9" in lowered:
-        if "glycerol" in lowered:
-            return "M9 + glycerol"
-        if "glucose" in lowered:
-            return "M9 + glucose"
-        return "M9"
-    if "terrific broth" in lowered or re.search(r"\btb\b", lowered):
-        return "Terrific Broth"
-    if "mops" in lowered:
-        return "MOPS"
-    return text
+    # Exact aliases only: concentrations, supplements and qualifiers are evidence.
+    aliases = {
+        "lb": "LB", "luria bertani": "LB", "luria-bertani": "LB",
+        "lennox lb": "LB Lennox", "lb lennox": "LB Lennox",
+        "m9": "M9", "m9 + glucose": "M9 + glucose",
+        "m9 + glycerol": "M9 + glycerol", "mops": "MOPS",
+        "tb": "Terrific Broth", "terrific broth": "Terrific Broth",
+    }
+    return aliases.get(text.casefold(), text)
 
 
 def canonical_treatment(value: object) -> str:
@@ -198,15 +203,13 @@ def canonical_treatment(value: object) -> str:
     if not text:
         return ""
     lowered = text.casefold()
-    if lowered in {"none", "control", "untreated", "no treatment", "n/a", "na"}:
+    if lowered in {"none", "control", "untreated", "no treatment"}:
         return "none"
-    if "iptg" in lowered:
+    if lowered == "iptg":
         return "IPTG"
-    if "glucose" in lowered and any(
-        token in lowered for token in ("limit", "starve", "deplet", "restrict")
-    ):
+    if lowered in {"glucose limitation", "glucose starvation"}:
         return "glucose limitation"
-    if "heat" in lowered and any(token in lowered for token in ("shock", "stress")):
+    if lowered in {"heat shock", "heat stress"}:
         return "heat shock"
     return text
 
@@ -303,6 +306,8 @@ class ObservationSet:
         origin: str,
         confidence: float,
     ) -> None:
+        if clean_text(value).casefold() in {"unknown", "n/a", "na", "not available", "not provided", "missing"}:
+            return
         canonical = canonical_value(field, value)
         if not canonical:
             return
@@ -479,7 +484,7 @@ def map_sample_row(
     origin: dict[str, list[dict[str, object]]] = {}
     conflicts: dict[str, list[str]] = {}
     confidences: list[float] = []
-    for field in CONDITION_FIELDS:
+    for field in OBSERVED_FIELDS:
         selected, evidence, field_conflicts = observations.select(field)
         values[field] = selected
         if evidence:
@@ -505,7 +510,7 @@ def map_sample_row(
         )
         source_record_id = source_record_key
     unified_sample_id = make_sample_id(source, source_record_key)
-    condition_id = make_condition_id(values)
+    condition_id = make_condition_id(values, incomplete_scope=unified_sample_id)
     observed_field_count = sum(bool(values[field]) for field in CONDITION_FIELDS)
     if all(values[field] for field in ("medium", "genotype", "treatment", "timepoint")):
         condition_status = "complete"
@@ -528,7 +533,7 @@ def map_sample_row(
         "source_record_id": source_record_id,
         "source_record_key": source_record_key,
         "study_accession": clean_text(row.get("study_accession")),
-        "mapping_version": "condition-map-v1",
+        "mapping_version": MAPPING_VERSION,
     }
     if biosample:
         provenance["biosample"] = {
@@ -544,7 +549,9 @@ def map_sample_row(
         "study_accession": clean_text(row.get("study_accession")),
         "sample_name": clean_text(row.get("sample_name")),
         "scientific_name": clean_text(row.get("scientific_name")),
-        "strain": clean_text(row.get("strain")),
+        **{field: values[field] for field in CONTEXT_FIELDS},
+        "condition_identity_complete": str(all(values[field] for field in CONDITION_ID_FIELDS)).lower(),
+        "condition_mapping_version": MAPPING_VERSION,
         "omics_types": clean_text(row.get("omics_types")),
         "medium": values["medium"],
         "genotype": values["genotype"],
@@ -576,6 +583,12 @@ OUTPUT_FIELDS = (
     "sample_name",
     "scientific_name",
     "strain",
+    "temperature",
+    "oxygen",
+    "ph",
+    "growth_phase",
+    "condition_identity_complete",
+    "condition_mapping_version",
     "omics_types",
     "medium",
     "genotype",
@@ -599,7 +612,7 @@ def build_unified_condition_map(
     biosample_cache: Path | None = None,
     limit: int | None = None,
 ) -> dict[str, Any]:
-    output_dir.mkdir(parents=True, exist_ok=True)
+    prepare_output_dir(output_dir)
     output_path = output_dir / "unified_sample_map.tsv.gz"
     summary_path = output_dir / "condition_mapping_summary.json"
     source_counts: Counter = Counter()
@@ -609,12 +622,15 @@ def build_unified_condition_map(
     condition_ids: set[str] = set()
     biosample_matches = 0
     rows = 0
-    with gzip.open(output_path, "wt", encoding="utf-8", newline="") as handle:
+    biosample_inputs: set[Path] = set()
+    with deterministic_gzip_text(output_path) as handle:
         writer = csv.DictWriter(handle, fieldnames=OUTPUT_FIELDS, delimiter="\t")
         writer.writeheader()
         for row in iter_tsv(sample_master):
             accession = clean_text(row.get("sample_accession"))
             xml_text = read_biosample_cache(biosample_cache, accession)
+            if xml_text is not None and biosample_cache:
+                biosample_inputs.add(biosample_cache / f"{accession}.xml")
             mapped = map_sample_row(row, biosample_xml=xml_text)
             writer.writerow(mapped)
             rows += 1
@@ -629,11 +645,14 @@ def build_unified_condition_map(
                 break
 
     summary = {
+        "provenance": build_provenance({"mapping_version": MAPPING_VERSION, "limit": limit,
+                                        "seed": None}, [sample_master, *sorted(biosample_inputs)]),
+        "output_sha256": sha256_file(output_path),
         "generated_at": utc_now(),
         "input": str(sample_master),
         "output": str(output_path),
         "biosample_cache": str(biosample_cache) if biosample_cache else "",
-        "mapping_version": "condition-map-v1",
+        "mapping_version": MAPPING_VERSION,
         "rows": rows,
         "unique_sample_ids": len(sample_ids),
         "unique_condition_ids": len(condition_ids),

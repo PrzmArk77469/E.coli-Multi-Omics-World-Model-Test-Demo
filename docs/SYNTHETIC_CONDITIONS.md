@@ -2,6 +2,9 @@
 
 ## Scope
 
+v0.2 uses one selected sample context per simulation and separate molecular
+and condition origins. See [migration and boundaries](SCIENTIFIC_INTEGRITY.md).
+
 The observed condition registry is intentionally sparse. Synthetic priors exist
 only to exercise the condition-aware Demo workflow and expose missing interface
 contracts. They are not biological measurements and must not be reported as
@@ -30,7 +33,7 @@ explicitly joined for the Demo:
 Every synthetic record carries:
 
 - `synthetic_reason=missing_source_attribute`;
-- `generation_method=deterministic_biological_condition_prior_v1`;
+- `generation_method=deterministic_condition_fixture_v2`;
 - the fixed `generation_seed`;
 - `confidence=0.25`;
 - `synthetic_fields_json`;
@@ -79,7 +82,7 @@ The command:
 1. reads observed samples;
 2. writes missing-field priors to a sidecar;
 3. selects a deterministic, source-stratified Demo cohort;
-4. attaches one condition context to every simulation agent;
+4. selects one source sample from that cohort and shares its context across all synthetic agents;
 5. runs the event engine;
 6. writes event, agent-context, summary, manifest, and synthetic-provenance
    files;
@@ -91,9 +94,11 @@ environment for tests and small Demo runs; a future full WSL run should place
 the temporary data tree on the Linux ext4 VHDX and publish only the final
 artifacts back to the project data tree.
 
-## Current verified run
+## Historical v0.1 verified run
 
-The local seed-42 run completed with:
+The old local seed-42 run completed with the following values. These are not
+v0.2 acceptance targets; contact detection, geometry, and context selection
+have changed:
 
 ```text
 source rows:                  602,778
