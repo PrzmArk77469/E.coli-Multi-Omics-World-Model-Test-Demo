@@ -32,6 +32,9 @@ class Agent:
     state_version: int = 0
     source_ref: str = "synthetic://mvp"
     confidence: float = 0.5
+    unified_sample_id: str = ""
+    condition_id: str = ""
+    data_origin: str = "SYNTHETIC"
 
     @property
     def position(self) -> tuple[float, float, float]:
@@ -46,6 +49,10 @@ class Agent:
         require(self.r_eff > 0, "r_eff must be positive")
         require(self.copy_weight >= 1, "copy_weight must be at least 1")
         require(0.0 <= self.confidence <= 1.0, "confidence must be between 0 and 1")
+        require(
+            self.data_origin in {"OBSERVED", "MIXED", "SYNTHETIC"},
+            "unsupported data_origin",
+        )
 
     def to_dict(self) -> dict[str, Any]:
         return asdict(self)

@@ -81,6 +81,14 @@ synthetic gap filling.
 See `docs/CONDITION_MAPPING.md` for the mapping rules and the resumable ENA
 BioSample fetch command.
 
+## Condition-aware Demo
+
+`src/ecoli_world/demo_pipeline.py` generates a clearly labeled synthetic
+condition sidecar, selects a deterministic Demo cohort, attaches the resulting
+sample and condition IDs to all 2,000 agents, and runs the event engine.
+
+See `docs/SYNTHETIC_CONDITIONS.md` for the run command and provenance rules.
+
 ## Git workflow
 
 ```powershell

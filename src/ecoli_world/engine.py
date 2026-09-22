@@ -55,6 +55,10 @@ class SimulationResult:
     queued_events_remaining: int
     events: list[EncounterEvent]
     complexes: list[Complex]
+    conditioned_agents: int
+    condition_count: int
+    data_origin_counts: dict[str, int]
+    condition_distribution: list[tuple[str, int]]
 
     def to_summary_dict(self) -> dict[str, object]:
         summary = asdict(self.config)
@@ -67,6 +71,10 @@ class SimulationResult:
                 "invalidated_events": self.invalidated_events,
                 "queued_events_remaining": self.queued_events_remaining,
                 "simulation_seconds": self.config.steps * self.config.step_seconds,
+                "conditioned_agents": self.conditioned_agents,
+                "condition_count": self.condition_count,
+                "data_origin_counts": self.data_origin_counts,
+                "condition_distribution": self.condition_distribution,
             }
         )
         return summary
@@ -79,12 +87,16 @@ class SimulationEngine:
         rules: Optional[list[Rule]] = None,
         behaviors: Optional[list[Behavior]] = None,
         event_sink: Optional[Callable[[EncounterEvent], None]] = None,
+        condition_contexts: Optional[list[dict[str, str]]] = None,
     ) -> None:
         config.validate()
         self.config = config
         self.rules = sorted(rules or default_rules(), key=lambda rule: (-rule.priority, rule.rule_id))
         self.behaviors = behaviors or default_behaviors()
         self.event_sink = event_sink
+        if condition_contexts is not None and len(condition_contexts) < config.agent_count:
+            raise ValueError("condition_contexts must cover every agent")
+        self.condition_contexts = condition_contexts
         self.rng = random.Random(config.seed)
         self.agents: list[Agent] = []
         self.agents_by_uid: dict[int, Agent] = {}
@@ -102,6 +114,10 @@ class SimulationEngine:
             self._process_due_events(step_index)
 
         outcome_counts = Counter(event.outcome for event in self.events)
+        condition_ids = [
+            agent.condition_id for agent in self.agents if agent.condition_id
+        ]
+        origin_counts = Counter(agent.data_origin for agent in self.agents)
         return SimulationResult(
             config=self.config,
             outcome_counts={
@@ -116,6 +132,10 @@ class SimulationEngine:
             queued_events_remaining=self.queue.queued_count,
             events=self.events,
             complexes=self.complexes,
+            conditioned_agents=len(condition_ids),
+            condition_count=len(set(condition_ids)),
+            data_origin_counts=dict(origin_counts),
+            condition_distribution=Counter(condition_ids).most_common(20),
         )
 
     def _initialize_agents(self) -> None:
@@ -128,6 +148,11 @@ class SimulationEngine:
         for agent_uid, agent_type in enumerate(agent_types):
             x, y, z = self._random_rod_position()
             state_id, r_eff, copy_weight = self._type_defaults(agent_type)
+            context = (
+                self.condition_contexts[agent_uid]
+                if self.condition_contexts is not None
+                else {}
+            )
             agent = Agent(
                 agent_uid=agent_uid,
                 species_id=f"ECOLI:{agent_type}",
@@ -141,6 +166,9 @@ class SimulationEngine:
                 copy_weight=copy_weight,
                 source_ref=f"synthetic://ecoli-mvp/{agent_type}",
                 confidence=0.5,
+                unified_sample_id=context.get("unified_sample_id", ""),
+                condition_id=context.get("effective_condition_id", ""),
+                data_origin=context.get("data_origin", "SYNTHETIC"),
             )
             agent.validate()
             self.agents.append(agent)

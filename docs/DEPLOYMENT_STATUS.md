@@ -47,21 +47,27 @@ Last updated: 2026-09-22
 - A resumable ENA BioSample XML fetcher is implemented. Three MG1655 samples
   are cached as a contract demonstration; bulk retrieval remains a deliberate
   later operation.
+- Synthetic gap filling is isolated in `synthetic_condition_fill.tsv.gz` and
+  never overwrites the observed map. The seed-42 Demo selected 2,000
+  source-stratified contexts and attached them to all 2,000 agents.
+- The condition-aware event run completed with 58,558 events, all three
+  required outcomes, and 237 complexes. The event and agent-context logs are
+  local reproducibility artifacts, not Git payloads.
 
 ## Current boundary
 
-The local execution, container, Git, network, first simulation, and observed
-condition-mapping foundations are operational. NemoHermes, Alibaba Cloud
-resources, bulk ENA BioSample retrieval, and synthetic gap-filling have not yet
-been implemented.
+The local execution, container, Git, network, condition-aware simulation, and
+observed/synthetic separation foundations are operational. NemoHermes,
+Alibaba Cloud resources, and bulk ENA BioSample retrieval have not yet been
+implemented.
 
 ## Immediate next work
 
-1. Add clearly labeled biologically plausible synthetic fixtures where source
-   data is incomplete.
-2. Deploy NemoHermes after repeatable local workflows exist.
-3. Deploy the Alibaba Cloud CPU control plane and private OSS before adding an
+1. Deploy NemoHermes after repeatable local workflows exist.
+2. Deploy the Alibaba Cloud CPU control plane and private OSS before adding an
    on-demand GPU worker.
+3. Replace synthetic Demo fields with real BioSample attributes in the next ENA
+   retrieval batch.
 
 ## Required user decisions
 

@@ -63,6 +63,23 @@ class SimulationTests(unittest.TestCase):
         for complex_model in result.complexes:
             complex_model.validate()
 
+    def test_condition_contexts_are_attached_to_every_agent(self) -> None:
+        contexts = [
+            {
+                "unified_sample_id": f"ECOLI_S_{index:04d}",
+                "effective_condition_id": f"ECOLI_DC_{index % 3}",
+                "data_origin": "MIXED" if index % 2 else "SYNTHETIC",
+            }
+            for index in range(100)
+        ]
+        result = SimulationEngine(
+            SimulationConfig(agent_count=100, steps=10, seed=5),
+            condition_contexts=contexts,
+        ).run()
+        self.assertEqual(result.conditioned_agents, 100)
+        self.assertEqual(result.condition_count, 3)
+        self.assertEqual(sum(result.data_origin_counts.values()), 100)
+
 
 class SchemaTests(unittest.TestCase):
     def test_schema_files_are_valid_json(self) -> None:

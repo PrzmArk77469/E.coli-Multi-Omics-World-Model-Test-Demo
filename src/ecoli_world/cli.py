@@ -9,6 +9,7 @@ from pathlib import Path
 from .engine import SimulationConfig, SimulationEngine
 from .io import JsonlEventWriter, write_json
 from .rules import default_behaviors, default_rules
+from .synthetic_conditions import read_demo_contexts
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -17,6 +18,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--steps", type=int, default=80)
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--output", type=Path, default=Path("artifacts/simulation_mvp"))
+    parser.add_argument("--condition-contexts", type=Path)
     parser.add_argument(
         "--allow-missing-outcomes",
         action="store_true",
@@ -33,12 +35,23 @@ def main(argv: list[str] | None = None) -> int:
     config = SimulationConfig(agent_count=args.agents, steps=args.steps, seed=args.seed)
     rules = default_rules()
     behaviors = default_behaviors()
+    condition_contexts = (
+        read_demo_contexts(args.condition_contexts)
+        if args.condition_contexts
+        else None
+    )
     events_path = output_dir / "events.jsonl"
     summary_path = output_dir / "summary.json"
     manifest_path = output_dir / "run_manifest.json"
 
     with JsonlEventWriter(events_path) as writer:
-        engine = SimulationEngine(config=config, rules=rules, behaviors=behaviors, event_sink=writer.write)
+        engine = SimulationEngine(
+            config=config,
+            rules=rules,
+            behaviors=behaviors,
+            event_sink=writer.write,
+            condition_contexts=condition_contexts,
+        )
         result = engine.run()
 
     summary = result.to_summary_dict()
@@ -54,6 +67,10 @@ def main(argv: list[str] | None = None) -> int:
             "config": result.to_summary_dict(),
             "rules": [rule.to_dict() for rule in rules],
             "behaviors": [behavior.to_dict() for behavior in behaviors],
+            "condition_context_file": str(args.condition_contexts)
+            if args.condition_contexts
+            else "",
+            "condition_context_count": len(condition_contexts or []),
             "schema_files": [
                 "schemas/agent.schema.json",
                 "schemas/behavior.schema.json",

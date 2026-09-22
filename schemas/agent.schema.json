@@ -18,7 +18,10 @@
     "active",
     "state_version",
     "source_ref",
-    "confidence"
+    "confidence",
+    "unified_sample_id",
+    "condition_id",
+    "data_origin"
   ],
   "properties": {
     "agent_uid": {"type": "integer", "minimum": 0},
@@ -35,6 +38,12 @@
     "complex_uid": {"type": ["string", "null"]},
     "state_version": {"type": "integer", "minimum": 0},
     "source_ref": {"type": "string", "minLength": 1},
-    "confidence": {"type": "number", "minimum": 0, "maximum": 1}
+    "confidence": {"type": "number", "minimum": 0, "maximum": 1},
+    "unified_sample_id": {"type": "string"},
+    "condition_id": {"type": "string"},
+    "data_origin": {
+      "type": "string",
+      "enum": ["OBSERVED", "MIXED", "SYNTHETIC"]
+    }
   }
 }

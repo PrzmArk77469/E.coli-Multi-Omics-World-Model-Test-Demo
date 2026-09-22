@@ -7,6 +7,8 @@
 3. `docs/INFRASTRUCTURE.md`
 4. `docs/LOGGING_AND_ROLLBACK.md`
 5. `docs/NETWORK_AND_PROXY.md`
+6. `docs/CONDITION_MAPPING.md`
+7. `docs/SYNTHETIC_CONDITIONS.md`
 
 ## Current machine layout
 
@@ -53,6 +55,9 @@
 - An observed-only sample-condition registry is generated at
   `D:\CodexApp\Project13\EcoliOmics\integrated\condition_completion`. It keeps
   source evidence separate from any future synthetic sidecar.
+- A condition-aware seed-42 Demo is generated under
+  `D:\CodexApp\Project13\EcoliOmics\integrated\condition_completion\demo_full`.
+  Its synthetic sidecar is explicitly separated from observed metadata.
 
 ## Resume command
 

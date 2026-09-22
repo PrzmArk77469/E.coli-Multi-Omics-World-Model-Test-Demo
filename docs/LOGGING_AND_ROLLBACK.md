@@ -14,6 +14,9 @@ Important files:
 - `wsl-configure-*.log`: `.wslconfig` and Ubuntu start verification.
 - `wsl-2.7.14-install.log`: signed Microsoft WSL runtime installation.
 - `verify-*.log` and `last-verification.json`: final infrastructure checks.
+- `condition-demo-*.json`: hashes and outcome totals for a condition-aware
+  simulation run; the matching event and manifest files remain in the data
+  tree.
 - `wsl-reboot-required.flag`: transient reboot marker; remove it after the
   reboot has completed and WSL is verified.
 

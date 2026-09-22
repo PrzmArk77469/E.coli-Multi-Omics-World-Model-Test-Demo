@@ -69,3 +69,10 @@ The rule probabilities and positions are fixtures, not scientific estimates.
 Step 3 replaces incomplete metadata with a documented condition-mapping
 architecture; Step 4 introduces clearly labeled biologically plausible
 synthetic fixtures where source coverage is insufficient.
+
+## Condition-aware Demo
+
+`src/ecoli_world/demo_pipeline.py` joins the observed condition registry to an
+isolated synthetic sidecar and attaches one unified sample/condition context to
+every agent. See `docs/SYNTHETIC_CONDITIONS.md` for the generation rules,
+guardrails, and verified run.
