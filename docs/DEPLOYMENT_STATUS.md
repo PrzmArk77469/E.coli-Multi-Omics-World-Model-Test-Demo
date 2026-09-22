@@ -1,72 +1,61 @@
 # Deployment Status
 
-Last updated: 2026-09-21 16:15 +08:00
+Last updated: 2026-09-22
 
 ## Completed
 
-- Created the Git repository skeleton at `D:\CodexApp\Project13\Git`.
-- Added `.gitignore`, `.gitattributes`, `README.md`, `AGENTS.md`, and
-  infrastructure documentation.
-- Copied project documents, scripts, registry files, small metadata manifests,
-  and visualizations into the repository.
-- Enabled the Windows features `Microsoft-Windows-Subsystem-Linux` and
-  `VirtualMachinePlatform`.
-- Downloaded Ubuntu Base 24.04.5 to `D:\WSL\Downloads` and verified SHA256
-  `e77b6f10c2590cef872b33ee9f635a0e3fd1f57fb074c0e52b5c7f56147a0c86`.
-- Downloaded Docker Desktop to `D:\DockerDesktopDownloads`; Authenticode
-  signature verification succeeded.
-- Installed Docker Desktop to `D:\DockerDesktop`.
-- Configured Docker WSL data root as `D:\DockerDesktopData`.
-- Pre-downloaded the Microsoft WSL2 kernel MSI. Its pre-reboot installation
-  returned `1603` because `LxssManager` does not exist until the pending WSL
-  feature activation reboot. `01-Install-Ubuntu2404.ps1` retries it after the
-  reboot.
-- Created the initial Git commit
-  `dc7a5a1510acfac4df9b0a532c5e635bb1e4972f`.
-- Pushed `main` to the local rollback remote
+- Windows remains Windows 10 Home 22H2 build 19045; no Windows upgrade was
+  performed.
+- Microsoft WSL runtime `2.7.14` and Linux kernel
+  `6.18.33.2-microsoft-standard-WSL2` are installed.
+- Ubuntu `24.04` is registered as `Ubuntu-24.04`, runs as WSL2, and stores its
+  VHDX under `D:\WSL\Ubuntu-24.04`.
+- Ubuntu user `mars` is configured. Git `2.43.0`, Python `3.12.3`, and
+  `uv 0.12.17` are available.
+- Docker Desktop `4.91.0` with Linux Engine `29.8.0` is installed at
+  `D:\DockerDesktop`; persistent data is under `D:\DockerDesktopData`.
+- Docker Desktop WSL integration is enabled for `Ubuntu-24.04`.
+- Docker Desktop uses the Clash Verge HTTP proxy at
+  `http://127.0.0.1:7897`.
+- Ubuntu uses the Windows-host gateway proxy through the idempotent
+  `infra/wsl/configure-proxy.sh` setup.
+- Clash Verge permits LAN access on mixed port `7897`; system proxy and TUN
+  mode remain disabled.
+- Windows Firewall allows only `172.16.0.0/12` to reach
+  `verge-mihomo.exe:7897`.
+- GitHub proxy access, Aliyun direct access, Git remote access, and Docker
+  `hello-world` have all been verified from Ubuntu.
+- The repository is connected to
+  `https://github.com/PrzmArk77469/Git.git` as `origin`.
+- A local rollback remote named `backup` points to
   `D:\CodexApp\Project13\GitBackup.git`.
-- Connected `origin` to `https://github.com/PrzmArk77469/Git.git`.
-- Merged the two pre-existing GitHub commits with the new project history
-  using an unrelated-history merge that preserves both histories.
-- Pushed the merged `main` branch to GitHub.
+- The latest verification is recorded locally in
+  `logs/last-verification.json` and the matching `logs/verify-*.log`.
+- Existing omics data contains about 2,134 files and 13.27 GB on disk,
+  including MG1655 references, ENA/PRIDE/MetaboLights assets, RegulonDB,
+  iML1515, metabolomics, proteomics, and integrated metadata masters.
 
-## Pending Windows reboot
+## Current boundary
 
-Windows returned DISM exit code `3010`. WSL2 cannot be imported until the
-computer restarts.
+The local execution, container, Git, and network foundations are operational.
+NemoHermes, Alibaba Cloud resources, the agent simulation engine, condition
+completion, and synthetic gap-filling have not yet been implemented.
 
-After restart, run the following from an elevated PowerShell:
+## Immediate next work
 
-```powershell
-Set-Location D:\CodexApp\Project13\Git
-.\infra\windows\01-Install-Ubuntu2404.ps1
-.\infra\windows\03-Configure-WSL.ps1
-.\infra\windows\02-Install-DockerDesktop.ps1
-.\infra\windows\04-Verify-Infrastructure.ps1
-```
-
-Then set the Linux password:
-
-```powershell
-wsl.exe -d Ubuntu-24.04 -u root -- passwd mars
-```
-
-## Git remote
-
-- Local branch: `main`
-- Local rollback remote: `backup` at
-  `D:\CodexApp\Project13\GitBackup.git`
-- External `origin`: `https://github.com/PrzmArk77469/Git.git`
-
-Push subsequent changes with:
-
-```powershell
-git push origin main
-git push backup main
-```
+1. Build the 2,000-agent minimal simulation loop.
+2. Add schemas, spatial hashing, neighborhood detection, event queueing, event
+   logs, and `NO_EFFECT` / `MODIFY` / `BIND` outcomes.
+3. Define condition-field completion and unified sample-id mapping.
+4. Add clearly labeled biologically plausible synthetic fixtures where source
+   data is incomplete.
+5. Deploy NemoHermes after repeatable local workflows exist.
+6. Deploy the Alibaba Cloud CPU control plane and private OSS before adding an
+   on-demand GPU worker.
 
 ## Required user decisions
 
-- Restart Windows when convenient to complete WSL2 import.
 - Decide whether to mirror GitHub to Alibaba Cloud Codeup for mainland ECS
   access.
+- Decide when to provision the first CPU ECS and private OSS bucket.
+- Decide which inference provider NemoHermes should use.

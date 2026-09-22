@@ -2,7 +2,8 @@
 set -euo pipefail
 
 LOG_DIR="/mnt/d/CodexApp/Project13/Git/logs"
-APT_MIRROR="${APT_MIRROR:-https://mirrors.aliyun.com/ubuntu/}"
+APT_HTTP_MIRROR="${APT_HTTP_MIRROR:-http://mirrors.aliyun.com/ubuntu/}"
+APT_HTTPS_MIRROR="${APT_HTTPS_MIRROR:-https://mirrors.aliyun.com/ubuntu/}"
 mkdir -p "${LOG_DIR}"
 STAMP="$(date +%Y%m%d-%H%M%S)"
 LOG_FILE="${LOG_DIR}/bootstrap-${STAMP}.log"
@@ -13,25 +14,45 @@ echo "Starting Ubuntu bootstrap at $(date -Is)"
 
 export DEBIAN_FRONTEND=noninteractive
 
-echo "Configuring APT mirror: ${APT_MIRROR}"
 install -d -m 0755 /etc/apt/sources.list.d
 if [[ -f /etc/apt/sources.list && ! -f /etc/apt/sources.list.codex-disabled ]]; then
   mv /etc/apt/sources.list /etc/apt/sources.list.codex-disabled
 fi
 
-cat >/etc/apt/sources.list.d/ubuntu.sources <<EOF
+write_apt_sources() {
+  local mirror="$1"
+  cat >/etc/apt/sources.list.d/ubuntu.sources <<EOF
 Types: deb
-URIs: ${APT_MIRROR}
+URIs: ${mirror}
 Suites: noble noble-updates noble-backports
 Components: main restricted universe multiverse
 Signed-By: /usr/share/keyrings/ubuntu-archive-keyring.gpg
 
 Types: deb
-URIs: ${APT_MIRROR}
+URIs: ${mirror}
 Suites: noble-security
 Components: main restricted universe multiverse
 Signed-By: /usr/share/keyrings/ubuntu-archive-keyring.gpg
 EOF
+}
+
+update_apt() {
+  local label="$1"
+  local update_ok=0
+  for attempt in 1 2 3; do
+    echo "APT update (${label}) attempt ${attempt}/3"
+    if apt-get -o Acquire::Retries=5 update; then
+      update_ok=1
+      break
+    fi
+    sleep $((attempt * 5))
+    rm -rf /var/lib/apt/lists/*
+  done
+  if [[ "${update_ok}" -ne 1 ]]; then
+    echo "APT update (${label}) failed after 3 attempts." >&2
+    return 1
+  fi
+}
 
 cat >/etc/apt/apt.conf.d/99-project-network <<'EOF'
 Acquire::Retries "5";
@@ -45,20 +66,32 @@ EOF
 apt-get clean
 rm -rf /var/lib/apt/lists/*
 
-update_ok=0
+echo "Bootstrapping CA certificates over HTTP: ${APT_HTTP_MIRROR}"
+write_apt_sources "${APT_HTTP_MIRROR}"
+update_apt "HTTP bootstrap"
+
+ca_ok=0
 for attempt in 1 2 3; do
-  echo "APT update attempt ${attempt}/3"
-  if apt-get -o Acquire::Retries=5 update; then
-    update_ok=1
+  echo "CA certificate installation attempt ${attempt}/3"
+  if apt-get -y -o Acquire::Retries=5 -o Dpkg::Lock::Timeout=120 install ca-certificates; then
+    ca_ok=1
     break
   fi
+  apt-get clean
+  rm -rf /var/lib/apt/lists/partial/*
   sleep $((attempt * 5))
-  rm -rf /var/lib/apt/lists/*
 done
-if [[ "${update_ok}" -ne 1 ]]; then
-  echo "APT update failed after 3 attempts." >&2
+if [[ "${ca_ok}" -ne 1 ]]; then
+  echo "CA certificate installation failed after 3 attempts." >&2
   exit 1
 fi
+update-ca-certificates
+
+echo "Switching APT to HTTPS: ${APT_HTTPS_MIRROR}"
+write_apt_sources "${APT_HTTPS_MIRROR}"
+apt-get clean
+rm -rf /var/lib/apt/lists/*
+update_apt "HTTPS"
 
 packages=(
   build-essential

@@ -2,6 +2,9 @@
 
 ## Order of operations
 
+The local WSL, Ubuntu, Docker, Git, and proxy foundation is now operational.
+Continue with the cloud work below; do not rebuild the local runtime.
+
 1. Create or verify the Alibaba Cloud account and budget guardrails.
 2. Create a private OSS bucket in Shanghai or Hangzhou.
 3. Create a small CPU ECS control plane with SSH restricted to the current
@@ -30,4 +33,3 @@ must run in `tmux` or systemd and write checkpoints to OSS.
 NemoHermes is an experimental agent layer. It may assist with task planning,
 rule drafting, log summaries, and workflow orchestration, but it must not be
 the only holder of cloud credentials or the source of scientific state.
-
