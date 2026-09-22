@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-REPO_ROOT="${REPO_ROOT:-/mnt/d/CodexApp/Project13/Git}"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REPO_ROOT="${REPO_ROOT:-$(cd "${SCRIPT_DIR}/../.." && pwd)}"
 LOG_DIR="${LOG_DIR:-${REPO_ROOT}/logs}"
 APT_HTTP_MIRROR="${APT_HTTP_MIRROR:-http://mirrors.aliyun.com/ubuntu/}"
 APT_HTTPS_MIRROR="${APT_HTTPS_MIRROR:-https://mirrors.aliyun.com/ubuntu/}"

@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-REPO_ROOT="${REPO_ROOT:-/mnt/d/CodexApp/Project13/Git}"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REPO_ROOT="${REPO_ROOT:-$(cd "${SCRIPT_DIR}/../.." && pwd)}"
 LOG_DIR="${LOG_DIR:-${REPO_ROOT}/logs}"
 HERMES_INSTALL_URL="${HERMES_INSTALL_URL:-https://hermes-agent.nousresearch.com/install.sh}"
 HERMES_INSTALLER_SHA256="${HERMES_INSTALLER_SHA256:-00f9080c6452bf87f03ef2fffb4b2c23b9f43f946aaae956e4c547d17e310b22}"

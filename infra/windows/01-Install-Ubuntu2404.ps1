@@ -16,6 +16,9 @@ Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
 
 $repoRoot = (Resolve-Path (Join-Path $PSScriptRoot "..\..")).Path
+$driveLetter = $repoRoot.Substring(0, 1).ToLowerInvariant()
+$repoRelativePath = $repoRoot.Substring(2).Replace("\", "/")
+$repoWslPath = "/mnt/${driveLetter}${repoRelativePath}"
 $logDir = Join-Path $repoRoot "logs"
 New-Item -ItemType Directory -Force -Path $logDir | Out-Null
 New-Item -ItemType Directory -Force -Path $InstallRoot | Out-Null
@@ -26,7 +29,7 @@ $logPath = Join-Path $logDir "ubuntu-install-$stamp.log"
 $rebootFlag = Join-Path $logDir "wsl-reboot-required.flag"
 $wslMsiPath = Join-Path $DownloadRoot "wsl.2.7.14.0.x64.msi"
 $rootfsPath = Join-Path $DownloadRoot "ubuntu-base-24.04.5-base-amd64.tar.gz"
-$bootstrapPath = "/mnt/d/CodexApp/Project13/Git/infra/wsl/bootstrap-ubuntu.sh"
+$bootstrapPath = "${repoWslPath}/infra/wsl/bootstrap-ubuntu.sh"
 
 Start-Transcript -Path $logPath -Append
 try {
@@ -119,7 +122,6 @@ EOF
         throw "Ubuntu bootstrap failed. Review the timestamped log."
     }
 
-    & wsl.exe --terminate $DistroName
     Remove-Item -Force -ErrorAction SilentlyContinue $rebootFlag
     Write-Host "Ubuntu $DistroName is ready. Run passwd mars before using sudo."
 }

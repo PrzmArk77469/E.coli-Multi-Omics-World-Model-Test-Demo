@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-REPO_ROOT="${REPO_ROOT:-/mnt/d/CodexApp/Project13/Git}"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REPO_ROOT="${REPO_ROOT:-$(cd "${SCRIPT_DIR}/../.." && pwd)}"
 LOG_DIR="${LOG_DIR:-${REPO_ROOT}/logs}"
 TARGET_USER="${TARGET_USER:-mars}"
 NODE_MAJOR="${NODE_MAJOR:-22}"

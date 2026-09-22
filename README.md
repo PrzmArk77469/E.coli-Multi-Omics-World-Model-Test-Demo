@@ -15,6 +15,7 @@ the project data tree outside this repository or an object-storage bucket.
 - [New conversation handoff](docs/NEW_CONVERSATION_CONTEXT.md)
 - [Current deployment status](docs/DEPLOYMENT_STATUS.md)
 - [Hermes Agent in WSL](docs/HERMES_WSL.md)
+- [Portable infrastructure guide](docs/PORTABLE_INFRASTRUCTURE.md)
 
 ## System at a glance
 

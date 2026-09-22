@@ -16,8 +16,9 @@ here.
 5. `docs/LOGGING_AND_ROLLBACK.md`
 6. `docs/NETWORK_AND_PROXY.md`
 7. `docs/HERMES_WSL.md`
-8. `docs/CONDITION_MAPPING.md`
-9. `docs/SYNTHETIC_CONDITIONS.md`
+8. `docs/PORTABLE_INFRASTRUCTURE.md`
+9. `docs/CONDITION_MAPPING.md`
+10. `docs/SYNTHETIC_CONDITIONS.md`
 
 ## Fast start
 

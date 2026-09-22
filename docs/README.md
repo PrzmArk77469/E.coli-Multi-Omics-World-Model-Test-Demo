@@ -19,6 +19,9 @@
 
 ## Infrastructure
 
+- [Portable infrastructure guide](PORTABLE_INFRASTRUCTURE.md): self-contained
+  migration guide for recreating the local stack in a new project without
+  copying the current Git history or remotes.
 - [Infrastructure topology](INFRASTRUCTURE.md): Windows, WSL, Docker, and cloud
   layout.
 - [WSL2 Ubuntu 24.04](WSL2_UBUNTU24.04.md): local runtime deployment.
