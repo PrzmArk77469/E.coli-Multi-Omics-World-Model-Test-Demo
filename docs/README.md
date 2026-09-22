@@ -22,11 +22,13 @@
 - [Infrastructure topology](INFRASTRUCTURE.md): Windows, WSL, Docker, and cloud
   layout.
 - [WSL2 Ubuntu 24.04](WSL2_UBUNTU24.04.md): local runtime deployment.
+- [Hermes Agent in WSL](HERMES_WSL.md): official Nous Research installation,
+  authentication, operation, and rollback.
 - [Network and proxy](NETWORK_AND_PROXY.md): Clash, WSL, Docker, and GitHub
   routing.
 - [Logging and rollback](LOGGING_AND_ROLLBACK.md): logs and recovery rules.
-- [Alibaba Cloud and NemoHermes](ALIYUN_AND_HERMES.md): planned remote
-  extension path.
+- [Alibaba Cloud and Hermes Agent](ALIYUN_AND_HERMES.md): local agent
+  connection and planned remote extension path.
 
 ## Source design documents
 

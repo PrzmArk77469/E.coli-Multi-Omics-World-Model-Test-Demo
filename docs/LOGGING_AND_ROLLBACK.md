@@ -13,6 +13,8 @@ Important files:
 - `bootstrap-*.log`: Ubuntu package installation.
 - `wsl-configure-*.log`: `.wslconfig` and Ubuntu start verification.
 - `wsl-2.7.14-install.log`: signed Microsoft WSL runtime installation.
+- `hermes-install-*.log`: official Hermes installer download, SHA256,
+  dependency installation, update, and diagnostics.
 - `verify-*.log` and `last-verification.json`: final infrastructure checks.
 - `condition-demo-*.json`: hashes and outcome totals for a condition-aware
   simulation run; the matching event and manifest files remain in the data
@@ -39,6 +41,11 @@ Logs are ignored by Git except for `logs/README.md`.
 8. The WSL runtime MSI must be verified against official SHA256
    `db084e536279a59e90a26ec598d8aa8a4dff8309f41d078fd06242953ac1ebcd`
    and a valid Microsoft Authenticode signature.
+9. Hermes code can be recovered through its Git checkout under
+   `~/.hermes/hermes-agent`. State and configuration can be backed up with
+   `hermes backup` and restored with `hermes import`.
+10. Do not replace the official Hermes Agent with an unrelated agent stack
+   while the current installation is diagnostically healthy.
 
 ## Recovery sequence
 
@@ -50,3 +57,6 @@ Logs are ignored by Git except for `logs/README.md`.
    from the rootfs archive.
 6. If Docker cannot pull because port `7897` is closed, start Clash Verge
    before rerunning the Docker script or verification.
+7. If Hermes is missing or damaged, re-run
+   `bash infra/wsl/install-hermes.sh`; restore `~/.hermes` from a backup only
+   when local sessions, memory, or configuration are also affected.

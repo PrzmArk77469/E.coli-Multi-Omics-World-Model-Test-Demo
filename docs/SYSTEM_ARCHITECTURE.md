@@ -16,7 +16,8 @@ biological predictions.
 ## 2. System overview
 
 Solid nodes are implemented and locally verified. Dashed nodes are planned
-extensions and must not be treated as deployed infrastructure.
+extensions and must not be treated as deployed infrastructure. Hermes is
+installed locally, but model authentication is still pending.
 
 ```mermaid
 flowchart TB
@@ -33,7 +34,7 @@ flowchart TB
     Engine["2,000-agent event engine"]
     Events["Events, complexes, summary, manifest"]
     Viewer["Interactive 3D replay viewer"]
-    Hermes["NemoHermes agent layer<br/>planned"]
+    Hermes["Nous Research Hermes Agent<br/>installed; model auth pending"]
     ECS["Alibaba Cloud CPU ECS<br/>planned"]
     OSS["Private OSS bucket<br/>planned"]
     GPU["On-demand GPU ECS<br/>planned"]
@@ -51,7 +52,8 @@ flowchart TB
     Context --> Engine
     Engine --> Events
     Events --> Viewer
-    Local -.-> Hermes
+    Local --> Hermes
+    Hermes --> Engine
     Local -. SSH .-> ECS
     ECS -.-> OSS
     ECS -.-> GPU
@@ -59,9 +61,9 @@ flowchart TB
     classDef done fill:#dff5ef,stroke:#237a68,color:#102d28,stroke-width:1.5px;
     classDef data fill:#fff2cc,stroke:#9a6b00,color:#3d2a00,stroke-width:1.5px;
     classDef planned fill:#f2f2f2,stroke:#777,color:#333,stroke-dasharray:5 4;
-    class User,Codex,GitHub,Local,Docker,Engine,Viewer done;
+    class User,Codex,GitHub,Local,Docker,Hermes,Engine,Viewer done;
     class Data,Observed,Mapping,Sidecar,Context,Events data;
-    class Hermes,ECS,OSS,GPU planned;
+    class ECS,OSS,GPU planned;
 ```
 
 ## 3. End-to-end execution
@@ -138,12 +140,14 @@ flowchart TB
     Docker["Docker Desktop<br/>data on D:"]
     Proxy["Clash Verge mixed port 7897<br/>LAN access enabled"]
     Repo["Git workspace<br/>origin + local backup"]
+    Hermes["Hermes Agent<br/>local CLI and tools"]
     CPU["Alibaba Cloud CPU ECS<br/>planned control plane"]
     OSS["Private OSS<br/>planned data and checkpoints"]
     GPU["GPU ECS worker<br/>planned, on demand"]
 
     Windows --> WSL
     Windows --> Docker
+    WSL --> Hermes
     WSL <--> Proxy
     Docker <--> Proxy
     WSL <--> Repo
@@ -154,7 +158,7 @@ flowchart TB
 
     classDef local fill:#dff5ef,stroke:#237a68,color:#102d28;
     classDef planned fill:#f2f2f2,stroke:#777,color:#333,stroke-dasharray:5 4;
-    class Windows,WSL,Docker,Proxy,Repo local;
+    class Windows,WSL,Docker,Proxy,Repo,Hermes local;
     class CPU,OSS,GPU planned;
 ```
 
@@ -176,7 +180,7 @@ does not require renaming this stable local directory.
 | `visualizations/demo_engine.html` | Interactive Three.js replay interface | Implemented |
 | `infra/windows/` | WSL, Ubuntu, Docker installation and verification | Implemented locally |
 | `infra/wsl/` | Ubuntu bootstrap and proxy configuration | Implemented locally |
-| NemoHermes | Agent-assisted planning and orchestration | Planned |
+| Nous Research Hermes Agent | Agent-assisted planning and orchestration | Installed; model authentication pending |
 | Alibaba Cloud | CPU control plane, private OSS, on-demand GPU | Planned |
 
 ## 7. Repository map
@@ -193,7 +197,7 @@ schemas/                        Five simulation entity schemas
 src/ecoli_world/                Python simulation and condition-mapping code
 tests/                          Unit and end-to-end tests
 infra/windows/                  Windows and Docker setup scripts
-infra/wsl/                      Ubuntu bootstrap and proxy scripts
+infra/wsl/                      Ubuntu bootstrap, proxy, and Hermes scripts
 metadata/download_queue/        Small reproducibility manifests
 visualizations/                 Replay and architecture HTML assets
 ```
@@ -219,6 +223,9 @@ Result: 16 tests pass, including the 2,000-agent end-to-end condition Demo.
 Runtime evidence is stored locally under `logs/` and includes infrastructure
 verification plus `condition-demo-42.json` hashes and outcome totals. The local
 `backup` remote provides an additional rollback point independent of GitHub.
+Hermes `v0.21.4` passes core dependency, tool, and configuration diagnostics.
+Its remaining actionable item is model authentication; SQLite and optional
+tool warnings are non-blocking.
 
 ## 9. Review checklist
 
@@ -228,13 +235,18 @@ verification plus `condition-demo-42.json` hashes and outcome totals. The local
 4. Confirm that the event engine emits all three required outcomes.
 5. Confirm that summary, manifest, event log, and replay payload agree.
 6. Treat all current simulation positions and rules as engineering fixtures.
-7. Add Hermes, Alibaba Cloud, and bulk ENA retrieval only after preserving this
-   verified local baseline.
+7. Keep the verified simulation baseline intact while Hermes is connected to a
+   hosted model provider.
+8. Add Alibaba Cloud and bulk ENA retrieval only after preserving this verified
+   local baseline.
 
 ## 10. Next milestones
 
 1. Rename and maintain the canonical GitHub repository.
-2. Deploy NemoHermes against the stable local WSL and Docker workflow.
-3. Provision the Alibaba Cloud CPU control plane and private OSS bucket.
-4. Expand ENA BioSample retrieval and reduce synthetic condition coverage.
-5. Add a GPU worker only for a measured model-training or inference workload.
+2. Authenticate the installed Hermes Agent and run a repository-scoped smoke
+   task.
+3. Connect Hermes to the remote execution model after local authentication is
+   verified.
+4. Provision the Alibaba Cloud CPU control plane and private OSS bucket.
+5. Expand ENA BioSample retrieval and reduce synthetic condition coverage.
+6. Add a GPU worker only for a measured model-training or inference workload.

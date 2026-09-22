@@ -1,4 +1,4 @@
-# Alibaba Cloud and NemoHermes
+# Alibaba Cloud and Hermes Agent
 
 ## Order of operations
 
@@ -11,7 +11,8 @@ Continue with the cloud work below; do not rebuild the local runtime.
    public IP.
 4. Verify Git, Docker, `uv`, `ossutil`, and `tmux` on the control plane.
 5. Add the GPU ECS worker only for a measured workload.
-6. Install NemoHermes after the local WSL and Git workflow is stable.
+6. Connect the local Hermes Agent to the tested remote workflow through SSH
+   after the local model provider is authenticated.
 
 ## Remote invocation model
 
@@ -28,8 +29,10 @@ Windows Codex
 Use `~/.ssh/config`, `rsync`, `tmux`, and Docker commands from WSL. Long jobs
 must run in `tmux` or systemd and write checkpoints to OSS.
 
-## NemoHermes
+## Hermes Agent
 
-NemoHermes is an experimental agent layer. It may assist with task planning,
-rule drafting, log summaries, and workflow orchestration, but it must not be
-the only holder of cloud credentials or the source of scientific state.
+Nous Research Hermes Agent is installed in local WSL and may assist with task
+planning, rule drafting, log summaries, and workflow orchestration. It must not
+be the only holder of cloud credentials or the source of scientific state.
+Cloud credentials remain in the user's SSH and cloud tooling, never in this
+repository. Local installation details are in `docs/HERMES_WSL.md`.

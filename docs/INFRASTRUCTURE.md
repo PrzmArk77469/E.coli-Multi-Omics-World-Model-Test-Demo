@@ -6,6 +6,7 @@
 Windows Codex
   -> WSL2 Ubuntu 24.04 on D:
   -> Docker Desktop data on D:
+  -> Nous Research Hermes Agent under /home/mars/.hermes
   -> Clash Verge proxy for Docker Hub, GitHub, and release assets
   -> GitHub/Codeup source repository
   -> Alibaba Cloud CPU ECS control plane
@@ -63,6 +64,21 @@ trusted CA bundle.
 - Pin experiment images by Git SHA or digest.
 - Do not use mutable `latest` tags for recorded experiments.
 - Keep image storage on `D:\DockerDesktopData`.
+
+## Agent layer
+
+- Use the official Nous Research Hermes Agent installed in `Ubuntu-24.04`.
+- Command: `/home/mars/.local/bin/hermes`.
+- Code: `/home/mars/.hermes/hermes-agent`.
+- Configuration and local credentials: `/home/mars/.hermes/`.
+- Installation and refresh: `infra/wsl/install-hermes.sh`.
+- Installer source: `https://hermes-agent.nousresearch.com/install.sh`.
+- Reviewed installer SHA256:
+  `00f9080c6452bf87f03ef2fffb4b2c23b9f43f946aaae956e4c547d17e310b22`.
+- Model authentication is user-owned and intentionally excluded from
+  automation. The current recommended path is `hermes setup --portal`.
+- Hermes is an orchestration client, not the authority for scientific state,
+  provenance, container pins, or cloud credentials.
 
 ## Network policy
 

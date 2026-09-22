@@ -59,19 +59,28 @@ Last updated: 2026-09-22
   timeline controls, provenance filters, and agent inspection. The reusable
   viewer template and vendor assets are versioned; generated data remains a
   local artifact.
+- Nous Research Hermes Agent `v0.21.4` is installed under
+  `/home/mars/.hermes` from upstream commit `836b5f82`. The CLI, ACP entry
+  point, browser/computer-use support, Playwright Chromium, memory, cron,
+  skills, terminal, and file tools are available.
+- Hermes configuration was migrated to version `v45`. Its reviewed installer
+  hash, idempotent WSL installer, and operating procedure are recorded in the
+  repository. No API key or OAuth credential is stored in Git.
 - `docs/SYSTEM_ARCHITECTURE.md` is the canonical system map for onboarding,
   deployment review, provenance review, and rollback planning.
 
 ## Current boundary
 
 The local execution, container, Git, network, condition-aware simulation, and
-observed/synthetic separation foundations are operational. NemoHermes,
-Alibaba Cloud resources, and bulk ENA BioSample retrieval have not yet been
-implemented.
+observed/synthetic separation foundations are operational. The official
+Nous Research Hermes Agent is installed and diagnostically healthy, but model
+authentication remains pending. Alibaba Cloud resources and bulk ENA BioSample
+retrieval have not yet been provisioned.
 
 ## Immediate next work
 
-1. Deploy NemoHermes after repeatable local workflows exist.
+1. Authenticate Hermes with Nous Portal or another hosted model provider, then
+   run one repository-scoped smoke task.
 2. Deploy the Alibaba Cloud CPU control plane and private OSS before adding an
    on-demand GPU worker.
 3. Replace synthetic Demo fields with real BioSample attributes in the next ENA
@@ -82,4 +91,4 @@ implemented.
 - Decide whether to mirror GitHub to Alibaba Cloud Codeup for mainland ECS
   access.
 - Decide when to provision the first CPU ECS and private OSS bucket.
-- Decide which inference provider NemoHermes should use.
+- Decide which hosted inference provider Hermes should use.

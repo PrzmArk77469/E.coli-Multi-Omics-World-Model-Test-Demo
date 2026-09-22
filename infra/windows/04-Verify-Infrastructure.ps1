@@ -40,6 +40,19 @@ function Invoke-WslCommand {
     return $output
 }
 
+function Invoke-WslCommandAllowFailure {
+    param(
+        [Parameter(Mandatory = $true)]
+        [string[]]$Arguments
+    )
+
+    $output = (& $WslExe @Arguments 2>&1 | Out-String).Trim()
+    return [pscustomobject]@{
+        ExitCode = $LASTEXITCODE
+        Output = $output
+    }
+}
+
 function Convert-WslText {
     param(
         [Parameter(Mandatory = $true)]
@@ -65,6 +78,13 @@ try {
     $dockerClient = Invoke-WslCommand -Arguments @(
         "-d", $DistroName, "--", "docker", "version", "--format", "{{.Client.Version}}"
     )
+    $hermesVersionResult = Invoke-WslCommandAllowFailure -Arguments @(
+        "-d", $DistroName, "-u", $LinuxUser, "--", "bash", "-lc", "hermes --version"
+    )
+    $hermesVersion = Convert-WslText -Text $hermesVersionResult.Output
+    if ($hermesVersionResult.ExitCode -ne 0 -or $hermesVersion -notmatch "Hermes Agent") {
+        throw "Hermes Agent verification failed.`n$hermesVersion"
+    }
 
     $dockerServer = $null
     for ($attempt = 1; $attempt -le 12; $attempt++) {
@@ -115,9 +135,19 @@ try {
         throw "Aliyun direct verification returned HTTP $aliyunHttp."
     }
 
+    $hermesDoctorResult = Invoke-WslCommandAllowFailure -Arguments @(
+        "-d", $DistroName, "-u", $LinuxUser, "--", "bash", "-lc", "hermes doctor"
+    )
+    $hermesDoctor = Convert-WslText -Text $hermesDoctorResult.Output
+    if ($hermesDoctorResult.ExitCode -notin @(0, 1)) {
+        throw "Hermes doctor returned exit code $($hermesDoctorResult.ExitCode).`n$hermesDoctor"
+    }
+    $hermesAuthPending = $hermesDoctor -match "hermes setup"
+
+    $gitProxy = "http://${wslHost}:${ProxyPort}"
     $gitRemote = Invoke-WslCommand -Arguments @(
-        "-d", $DistroName, "-u", $LinuxUser, "--", "git", "-C", $repoWslPath,
-        "ls-remote", "--heads", "origin"
+        "-d", $DistroName, "-u", $LinuxUser, "--", "bash", "-lc",
+        "git -C ${repoWslPath} -c http.proxy=${gitProxy} -c https.proxy=${gitProxy} ls-remote --heads origin"
     )
     if (-not $gitRemote) {
         throw "The Git origin remote did not return any heads."
@@ -140,11 +170,15 @@ try {
         docker_client = $dockerClient
         docker_server = $dockerServer
         docker_hello_world = "ok"
+        hermes_version = $hermesVersion
+        hermes_doctor_exit = $hermesDoctorResult.ExitCode
+        hermes_auth_pending = $hermesAuthPending
         clash_proxy_port = $ProxyPort
         clash_reachable = $clashReachable
         wsl_host = $wslHost
         github_http = [int]$githubHttp
         aliyun_http = [int]$aliyunHttp
+        git_proxy = $gitProxy
         git_remote = "ok"
         firewall_rule = $FirewallRuleName
         log = $logPath

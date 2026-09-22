@@ -67,6 +67,8 @@ prepend:
   - 'DOMAIN-SUFFIX,nodesource.com,Ghelper'
   - 'DOMAIN-SUFFIX,npmjs.org,Ghelper'
   - 'DOMAIN-SUFFIX,npmjs.com,Ghelper'
+  - 'DOMAIN-SUFFIX,nousresearch.com,Ghelper'
+  - 'DOMAIN-SUFFIX,openrouter.ai,Ghelper'
   - 'DOMAIN-SUFFIX,aliyun.com,DIRECT'
   - 'DOMAIN-SUFFIX,aliyuncs.com,DIRECT'
   - 'DOMAIN-SUFFIX,alibabacloud.com,DIRECT'
@@ -83,6 +85,10 @@ The generated profile already ends with:
 ```
 
 Do not append duplicate `GEOIP` or `MATCH` entries after that final match.
+
+The Nous Research rules carry the official Hermes installer, Portal OAuth, and
+model API traffic through the existing proxy group. OpenRouter is included as
+the most likely alternative hosted inference path.
 
 ## Docker Desktop
 
@@ -175,6 +181,8 @@ Manual checks:
 Test-NetConnection 127.0.0.1 -Port 7897
 & 'C:\Program Files\WSL\wsl.exe' -d Ubuntu-24.04 -- docker run --rm hello-world
 & 'C:\Program Files\WSL\wsl.exe' -d Ubuntu-24.04 -u mars -- bash -lc 'curl -I https://github.com'
+& 'C:\Program Files\WSL\wsl.exe' -d Ubuntu-24.04 -u mars -- bash -lc 'hermes --version'
+& 'C:\Program Files\WSL\wsl.exe' -d Ubuntu-24.04 -u mars -- bash -lc 'hermes doctor'
 ```
 
 `http://127.0.0.1:7897/` is the proxy listener, not a dashboard. Do not judge

@@ -8,8 +8,9 @@
 4. `docs/INFRASTRUCTURE.md`
 5. `docs/LOGGING_AND_ROLLBACK.md`
 6. `docs/NETWORK_AND_PROXY.md`
-7. `docs/CONDITION_MAPPING.md`
-8. `docs/SYNTHETIC_CONDITIONS.md`
+7. `docs/HERMES_WSL.md`
+8. `docs/CONDITION_MAPPING.md`
+9. `docs/SYNTHETIC_CONDITIONS.md`
 
 ## Current machine layout
 
@@ -23,6 +24,8 @@
 | Modern WSL MSI | `D:\WSL\Downloads\wsl.2.7.14.0.x64.msi` |
 | Docker Desktop | `D:\DockerDesktop` |
 | Docker WSL data | `D:\DockerDesktopData` |
+| Hermes home | `/home/mars/.hermes` in `Ubuntu-24.04` |
+| Hermes code | `/home/mars/.hermes/hermes-agent` in `Ubuntu-24.04` |
 | Logs | `D:\CodexApp\Project13\Git\logs` |
 | Local Git backup | `D:\CodexApp\Project13\GitBackup.git` |
 
@@ -48,6 +51,15 @@
   Windows Firewall rule `Project13 Clash Verge WSL 7897` is restricted to
   `172.16.0.0/12`.
 - The `hello-world` image was pulled and executed successfully from Ubuntu.
+- Nous Research Hermes Agent `v0.21.4` is installed at
+  `/home/mars/.local/bin/hermes`. It includes the CLI, ACP entry point,
+  browser/computer-use tools, Playwright Chromium, skills, memory, cron,
+  terminal, and file tools.
+- Hermes configuration is version `v45`. Model authentication is pending:
+  run `hermes setup --portal` or `hermes model`. No credential belongs in Git.
+- Hermes runtime diagnostics report one expected setup item until a model
+  provider is authenticated. Optional messaging, X Search, vision, and image
+  generation tools remain unavailable until configured.
 - The repository is connected to
   `https://github.com/PrzmArk77469/E.coli-Multi-Omics-World-Model-Test-Demo.git`
   as `origin`.
@@ -82,6 +94,8 @@ the infrastructure is already running, the preferred direct checks are:
 & 'C:\Program Files\WSL\wsl.exe' -d Ubuntu-24.04 -- git --version
 & 'C:\Program Files\WSL\wsl.exe' -d Ubuntu-24.04 -- uv --version
 & 'C:\Program Files\WSL\wsl.exe' -d Ubuntu-24.04 -- docker version
+& 'C:\Program Files\WSL\wsl.exe' -d Ubuntu-24.04 -u mars -- bash -lc 'hermes --version'
+& 'C:\Program Files\WSL\wsl.exe' -d Ubuntu-24.04 -u mars -- bash -lc 'hermes doctor'
 & 'C:\Users\Mars\.cache\codex-runtimes\codex-primary-runtime\dependencies\native\powershell\pwsh.exe' -NoProfile -ExecutionPolicy Bypass -File D:\CodexApp\Project13\Git\infra\windows\04-Verify-Infrastructure.ps1
 ```
 
@@ -97,3 +111,5 @@ the infrastructure is already running, the preferred direct checks are:
   document for the controlled recovery procedure.
 - Do not use a third-party Docker registry mirror when the verified Clash
   proxy path is available.
+- Do not place Hermes API keys, OAuth tokens, or provider credentials in the
+  repository or infrastructure logs.
