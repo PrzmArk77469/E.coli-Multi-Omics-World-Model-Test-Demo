@@ -3,12 +3,13 @@
 ## Read these first
 
 1. `README.md`
-2. `docs/DEPLOYMENT_STATUS.md`
-3. `docs/INFRASTRUCTURE.md`
-4. `docs/LOGGING_AND_ROLLBACK.md`
-5. `docs/NETWORK_AND_PROXY.md`
-6. `docs/CONDITION_MAPPING.md`
-7. `docs/SYNTHETIC_CONDITIONS.md`
+2. `docs/SYSTEM_ARCHITECTURE.md`
+3. `docs/DEPLOYMENT_STATUS.md`
+4. `docs/INFRASTRUCTURE.md`
+5. `docs/LOGGING_AND_ROLLBACK.md`
+6. `docs/NETWORK_AND_PROXY.md`
+7. `docs/CONDITION_MAPPING.md`
+8. `docs/SYNTHETIC_CONDITIONS.md`
 
 ## Current machine layout
 
@@ -48,7 +49,8 @@
   `172.16.0.0/12`.
 - The `hello-world` image was pulled and executed successfully from Ubuntu.
 - The repository is connected to
-  `https://github.com/PrzmArk77469/Git.git` as `origin`.
+  `https://github.com/PrzmArk77469/E.coli-Multi-Omics-World-Model-Test-Demo.git`
+  as `origin`.
 - A local rollback remote named `backup` points to
   `D:\CodexApp\Project13\GitBackup.git`.
 - The latest verification is recorded in `logs/last-verification.json`.

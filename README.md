@@ -1,4 +1,4 @@
-# E. coli Multi-Omics World Model
+# E. coli Multi-Omics World Model Test Demo
 
 This repository contains source code, configuration, documentation, tests, and
 small reproducibility metadata for the E. coli MG1655 multi-omics world-model
@@ -7,6 +7,35 @@ Demo.
 Raw data, reference snapshots, generated artifacts, credentials, and runtime
 logs are intentionally excluded from Git. The canonical large-data location is
 the project data tree outside this repository or an object-storage bucket.
+
+## Start here
+
+- [System architecture and review map](docs/SYSTEM_ARCHITECTURE.md)
+- [Documentation index](docs/README.md)
+- [New conversation handoff](docs/NEW_CONVERSATION_CONTEXT.md)
+- [Current deployment status](docs/DEPLOYMENT_STATUS.md)
+
+## System at a glance
+
+```mermaid
+flowchart LR
+    Data["Observed multi-omics metadata"] --> Mapping["Unified sample and condition mapping"]
+    Mapping --> Synthetic["Labeled synthetic sidecar"]
+    Synthetic --> Engine["2,000-agent event engine"]
+    Engine --> Events["Events, complexes, and manifests"]
+    Events --> Viewer["Interactive 3D replay"]
+    Infra["Windows + WSL2 Ubuntu + Docker"] --> Engine
+    Infra --> Viewer
+    Cloud["Alibaba Cloud and NemoHermes"] -. planned .-> Engine
+
+    classDef done fill:#dff5ef,stroke:#237a68,color:#102d28;
+    classDef planned fill:#f2f2f2,stroke:#777,color:#333,stroke-dasharray:5 4;
+    class Data,Mapping,Synthetic,Engine,Events,Viewer,Infra done;
+    class Cloud planned;
+```
+
+The detailed component, provenance, deployment, and rollback maps are in
+`docs/SYSTEM_ARCHITECTURE.md`.
 
 ## Repository boundaries
 
@@ -119,5 +148,6 @@ git push -u origin main
 ```
 
 The configured `origin` is
-`https://github.com/PrzmArk77469/Git.git`. A local rollback remote named
-`backup` points to `D:\CodexApp\Project13\GitBackup.git`.
+`https://github.com/PrzmArk77469/E.coli-Multi-Omics-World-Model-Test-Demo.git`.
+A local rollback remote named `backup` points to
+`D:\CodexApp\Project13\GitBackup.git`.

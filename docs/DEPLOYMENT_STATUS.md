@@ -26,7 +26,8 @@ Last updated: 2026-09-22
 - GitHub proxy access, Aliyun direct access, Git remote access, and Docker
   `hello-world` have all been verified from Ubuntu.
 - The repository is connected to
-  `https://github.com/PrzmArk77469/Git.git` as `origin`.
+  `https://github.com/PrzmArk77469/E.coli-Multi-Omics-World-Model-Test-Demo.git`
+  as `origin`.
 - A local rollback remote named `backup` points to
   `D:\CodexApp\Project13\GitBackup.git`.
 - The latest verification is recorded locally in
@@ -58,6 +59,8 @@ Last updated: 2026-09-22
   timeline controls, provenance filters, and agent inspection. The reusable
   viewer template and vendor assets are versioned; generated data remains a
   local artifact.
+- `docs/SYSTEM_ARCHITECTURE.md` is the canonical system map for onboarding,
+  deployment review, provenance review, and rollback planning.
 
 ## Current boundary
 
