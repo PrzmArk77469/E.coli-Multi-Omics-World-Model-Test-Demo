@@ -120,9 +120,11 @@ conversation should verify behavior through commands, not by reading `.env`.
 - A local rollback remote named `backup` points to
   `D:\CodexApp\Project13\GitBackup.git`.
 - Current branch: `main`.
-- Current verified commit before the next change:
-  `9e70c48f55c1763c6c433b295551e3d319e7a235`.
-- `origin/main` and `backup/main` include that commit.
+- Use `git log -1 --oneline` as the authoritative current revision.
+- The infrastructure snapshot was fully reverified at
+  `2026-09-22 17:33:04 +08:00`.
+- `origin/main` and `backup/main` are synchronized after each verified
+  documentation or code change.
 - Docker and GitHub traffic use the verified Clash Verge proxy path.
 - The latest complete infrastructure verification is
   `logs/last-verification.json`.
