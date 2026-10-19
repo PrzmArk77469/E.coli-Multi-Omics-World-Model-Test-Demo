@@ -157,6 +157,16 @@ git commit -m "Bootstrap project infrastructure"
 git push -u origin main
 ```
 
+Scope and confidentiality
+
+This repository contains engineering-validation code, schemas, documentation,
+and small aggregate metadata only. It does not contain manuscript text,
+unpublished experimental datasets, raw third-party data, model checkpoints,
+credentials, or collaborator-confidential materials.
+
+The synthetic simulation is a workflow test and is not a calibrated biological
+prediction or a scientific finding.
+
 The configured `origin` is
 `https://github.com/PrzmArk77469/E.coli-Multi-Omics-World-Model-Test-Demo.git`.
 A local rollback remote named `backup` points to
