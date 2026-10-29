@@ -19,6 +19,9 @@
 
 ## Infrastructure
 
+- [Infrastructure readiness assessment](INFRASTRUCTURE_READINESS.md): current
+  Codex/Hermes capability boundary, PowerShell, Python, WSL, Docker, security,
+  and compute-readiness findings.
 - [Portable infrastructure guide](PORTABLE_INFRASTRUCTURE.md): self-contained
   migration guide for recreating the local stack in a new project without
   copying the current Git history or remotes.

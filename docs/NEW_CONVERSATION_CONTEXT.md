@@ -17,8 +17,9 @@ here.
 6. `docs/NETWORK_AND_PROXY.md`
 7. `docs/HERMES_WSL.md`
 8. `docs/PORTABLE_INFRASTRUCTURE.md`
-9. `docs/CONDITION_MAPPING.md`
-10. `docs/SYNTHETIC_CONDITIONS.md`
+9. `docs/INFRASTRUCTURE_READINESS.md`
+10. `docs/CONDITION_MAPPING.md`
+11. `docs/SYNTHETIC_CONDITIONS.md`
 
 ## Fast start
 
