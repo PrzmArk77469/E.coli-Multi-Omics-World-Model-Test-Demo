@@ -2,6 +2,37 @@
 
 Last updated: 2026-10-29
 
+## 2026-10-30 status update
+
+Several findings in the original assessment have been resolved:
+
+- PowerShell 7.6.9 is installed as a system application.
+- Windows now resolves `python` to Python 3.14.5 at `D:\Python314`.
+- uv 0.13.6 is available through real binaries in
+  `C:\Users\Mars\.local\bin`; uv-managed Python 3.12.16 is also available.
+- Global `PYTHONPATH` has been removed from Machine and User scopes.
+- uv, pip, and npm use isolated, writable caches under the user TEMP directory.
+- The persisted Windows PATH has no empty, duplicate, or missing entries after
+  cleanup.
+- Docker Desktop and the Linux Engine are running, Ubuntu integration works,
+  and `hello-world` passed from both WSL and Windows.
+- Codex has been updated and currently reports no failed doctor checks and no
+  configured MCP servers.
+
+The following findings remain current:
+
+- WSL cannot currently reach GitHub through Clash
+  (`SSL_ERROR_SYSCALL`, HTTP `000`).
+- `bubblewrap` and Codex CLI are still absent from WSL.
+- `py` is unavailable and `python3` still points at a WindowsApps alias.
+- Hermes remains behind upstream and reports dependency advisories.
+- No CUDA-capable GPU is available.
+- Codex has three non-blocking thread-history warnings and unverified Defender
+  exclusions.
+
+The body below records the 2026-10-29 assessment and is retained as historical
+context. Use `docs/NEW_CONVERSATION_CONTEXT.md` for the current operating state.
+
 ## 1. Scope
 
 This assessment covers the local infrastructure used by Codex and the
